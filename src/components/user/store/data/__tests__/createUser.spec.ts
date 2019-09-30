@@ -1,4 +1,4 @@
-import {create} from '../createUser';
+import {create} from '../create';
 import {CurrentUser} from '../../types';
 import {endpoint} from '../../../../../config';
 const fetchMock = require('fetch-mock');

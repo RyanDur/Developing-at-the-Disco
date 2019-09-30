@@ -1,4 +1,4 @@
-import {create} from './core';
+import {create} from './data';
 import {createUserMiddleware} from './middleware';
 import reducer from './reducer';
 
