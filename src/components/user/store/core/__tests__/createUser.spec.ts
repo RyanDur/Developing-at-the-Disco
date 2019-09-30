@@ -1,5 +1,6 @@
 import {create} from '../createUser';
 import {CurrentUser} from '../../types';
+import {endpoint} from '../../../../../config';
 const fetchMock = require('fetch-mock');
 
 describe('creating a user', () => {
@@ -7,6 +8,7 @@ describe('creating a user', () => {
   const mock = jest.fn();
 
   beforeEach(() => {
+    endpoint.users = 'http://some-host/users';
     fetchMock.post('path:/users', currentUser);
   });
 

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
+const EnvironmentPlugin = require("webpack").EnvironmentPlugin;
 
 module.exports = {
   mode: 'production',
@@ -36,7 +37,10 @@ module.exports = {
       }
     }),
     new HtmlWebpackRootPlugin(),
-    new CspHtmlWebpackPlugin()
+    new CspHtmlWebpackPlugin(),
+    new EnvironmentPlugin({
+      USERS_ENDPOINT: 'http://localhost:3000/users'
+    }),
   ],
   output: {
     filename: 'bundle.js',

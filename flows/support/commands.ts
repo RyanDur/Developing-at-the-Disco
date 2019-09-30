@@ -1,3 +1,32 @@
+import deferred from './fake/deferred';
+import {NewUser} from '../../src/components/user/store/types';
+
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject> {
+      signup(name: NewUser, id?: Number): Chainable<Subject>;
+    }
+  }
+}
+
+Cypress.Commands.add('signup', ({name}: NewUser, id = 1) => {
+  deferred.resolve({
+    json: () => ({name, id}),
+    ok: true
+  });
+  return cy.visit('/', {
+    onBeforeLoad(win) {
+      cy.stub(win, 'fetch')
+      .withArgs('http://localhost:3000/users')
+      .returns(deferred.promise);
+    }
+  })
+  .get('#create-user .name')
+  .type(name)
+  .get('form')
+  .submit();
+});
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,33 +52,3 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-
-import deferred from './fake/deferred';
-import {NewUser} from '../../src/components/user/store/types';
-
-declare global {
-  namespace Cypress {
-    interface Chainable<Subject> {
-      signup(name: NewUser, id?: Number): Chainable<Subject>;
-    }
-  }
-}
-
-Cypress.Commands.add('signup', ({name}: NewUser, id = 1) => {
-  deferred.resolve({
-    json: () => ({name, id}),
-    ok: true
-  });
-  return cy.visit('/', {
-    onBeforeLoad(win) {
-      cy.stub(win, 'fetch')
-      .withArgs('http://localhost:3000/users')
-      .as('create-user')
-      .returns(deferred.promise);
-    }
-  })
-  .get('#create-user .name')
-  .type(name)
-  .get('form')
-  .submit();
-});
