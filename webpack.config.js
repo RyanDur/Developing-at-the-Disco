@@ -13,6 +13,7 @@ module.exports = {
   devServer: {
     contentBase: './dist'
   },
+  stats: 'minimal',
   target: 'node',
   module: {
     rules: [
