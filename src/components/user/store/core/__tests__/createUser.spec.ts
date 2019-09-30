@@ -8,8 +8,8 @@ describe('creating a user', () => {
   const mock = jest.fn();
 
   beforeEach(() => {
-    endpoint.users = 'http://some-host/users';
-    fetchMock.post('path:/users', currentUser);
+    endpoint.users = 'users';
+    fetchMock.post(endpoint.users, currentUser);
   });
 
   it('should handle the response of creating a user', (done) => {
