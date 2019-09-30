@@ -1,6 +1,5 @@
 import {create} from '../createUser';
 import {CurrentUser} from '../../types';
-
 const fetchMock = require('fetch-mock');
 
 describe('creating a user', () => {
