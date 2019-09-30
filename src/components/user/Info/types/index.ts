@@ -1,0 +1,1 @@
+export {InfoProps} from './InfoProps';

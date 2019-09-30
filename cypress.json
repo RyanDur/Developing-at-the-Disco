@@ -1,0 +1,9 @@
+{
+  "fixturesFolder": "flows/fixtures",
+  "integrationFolder": "flows/integration",
+  "pluginsFile": "flows/plugins",
+  "screenshotsFolder": "flows/screenshots",
+  "supportFile": "flows/support",
+  "videosFolder": "flows/videos",
+  "baseUrl": "http://localhost:8080"
+}

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "baseUrl": "./node_modules",
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "lib": ["es5", "dom"],
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
