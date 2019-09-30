@@ -1,20 +1,21 @@
 import {create} from '../createUser';
-import {NewUser} from '../../types';
+import {CurrentUser} from '../../types';
 
 const fetchMock = require('fetch-mock');
 
 describe('creating a user', () => {
-  const body = {name: 'Ryan', id: 1};
+  const currentUser = {name: 'Ryan', id: 1};
   const mock = jest.fn();
 
   beforeEach(() => {
-    fetchMock.post('http://localhost:3000/users', body);
+    fetchMock.post('path:/users', currentUser);
   });
 
-  it('should handle the response of creating a user', async () => {
-    await create({name: 'Ryan'}, (user: NewUser) => {
+  it('should handle the response of creating a user', (done) => {
+    create({name: 'Ryan'}, (user: CurrentUser) => {
       mock(user);
+      expect(mock).toHaveBeenCalledWith(currentUser);
+      done();
     });
-    expect(mock).toHaveBeenCalledWith(body);
   });
 });
