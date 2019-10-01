@@ -9,12 +9,17 @@ const post = (message: any): RequestInit => ({
   headers: {'Content-Type': 'application/json'}
 });
 
-export type Create = <T>(message: any, onSuccess: SuccessHandler<T>) => void;
+type Method = RequestInit;
 
-export const create: Create = (message, onSuccess) =>
-  void fetch(endpoint.users, post(message))
+const create = <T>(method: Method, url: string, onSuccess: SuccessHandler<T>): void =>
+  void fetch(url, method)
   .then(async (response: Response) => {
     onSuccess(await response.json());
   }).catch((er) => {
     console.log('error: ' + er);
   });
+
+export type Create = <T>(message: any, onSuccess: SuccessHandler<T>) => void;
+
+export const createUser: Create = (user, onSuccess) =>
+  create(post(user), endpoint.users, onSuccess);

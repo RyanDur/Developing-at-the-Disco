@@ -1,4 +1,4 @@
-import {create} from '../create';
+import {createUser} from '../create';
 import {CurrentUser} from '../../types';
 import {endpoint} from '../../../../../config';
 const fetchMock = require('fetch-mock');
@@ -13,7 +13,7 @@ describe('creating a user', () => {
   });
 
   it('should handle the response of creating a user', (done) => {
-    create({name: 'Ryan'}, (user: CurrentUser) => {
+    createUser({name: 'Ryan'}, (user: CurrentUser) => {
       mock(user);
       expect(mock).toHaveBeenCalledWith(currentUser);
       done();

@@ -1,8 +1,8 @@
-import {create} from './data';
+import {createUser} from './data';
 import {createUserMiddleware} from './middleware';
 import reducer from './reducer';
 
-const userMiddleware = [createUserMiddleware(create)];
+const userMiddleware = [createUserMiddleware(createUser)];
 const userReducer = reducer;
 
 export {userMiddleware, userReducer};
