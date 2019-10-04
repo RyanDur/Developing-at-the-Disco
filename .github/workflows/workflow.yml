@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 1
 
       - name: test
-        run: yarn ci
+        run: yarn test:ci
 
       - run: pwd
 
