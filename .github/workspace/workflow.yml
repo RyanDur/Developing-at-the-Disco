@@ -1,0 +1,35 @@
+name: pipeline
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup java 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: '1.8'
+
+      - name: checkout
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: test
+        run: yarn ci
+
+      - run: pwd
+
+      - name: push to cf
+        uses: "louisthomas/cloud-foundry-cli-action@master"
+        env:
+          CF_API_ENDPOINT: api.run.pivotal.io
+          ORG: pivotallabs
+          SPACE: health-office
+          USERNAME: rdurling@pivotal.io
+          APP_NAME: Developing-at-the-Disco
+          ARTIFACT_PATH: dist
+          PASSWORD: ${{ secrets.CF_PASSWORD }}
