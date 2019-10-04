@@ -8,7 +8,8 @@
     "flows:silent": "cypress run",
     "build": "webpack",
     "start": "webpack-dev-server",
-    "start:backend": "node server.ts",
+    "start:open": "webpack-dev-server --open",
+    "start:backend": "node server.js",
     "test:flows": "start-server-and-test start http://localhost:8080 flows",
     "test:unit": "jest --env=jsdom",
     "test:ci": "yarn test:unit && start-server-and-test start http://localhost:8080 flows:silent"
