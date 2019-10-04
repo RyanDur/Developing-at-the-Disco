@@ -18,6 +18,9 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Download Packages
+        run: yarn
+
       - name: test
         run: yarn test:ci
 
