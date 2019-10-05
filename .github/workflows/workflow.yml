@@ -24,8 +24,6 @@ jobs:
       - name: test
         run: yarn test:ci
 
-      - run: pwd
-
       - name: push to cf
         uses: "louisthomas/cloud-foundry-cli-action@master"
         env:
