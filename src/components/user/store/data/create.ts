@@ -8,7 +8,10 @@ const post = (message: any): RequestInit => ({
   method: 'POST',
   body: JSON.stringify(message),
   mode: 'cors',
-  headers: {'Content-Type': 'application/json'}
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
 });
 
 const http = <T>(method: Method, url: string, onSuccess: SuccessHandler<T>): void =>
