@@ -24,6 +24,9 @@ jobs:
       - name: test
         run: yarn test:ci
 
+      - name: build
+        run: yarn build
+
       - name: push to cf
         uses: "louisthomas/cloud-foundry-cli-action@master"
         env:
@@ -32,5 +35,5 @@ jobs:
           SPACE: health-office
           USERNAME: rdurling@pivotal.io
           APP_NAME: Developing-at-the-Disco
-          ARTIFACT_PATH: Developing-at-the-Disco/dist
+          ARTIFACT_PATH: dist
           PASSWORD: ${{ secrets.CF_PASSWORD }}
