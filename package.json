@@ -9,7 +9,6 @@
     "build": "webpack",
     "start": "webpack-dev-server",
     "start:open": "webpack-dev-server --open",
-    "start:backend": "node server.js",
     "test:flows": "start-server-and-test start http://localhost:8080 flows",
     "test:unit": "jest --env=jsdom",
     "test:ci": "yarn test:unit && start-server-and-test start http://localhost:8080 flows:silent"
@@ -29,18 +28,30 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "csp-html-webpack-plugin": "^3.0.3",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
     "cypress": "^3.4.1",
     "dotenv-webpack": "^1.7.0",
     "eslint-plugin-react-hooks": "^2.0.1",
     "express": "latest",
     "fetch-mock": "^7.4.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-root-plugin": "^0.10.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "node-fetch": "^2.6.0",
+    "postcss-autoreset": "^2.0.2",
+    "postcss-import": "^12.0.1",
+    "postcss-initial": "^3.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
     "react-test-renderer": "^16.9.0",
+    "reset-css": "^4.0.1",
     "source-map-loader": "^0.2.4",
     "start-server-and-test": "^1.10.0",
+    "style-loader": "^1.0.0",
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.4",
     "tslint": "^5.18.0",
@@ -50,7 +61,9 @@
     "typescript": "^3.5.3",
     "webpack": "^4.38.0",
     "webpack-cli": "^3.3.7",
+    "webpack-dashboard": "^3.2.0",
     "webpack-dev-server": "^3.8.0",
+    "webpack-notifier": "^1.8.0",
     "ws": "^7.1.1"
   },
   "dependencies": {
@@ -74,6 +87,9 @@
     "testMatch": [
       "**/__tests__/**/?(*.)+(spec|test).ts?(x)"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
   }
 }

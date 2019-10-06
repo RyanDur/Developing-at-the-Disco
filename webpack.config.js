@@ -2,6 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const DashboardPlugin = require("webpack-dashboard/plugin");
 const EnvironmentPlugin = require("webpack").EnvironmentPlugin;
 
 module.exports = {
@@ -11,9 +14,11 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js']
   },
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    host: process.env.HOST,
+    port: process.env.PORT,
+    overlay: true
   },
-  stats: 'minimal',
   target: 'node',
   module: {
     rules: [
@@ -27,6 +32,31 @@ module.exports = {
         test: /\.js$/,
         exclude: [/node_modules/],
         loader: 'source-map-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {loader: 'css-loader', options: {importLoaders: 1}},
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: (loader) => [
+                require('postcss-import')({root: loader.resourcePath}),
+                require('postcss-autoreset')(),
+                require('postcss-initial')(),
+                require('postcss-preset-env')({
+                  stage: 3,
+                  features: {
+                    'nesting-rules': true
+                  }
+                }),
+                require('cssnano')()
+              ]
+            }
+          }
+        ]
       }
     ]
   },
@@ -39,9 +69,12 @@ module.exports = {
     }),
     new HtmlWebpackRootPlugin(),
     new CspHtmlWebpackPlugin(),
+    new WebpackNotifierPlugin(),
+    new FriendlyErrorsWebpackPlugin(),
+    new DashboardPlugin(),
     new EnvironmentPlugin({
-      USERS_ENDPOINT: 'http://localhost:3000/users'
-    }),
+      USERS_ENDPOINT: 'http://localhost:3001/users'
+    })
   ],
   output: {
     filename: 'bundle.js',

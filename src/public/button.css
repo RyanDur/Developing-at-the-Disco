@@ -1,0 +1,19 @@
+button {
+    all: unset;
+    text-align: center;
+    height: 4rem;
+    border-radius: 0.4rem;
+
+    &.primary {
+        background-color: rgb(0, 124, 135);
+        color: rgb(255, 255, 255);
+
+        &:hover {
+            background-color: rgb(3, 90, 97);
+        }
+
+        &:focus {
+            background-color: rgb(0, 143, 155);
+        }
+    }
+}

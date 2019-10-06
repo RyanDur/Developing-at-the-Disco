@@ -1,0 +1,57 @@
+#create-user {
+    position: relative;
+    display: flex;
+    width: 32rem;
+    flex-direction: column;
+
+    & .name-label {
+        color: rgb(102, 102, 102);
+        position: absolute;
+        bottom: 6.5rem;
+        padding: 0 1.2rem;
+        margin: 0;
+        width: 20.5%;
+        background-color: rgba(255, 255, 255, 0);
+        transition:
+                background-color 600ms 200ms ease-out,
+                bottom 500ms,
+                padding-left 500ms,
+                font-size 500ms,
+                line-height 500ms,
+                width 500ms,
+                margin-left 500ms;
+
+        &.candidate {
+            border-radius: 30%;
+            padding: 0;
+            margin: 0 1.2rem;
+            bottom: 8.5rem;
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            width: 17.5%;
+            background-color: rgba(255, 255, 255, 1);
+        }
+    }
+
+    & .name {
+        background-color: white;
+        position: relative;
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.2rem;
+        border-radius: 0.4rem;
+        border: 0.1rem solid rgb(153, 153, 153);
+        margin: 0 0 1.2rem;
+
+        &:focus {
+            outline: none;
+            border-radius: 0.4rem;
+            border: 0.1rem solid rgb(0, 124, 135);
+        }
+    }
+
+    & .submit {
+        width: 100%;
+    }
+
+}

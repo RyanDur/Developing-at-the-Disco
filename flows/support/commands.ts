@@ -17,7 +17,7 @@ Cypress.Commands.add('signup', ({name}: NewUser, id = 1) => {
   return cy.visit('/', {
     onBeforeLoad(win) {
       cy.stub(win, 'fetch')
-      .withArgs('http://localhost:3000/users')
+      .withArgs('http://localhost:3001/users')
       .returns(deferred.promise);
     }
   })
