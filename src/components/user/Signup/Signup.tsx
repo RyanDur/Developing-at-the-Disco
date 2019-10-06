@@ -20,28 +20,27 @@ export const Signup = ({createUser}: SignupProps) => {
     createUser(value.name);
   };
 
-  const setName = (event: ChangeEvent<HTMLInputElement>) => {
+  const setName = (event: ChangeEvent<HTMLInputElement>) =>
     setValue({...value, name: event.target.value});
-  };
 
-  const setFocus = () => {
-    setValue({...value, isCandidate: true});
-  };
+  const setCandidate = () => setValue({...value, isCandidate: true});
 
-  const setBlur = () => {
-    setValue({...value, isCandidate: !!value.name});
+  const checkCandidate = () => setValue({...value, isCandidate: !!value.name});
+
+  const getCandidate = () => {
+    if (value.isCandidate) return ' candidate';
   };
 
   return <form id='create-user' onSubmit={createNewUser}>
+    <label className={['name-label', getCandidate()].join(' ')}
+           htmlFor='create-user-name'>Username</label>
     <input type='text'
            id='create-user-name'
            className='name'
            value={value.name}
            onChange={setName}
-           onFocus={setFocus}
-           onBlur={setBlur}/>
-    <label className={'name-label' + (value.isCandidate ? ' candidate' : '')}
-           htmlFor='create-user-name'>Username</label>
+           onFocus={setCandidate}
+           onBlur={checkCandidate}/>
     <button type='submit' className='submit primary'>Enter</button>
   </form>;
 };

@@ -5,31 +5,25 @@
     flex-direction: column;
 
     & .name-label {
-        color: rgb(102, 102, 102);
         position: absolute;
-        bottom: 6.5rem;
-        padding: 0 1.2rem;
-        margin: 0;
+        z-index: 1;
+        top: 1rem;
+        margin: 0 1.2rem;
         width: 20.5%;
-        background-color: rgba(255, 255, 255, 0);
+        color: rgb(102, 102, 102);
+        background-image: linear-gradient(transparent, white 50%, white 60%, transparent 65%);
         transition:
-                background-color 600ms 200ms ease-out,
-                bottom 500ms,
-                padding-left 500ms,
+                top 500ms,
                 font-size 500ms,
                 line-height 500ms,
-                width 500ms,
-                margin-left 500ms;
+                width 500ms;
 
         &.candidate {
             border-radius: 30%;
-            padding: 0;
-            margin: 0 1.2rem;
-            bottom: 8.5rem;
+            top: -0.6rem;
             font-size: 1.2rem;
             line-height: 1.2rem;
             width: 17.5%;
-            background-color: rgba(255, 255, 255, 1);
         }
     }
 
