@@ -1,19 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {createProvider} from './store';
-import {Info, middleware, reducers, Signup} from './components';
+import {middleware, reducers, Signup} from './components';
 import './public/base.css';
+import {Header, Main} from './sections/Header';
 
 const Provider = createProvider(reducers, middleware);
 
 ReactDOM.render(
   <Provider>
-    <header>
-      <Info/>
-    </header>
-    <main>
-      <Signup/>
-    </main>
+    <Header/>
+    <Main/>
   </Provider>,
   document.getElementById('root')
 );

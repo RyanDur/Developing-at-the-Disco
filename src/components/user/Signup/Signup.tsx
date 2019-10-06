@@ -23,16 +23,21 @@ export const Signup = ({createUser}: SignupProps) => {
   const setName = (event: ChangeEvent<HTMLInputElement>) =>
     setValue({...value, name: event.target.value});
 
-  const setCandidate = () => setValue({...value, isCandidate: true});
+  const setCandidate = () =>
+    setValue({...value, isCandidate: true});
 
-  const checkCandidate = () => setValue({...value, isCandidate: !!value.name});
+  const checkCandidate = () =>
+    setValue({...value, isCandidate: !!value.name});
 
-  const getCandidate = () => {
+  const candidate = () => {
     if (value.isCandidate) return ' candidate';
   };
 
+  const classes = (...list: string[]) =>
+    list.filter(name => !!name).join(' ');
+
   return <form id='create-user' onSubmit={createNewUser}>
-    <label className={['name-label', getCandidate()].join(' ')}
+    <label className={classes('name-label', candidate())}
            htmlFor='create-user-name'>Username</label>
     <input type='text'
            id='create-user-name'
