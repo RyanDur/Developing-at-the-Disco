@@ -7,7 +7,7 @@
     & .name-label {
         position: absolute;
         z-index: 1;
-        top: 1rem;
+        top: 1.2rem;
         margin: 0 1.2rem;
         width: 20.5%;
         color: rgb(102, 102, 102);
@@ -21,6 +21,7 @@
         transition: top 300ms,
         font-size 300ms,
         line-height 300ms,
+        color 300ms,
         width 300ms;
 
         &.candidate {
@@ -29,12 +30,12 @@
             font-size: 1.2rem;
             line-height: 1.2rem;
             width: 17.5%;
+            color: rgb(0, 124, 135);
         }
     }
 
     & .name {
         height: 4rem;
-        width: 100%;
         padding: 0 1.2rem;
         border-radius: 0.4rem;
         border: 0.1rem solid rgb(153, 153, 153);
