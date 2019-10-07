@@ -1,7 +1,6 @@
 import {OtherUser, UserAction, UserActions, UserState} from './types';
 
 export const initialState: UserState = {
-  current: {name: undefined, id: undefined},
   others: [] as OtherUser[]
 };
 

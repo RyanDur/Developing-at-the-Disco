@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {createProvider} from './store';
-import {middleware, reducers, Signup} from './components';
+import {middleware, reducers} from './components';
 import './public/base.css';
-import {Header, Main} from './sections/Header';
+import {Header, Main} from './sections';
 
 const Provider = createProvider(reducers, middleware);
 

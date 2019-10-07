@@ -15,7 +15,6 @@ export const Signup = ({createUser}: SignupProps) => {
   });
 
   const createNewUser = (event: FormEvent) => {
-    event.stopPropagation();
     event.preventDefault();
     createUser(value.name);
   };

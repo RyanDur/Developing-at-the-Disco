@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {ReactElement} from 'react';
+import {ReactElement, ReactNode} from 'react';
 import ReactDOM from 'react-dom';
 import {act, Simulate} from 'react-dom/test-utils';
+import * as ShallowRenderer from 'react-test-renderer/shallow';
 
 let container: HTMLElement = null;
 
@@ -18,11 +19,16 @@ afterEach(() => {
 export interface TestRender {
   container: HTMLElement;
   getBy: <T extends HTMLElement>(selector: string) => T;
+  get: (node: JSX.Element) => ReactNode;
   change: (element: HTMLInputElement, eventData: Object) => void;
   focus: (element: HTMLInputElement, eventData?: Object) => void;
   blur: (element: HTMLInputElement, eventData?: Object) => void;
-  submit: (form: HTMLFormElement) => void;
+  submit: (form: HTMLFormElement, eventData?: Object) => void;
   click: (form: HTMLElement) => void;
+}
+
+export interface ShallowTestRender {
+  contains: (node: JSX.Element) => ReactNode;
 }
 
 export const render = (Component: ReactElement): TestRender => {
@@ -31,14 +37,29 @@ export const render = (Component: ReactElement): TestRender => {
   });
   return {
     container,
-    getBy: <T extends HTMLElement>(selector: string) => container.querySelector(`${selector}`) as T,
+    getBy: <T extends HTMLElement>(selector: string) =>
+      container.querySelector(`${selector}`) as T,
+    get: (node) => container.querySelector(`${node.key}`),
     focus: (element: HTMLElement, event: Object) =>
       Simulate.focus(element, event as any),
     blur: (element: HTMLElement, event: Object) =>
       Simulate.blur(element, event as any),
     change: (element: HTMLElement, event: Object) =>
       Simulate.change(element, event as any),
-    submit: (form: HTMLFormElement) => Simulate.submit(form),
-    click: (element: HTMLElement) => Simulate.click(element)
+    submit: (form: HTMLFormElement, event: Object) =>
+      Simulate.submit(form, event as any),
+    click: (element: HTMLElement) =>
+      Simulate.click(element)
+  };
+};
+
+export const shallowRender = (Component: ReactElement): ShallowTestRender => {
+  const shallow = ShallowRenderer.createRenderer();
+  act(() => {
+    shallow.render(Component, container);
+  });
+  const element = shallow.getRenderOutput();
+  return {
+    contains: (node) => element.props.children.type === node.type
   };
 };

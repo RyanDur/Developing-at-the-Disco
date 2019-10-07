@@ -1,8 +1,12 @@
 import {Signup} from '../../components/user';
 import * as React from 'react';
 
-export const Main = () => {
+interface MainProps {
+  noCurrentUser: boolean;
+}
+
+export const Main = ({noCurrentUser}: MainProps) => {
   return <main>
-    <Signup/>
+    {noCurrentUser && <Signup/>}
   </main>;
 };

@@ -11,12 +11,17 @@
         margin: 0 1.2rem;
         width: 20.5%;
         color: rgb(102, 102, 102);
-        background-image: linear-gradient(transparent, white 50%, white 60%, transparent 65%);
-        transition:
-                top 500ms,
-                font-size 500ms,
-                line-height 500ms,
-                width 500ms;
+        background-image: linear-gradient(
+                transparent,
+                rgb(255, 255, 255) 50%,
+                rgb(255, 255, 255) 60%,
+                transparent 65%,
+                transparent 65%
+        );
+        transition: top 300ms,
+        font-size 300ms,
+        line-height 300ms,
+        width 300ms;
 
         &.candidate {
             border-radius: 30%;
@@ -28,8 +33,6 @@
     }
 
     & .name {
-        background-color: white;
-        position: relative;
         height: 4rem;
         width: 100%;
         padding: 0 1.2rem;

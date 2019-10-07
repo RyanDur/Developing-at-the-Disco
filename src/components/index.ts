@@ -1,5 +1,5 @@
 import {Info, Signup, userMiddleware, userReducer} from './user';
-import {UserAction, UserState} from './user/store/types';
+import {UserAction, UserComponentState, UserState} from './user/store/types';
 import {Reducers} from '../store/types';
 
 const middleware = [
@@ -8,6 +8,8 @@ const middleware = [
 
 type ComponentAction = UserAction;
 type ComponentState = UserState;
+
+export type ConnectedState = UserComponentState;
 
 const reducers: Reducers<ComponentState, ComponentAction> = {
   user: userReducer

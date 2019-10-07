@@ -1,8 +1,12 @@
 import * as React from 'react';
 import {Info} from '../../components/user';
 
-export const Header = () => {
+interface HeaderProps {
+  hasCurrentUser: boolean;
+}
+
+export const Header = ({hasCurrentUser}: HeaderProps) => {
   return <header>
-    <Info/>
+    {hasCurrentUser && <Info/>}
   </header>;
 };
