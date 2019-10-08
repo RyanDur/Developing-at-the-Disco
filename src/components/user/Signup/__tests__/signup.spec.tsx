@@ -14,7 +14,7 @@ describe('Signing up', () => {
 
   describe('when name is empty', () => {
     it('should not have a candidate name', () => {
-      expect(subject.getBy('.name-label').classList).not.toContain('candidate');
+      expect(subject.getBy('.text-label').classList).not.toContain('candidate');
     });
 
     it('should not be able to submit the candidate', () => {
@@ -23,12 +23,12 @@ describe('Signing up', () => {
 
     describe('given input', () => {
       beforeEach(() => {
-        subject.change(subject.getBy('.name'), {target: {value: name}});
-        subject.focus(subject.getBy('.name'));
+        subject.change(subject.getBy('.text'), {target: {value: name}});
+        subject.focus(subject.getBy('.text'));
       });
 
-      it('should make the name a candidate.', () => {
-        expect(subject.getBy('.name-label').classList).toContain('candidate');
+      it('should make the text a candidate.', () => {
+        expect(subject.getBy('.text-label').classList).toContain('candidate');
       });
 
       it('should not be able to submit the candidate', () => {
@@ -40,7 +40,7 @@ describe('Signing up', () => {
           props.createUser.mockReset();
         });
 
-        it('should create a user with the name', () => {
+        it('should create a user with the text', () => {
           subject.submit(subject.getBy('form'));
 
           expect(props.createUser).toHaveBeenCalledWith(name);
@@ -53,7 +53,7 @@ describe('Signing up', () => {
         });
 
         it('should be disabled if input is empty', () => {
-          subject.change(subject.getBy('.name'), {target: {value: ''}});
+          subject.change(subject.getBy('.text'), {target: {value: ''}});
           subject.submit(subject.getBy('form'));
 
           expect(props.createUser).not.toHaveBeenCalled();
@@ -62,15 +62,15 @@ describe('Signing up', () => {
 
       describe('blur input', () => {
         it('should remove candidacy if the input has no value', async () => {
-          subject.change(subject.getBy('.name'), {target: {value: ''}});
-          subject.blur(subject.getBy('.name'));
-          expect(subject.getBy('.name-label').classList).not.toContain('candidate');
+          subject.change(subject.getBy('.text'), {target: {value: ''}});
+          subject.blur(subject.getBy('.text'));
+          expect(subject.getBy('.text-label').classList).not.toContain('candidate');
         });
 
         it('should not remove candidacy if the input has a value', async () => {
-          subject.change(subject.getBy('.name'), {target: {value: 'a'}});
-          subject.blur(subject.getBy('.name'));
-          expect(subject.getBy('.name-label').classList).toContain('candidate');
+          subject.change(subject.getBy('.text'), {target: {value: 'a'}});
+          subject.blur(subject.getBy('.text'));
+          expect(subject.getBy('.text-label').classList).toContain('candidate');
         });
       });
     });
