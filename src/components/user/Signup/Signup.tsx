@@ -1,12 +1,8 @@
 import * as React from 'react';
 import {ChangeEvent, FormEvent, useState} from 'react';
-import {SignupProps} from './types';
+import {SignupProps, SignupState} from './types';
+import {classes} from '../../util/helpers';
 import './Signup.css';
-
-interface SignupState {
-  name: string;
-  isCandidate: boolean;
-}
 
 export const Signup = ({createUser}: SignupProps) => {
   const [{name, isCandidate}, setValue] = useState<SignupState>({
@@ -19,21 +15,14 @@ export const Signup = ({createUser}: SignupProps) => {
     name && createUser(name);
   };
 
-  const setName = (event: ChangeEvent<HTMLInputElement>) =>
-    setValue({isCandidate, name: event.target.value});
+  const setName = ({target}: ChangeEvent<HTMLInputElement>) =>
+    setValue({isCandidate, name: target.value});
 
-  const setCandidate = () =>
-    setValue({name, isCandidate: true});
+  const setCandidate = () => setValue({name, isCandidate: true});
 
-  const checkCandidate = () =>
-    setValue({name, isCandidate: !!name});
+  const checkCandidate = () => setValue({name, isCandidate: !!name});
 
-  const candidate = () => {
-    if (isCandidate) return ' candidate';
-  };
-
-  const classes = (...list: string[]) =>
-    list.filter(className => !!className).join(' ');
+  const candidate = () => isCandidate ? 'candidate' : undefined;
 
   return <form id='create-user' onSubmit={createNewUser}>
     <label className={classes('name-label', candidate())} htmlFor='create-user-name'>
