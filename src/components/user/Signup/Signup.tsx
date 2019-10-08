@@ -13,9 +13,7 @@ export const Signup = ({createUser}: SignupProps) => {
   };
 
   return <form id='create-user' onSubmit={createNewUser}>
-    <TextInput onChange={updateName} className='name'>
-      UserName
-    </TextInput>
+    <TextInput onChange={updateName} className='name'>Username</TextInput>
     <button type='submit' className='submit primary' disabled={!name}>
       Enter
     </button>

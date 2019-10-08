@@ -1,18 +1,8 @@
 import * as React from 'react';
-import {ChangeEvent, ReactNode, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
+import {TextInputProps, TextInputState} from './types';
 import {classes} from '../../util/helpers';
 import './TextInput.css';
-
-interface TextInputProps {
-  onChange: (text: string) => void;
-  className: string;
-  children: ReactNode;
-}
-
-interface TextInputState {
-  text: string;
-  isCandidate: boolean;
-}
 
 export const TextInput = ({onChange, className, children}: TextInputProps) => {
   const [{text, isCandidate}, updateText] = useState<TextInputState>({
@@ -29,12 +19,9 @@ export const TextInput = ({onChange, className, children}: TextInputProps) => {
 
   const checkCandidate = () => updateText({text, isCandidate: !!text});
 
-  const candidate = () => isCandidate ? 'candidate' : undefined;
-
-  return <>
-    <label className={classes('text-label', candidate())} htmlFor={`create-${className}`}>
-      {children}
-    </label>
+  return <article className='text-input'>
+    <label className={classes('text-label', (isCandidate && 'candidate'))}
+           htmlFor={`create-${className}`}>{children}</label>
     <input type='text'
            id={`create-${className}`}
            className={classes('text', className)}
@@ -42,5 +29,5 @@ export const TextInput = ({onChange, className, children}: TextInputProps) => {
            onChange={updateValue}
            onFocus={setCandidate}
            onBlur={checkCandidate}/>
-  </>;
+  </article>;
 };
