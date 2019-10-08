@@ -6,12 +6,13 @@
 
     & .name-label {
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         top: 1.2rem;
         margin: 0 1.2rem;
         width: 20.5%;
         color: rgb(102, 102, 102);
         background-image: linear-gradient(
+                transparent,
                 transparent,
                 rgb(255, 255, 255) 50%,
                 rgb(255, 255, 255) 60%,
@@ -38,6 +39,8 @@
         height: 4rem;
         padding: 0 1.2rem;
         border-radius: 0.4rem;
+        position: relative;
+        z-index: 1;
         border: 0.1rem solid rgb(153, 153, 153);
         margin: 0 0 1.2rem;
 
@@ -50,6 +53,13 @@
 
     & .submit {
         width: 100%;
+        position: relative;
+        bottom: 0;
+        transition: bottom 300ms, z-index 0ms 300ms;
+
+        &:disabled {
+            bottom: 5.35rem;
+        }
     }
 
 }

@@ -9,42 +9,45 @@ interface SignupState {
 }
 
 export const Signup = ({createUser}: SignupProps) => {
-  const [value, setValue] = useState<SignupState>({
+  const [{name, isCandidate}, setValue] = useState<SignupState>({
     name: '',
     isCandidate: false
   });
 
   const createNewUser = (event: FormEvent) => {
     event.preventDefault();
-    createUser(value.name);
+    name && createUser(name);
   };
 
   const setName = (event: ChangeEvent<HTMLInputElement>) =>
-    setValue({...value, name: event.target.value});
+    setValue({isCandidate, name: event.target.value});
 
   const setCandidate = () =>
-    setValue({...value, isCandidate: true});
+    setValue({name, isCandidate: true});
 
   const checkCandidate = () =>
-    setValue({...value, isCandidate: !!value.name});
+    setValue({name, isCandidate: !!name});
 
   const candidate = () => {
-    if (value.isCandidate) return ' candidate';
+    if (isCandidate) return ' candidate';
   };
 
   const classes = (...list: string[]) =>
-    list.filter(name => !!name).join(' ');
+    list.filter(className => !!className).join(' ');
 
   return <form id='create-user' onSubmit={createNewUser}>
-    <label className={classes('name-label', candidate())}
-           htmlFor='create-user-name'>Username</label>
+    <label className={classes('name-label', candidate())} htmlFor='create-user-name'>
+      Username
+    </label>
     <input type='text'
            id='create-user-name'
            className='name'
-           value={value.name}
+           value={name}
            onChange={setName}
            onFocus={setCandidate}
            onBlur={checkCandidate}/>
-    <button type='submit' className='submit primary'>Enter</button>
+    <button type='submit' className='submit primary' disabled={!name}>
+      Enter
+    </button>
   </form>;
 };

@@ -30,9 +30,9 @@ jobs:
       - name: push to cf
         uses: "louisthomas/cloud-foundry-cli-action@master"
         env:
-          CF_API_ENDPOINT: api.run.pivotal.io
-          ORG: pivotallabs
-          SPACE: health-office
+          CF_API_ENDPOINT: api.run.pcfone.io
+          ORG: pivot-rdurling
+          SPACE: playground
           USERNAME: rdurling@pivotal.io
           APP_NAME: Developing-at-the-Disco
           ARTIFACT_PATH: dist
