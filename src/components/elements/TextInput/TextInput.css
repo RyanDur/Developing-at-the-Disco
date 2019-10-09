@@ -1,6 +1,7 @@
 .text-input {
     position: relative;
     width: 100%;
+    margin: 0 0 1.2rem;
 
     & .text-label {
         position: absolute;
@@ -28,7 +29,7 @@
             top: -0.6rem;
             font-size: 1.2rem;
             line-height: 1.2rem;
-            width: 17.5%;
+            width: 5.6rem;
             color: rgb(0, 124, 135);
         }
     }
@@ -41,12 +42,27 @@
         position: relative;
         z-index: 1;
         border: 0.1rem solid rgb(153, 153, 153);
-        margin: 0 0 1.2rem;
 
         &:focus {
             outline: none;
             border-radius: 0.4rem;
             border: 0.1rem solid rgb(0, 124, 135);
+        }
+    }
+
+    & .text-length {
+        position: absolute;
+        line-height: 1.4rem;
+        font-size: 1rem;
+        color: rgb(102, 102, 102);
+        z-index: 1;
+        bottom: 0.1rem;
+        right: 0.5rem;
+        opacity: 0;
+        transition: opacity 300ms;
+
+        &.candidate {
+            opacity: 1;
         }
     }
 }

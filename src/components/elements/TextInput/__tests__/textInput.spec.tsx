@@ -25,8 +25,17 @@ describe('the text input', () => {
       .toEqual(subject.getBy('.text').id);
   });
 
+  it('should associate the input wth the label count', () => {
+    expect(subject.getBy<HTMLLabelElement>('.text-length').htmlFor)
+      .toEqual(subject.getBy('.text').id);
+  });
+
   it('should not have a candidate name', () => {
     expect(subject.getBy('.text-label').classList).not.toContain('candidate');
+  });
+
+  it('should not inform the text length there is a candidate', () => {
+    expect(subject.getBy('.text-length').classList).not.toContain('candidate');
   });
 
   describe('on focus', () => {
@@ -59,6 +68,10 @@ describe('the text input', () => {
 
     it('should not be longer than the max length given', () => {
       expect(subject.getBy<HTMLInputElement>('.text').maxLength).toEqual(props.maxLength);
+    });
+
+    it('should inform the text length there is a candidate', () => {
+      expect(subject.getBy('.text-length').classList).toContain('candidate');
     });
 
     describe('blur input', () => {

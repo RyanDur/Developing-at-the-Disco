@@ -21,7 +21,9 @@ export const TextInput = ({onChange, className, maxLength, children}: TextInputP
 
   return <article className='text-input'>
     <label className={classes('text-label', (isCandidate && 'candidate'))}
-           htmlFor={`create-${className}`}>{children}</label>
+           htmlFor={`create-${className}`}>
+      {children}
+    </label>
     <input type='text'
            id={`create-${className}`}
            className={classes('text', className)}
@@ -30,5 +32,9 @@ export const TextInput = ({onChange, className, maxLength, children}: TextInputP
            onFocus={setCandidate}
            onBlur={checkCandidate}
            maxLength={maxLength}/>
+    <label className={classes('text-length', (isCandidate && 'candidate'))}
+           htmlFor={`create-${className}`}>
+      {`${text.length}/${maxLength}`}
+    </label>
   </article>;
 };
