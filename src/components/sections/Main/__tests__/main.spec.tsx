@@ -1,7 +1,7 @@
-import {shallowRender} from '../../../__tests__/support/testApi';
-import {Signup} from '../../../components/user';
+import {shallowRender} from '../../../../__tests__/support/testApi';
 import * as React from 'react';
 import {Main} from '../Main';
+import {Signup} from '../../../user';
 
 describe('the main section', () => {
   describe('when there is a user', () => {

@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import {createProvider} from './store';
 import {middleware, reducers} from './components';
 import './public/base.css';
-import {Header, Main} from './sections';
+import {Header, Main} from './components';
 
 const Provider = createProvider(reducers, middleware);
 

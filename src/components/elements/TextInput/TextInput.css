@@ -1,5 +1,8 @@
 .text-input {
-    .text-label {
+    position: relative;
+    width: 100%;
+
+    & .text-label {
         position: absolute;
         z-index: 2;
         top: 1.2rem;
@@ -30,7 +33,8 @@
         }
     }
 
-    .text {
+    & .text {
+        width: 100%;
         height: 4rem;
         padding: 0 1.2rem;
         border-radius: 0.4rem;

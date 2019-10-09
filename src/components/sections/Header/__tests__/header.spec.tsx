@@ -1,7 +1,7 @@
-import {shallowRender} from '../../../__tests__/support/testApi';
+import {shallowRender} from '../../../../__tests__/support/testApi';
 import * as React from 'react';
 import {Header} from '../Header';
-import {Info} from '../../../components/user';
+import {Info} from '../../../user';
 
 describe('the header section', () => {
   describe('when there is a user', () => {

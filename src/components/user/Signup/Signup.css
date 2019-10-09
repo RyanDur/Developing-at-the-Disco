@@ -10,7 +10,7 @@
         transition: bottom 300ms, z-index 0ms 300ms;
 
         &:disabled {
-            bottom: 5.35rem;
+            bottom: 5.2rem;
         }
     }
 

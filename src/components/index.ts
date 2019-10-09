@@ -1,6 +1,7 @@
-import {Info, Signup, userMiddleware, userReducer} from './user';
+import {userMiddleware, userReducer} from './user';
 import {UserAction, UserComponentState, UserState} from './user/store/types';
 import {Reducers} from '../store/types';
+import {Header, Main} from './sections';
 
 const middleware = [
   ...userMiddleware
@@ -18,6 +19,6 @@ const reducers: Reducers<ComponentState, ComponentAction> = {
 export {
   middleware,
   reducers,
-  Signup,
-  Info
+  Header,
+  Main
 };

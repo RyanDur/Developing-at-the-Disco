@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Signup} from '../../components/user';
 import './Main.css';
+import {Signup} from '../../user';
 
 interface MainProps {
   noCurrentUser: boolean;
