@@ -8,7 +8,6 @@ const mapDispatchToProps = (dispatch: Dispatch<UserAction>) => ({
   createUser: (name: string) => dispatch(create(name))
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(Signup);
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

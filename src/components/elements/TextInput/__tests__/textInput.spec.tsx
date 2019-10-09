@@ -3,7 +3,7 @@ import {render, TestRender} from '../../../../__tests__/support/testApi';
 import {TextInput} from '../index';
 
 describe('the text input', () => {
-  const props = {onChange: jest.fn(), className: 'Some-name'};
+  const props = {onChange: jest.fn(), className: 'Some-name', maxLength: 10};
   const title = 'Some text';
   const text = 'Yay';
   let subject: TestRender = null;
@@ -55,6 +55,10 @@ describe('the text input', () => {
 
     it('should trigger the passed in function', () => {
       expect(props.onChange).toHaveBeenCalledWith(text);
+    });
+
+    it('should not be longer than the max length given', () => {
+      expect(subject.getBy<HTMLInputElement>('.text').maxLength).toEqual(props.maxLength);
     });
 
     describe('blur input', () => {

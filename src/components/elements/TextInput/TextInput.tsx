@@ -4,7 +4,7 @@ import {TextInputProps, TextInputState} from './types';
 import {classes} from '../../util/helpers';
 import './TextInput.css';
 
-export const TextInput = ({onChange, className, children}: TextInputProps) => {
+export const TextInput = ({onChange, className, maxLength, children}: TextInputProps) => {
   const [{text, isCandidate}, updateText] = useState<TextInputState>({
     text: '',
     isCandidate: false
@@ -28,6 +28,7 @@ export const TextInput = ({onChange, className, children}: TextInputProps) => {
            value={text}
            onChange={updateValue}
            onFocus={setCandidate}
-           onBlur={checkCandidate}/>
+           onBlur={checkCandidate}
+           maxLength={maxLength}/>
   </article>;
 };

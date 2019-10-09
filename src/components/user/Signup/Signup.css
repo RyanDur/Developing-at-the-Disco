@@ -1,13 +1,12 @@
 #create-user {
-    position: relative;
     display: flex;
     width: 32rem;
     flex-direction: column;
 
     & .submit {
-        width: 100%;
         position: relative;
         bottom: 0;
+        width: 100%;
         transition: bottom 300ms, z-index 0ms 300ms;
 
         &:disabled {
