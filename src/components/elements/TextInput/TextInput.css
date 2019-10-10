@@ -11,12 +11,10 @@
         width: 20.5%;
         color: rgb(102, 102, 102);
         background-image: linear-gradient(
-                transparent,
-                transparent,
-                rgb(255, 255, 255) 50%,
-                rgb(255, 255, 255) 60%,
-                transparent 65%,
-                transparent 65%
+                transparent 50%,
+                white 50%,
+                white 58%,
+                transparent 60%
         );
         transition: top 300ms,
         font-size 300ms,
