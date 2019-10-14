@@ -1,32 +1,33 @@
 import * as React from 'react';
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import {TextInputProps, TextInputState} from './types';
-import {classes} from '../../util/helpers';
+import {classes, has} from '../../util/helpers';
+import {List} from '../List';
 import './TextInput.css';
 
-export const TextInput = ({onChange, className, maxLength, children}: TextInputProps) => {
+export const TextInput = ({onChange, className, maxLength, placeHolder, errors}: TextInputProps) => {
   const [{text, isCandidate}, updateText] = useState<TextInputState>({
     text: '',
     isCandidate: false
   });
 
-  const updateValue = ({target}: ChangeEvent<HTMLInputElement>) => {
-    onChange(target.value);
+  useEffect(() => onChange(text));
+
+  const updateValue = ({target}: ChangeEvent<HTMLInputElement>) =>
     updateText({isCandidate, text: target.value});
-  };
 
   const setCandidate = () => updateText({text, isCandidate: true});
 
   const checkCandidate = () => updateText({text, isCandidate: !!text});
 
-  return <article className='text-input'>
+  return <article className={classes('text-input', className)}>
     <label className={classes('text-label', (isCandidate && 'candidate'))}
            htmlFor={`create-${className}`}>
-      {children}
+      {placeHolder}
     </label>
     <input type='text'
            id={`create-${className}`}
-           className={classes('text', className)}
+           className='text'
            value={text}
            onChange={updateValue}
            onFocus={setCandidate}
@@ -36,5 +37,6 @@ export const TextInput = ({onChange, className, maxLength, children}: TextInputP
            htmlFor={`create-${className}`}>
       {`${text.length}/${maxLength}`}
     </label>
+    {has(errors) && <List className={'errors'} items={errors}/>}
   </article>;
 };

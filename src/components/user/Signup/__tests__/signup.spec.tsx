@@ -2,25 +2,29 @@ import * as React from 'react';
 import {Signup} from '../Signup';
 import {render, TestRender} from '../../../../__tests__/support/testApi';
 
+jest.mock('../../../../config', () => ({
+  maxUsernameLength: 30
+}));
+
 describe('Signing up', () => {
   const props = {createUser: jest.fn()};
   const mockPreventDefault = jest.fn();
   const name = 'YaY';
   let subject: TestRender = null;
 
-  beforeEach(async () => {
-    subject = await render(<Signup {...props}/>);
-  });
-
   describe('when name is empty', () => {
+    beforeEach(async () => {
+      subject = await render(<Signup {...props}/>);
+    });
+
     it('should not be able to submit the candidate', () => {
       expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeTruthy();
     });
 
     describe('given input', () => {
       beforeEach(() => {
-        subject.change(subject.getBy('.name'), {target: {value: name}});
-        subject.focus(subject.getBy('.name'));
+        subject.change(subject.getBy('.username input'), {target: {value: name}});
+        subject.focus(subject.getBy('.username input'));
       });
 
       it('should not be able to submit the candidate', () => {
@@ -45,12 +49,32 @@ describe('Signing up', () => {
         });
 
         it('should be disabled if input is empty', () => {
-          subject.change(subject.getBy('.name'), {target: {value: ''}});
+          subject.change(subject.getBy('.username input'), {target: {value: ''}});
+          subject.blur(subject.getBy('.username input'));
           subject.submit(subject.getBy('form'));
 
           expect(props.createUser).not.toHaveBeenCalled();
         });
       });
+    });
+  });
+
+  describe('when name already exists', () => {
+    const message = 'some error message';
+    const errors = [message];
+
+    beforeEach(async () => {
+      subject = await render(<Signup userNameErrors={errors} {...props}/>);
+      subject.change(subject.getBy('.username input'), {target: {value: name}});
+      subject.focus(subject.getBy('.username input'));
+    });
+
+    it('should not be able to submit', () => {
+      expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeTruthy();
+    });
+
+    it('should display the errors', () => {
+      expect(subject.getBy('.username').innerHTML).toContain(message);
     });
   });
 });

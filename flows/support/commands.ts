@@ -21,7 +21,7 @@ Cypress.Commands.add('signup', ({name}: NewUser, id = 1) => {
       .returns(deferred.promise);
     }
   })
-  .get('#create-user .name')
+  .get('#create-user .username input')
   .type(name)
   .get('form')
   .submit();

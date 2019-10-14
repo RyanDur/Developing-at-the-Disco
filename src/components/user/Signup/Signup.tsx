@@ -3,9 +3,10 @@ import {FormEvent, useState} from 'react';
 import {SignupProps} from './types';
 import {maxUsernameLength} from '../../../config';
 import {TextInput} from '../../elements';
+import {empty, has} from '../../util/helpers';
 import './Signup.css';
 
-export const Signup = ({createUser}: SignupProps) => {
+export const Signup = ({createUser, userNameErrors}: SignupProps) => {
   const [name, updateName] = useState('');
 
   const createNewUser = (event: FormEvent) => {
@@ -14,10 +15,14 @@ export const Signup = ({createUser}: SignupProps) => {
   };
 
   return <form id='create-user' onSubmit={createNewUser}>
-    <TextInput className='name' onChange={updateName} maxLength={maxUsernameLength}>
-      Username
-    </TextInput>
-    <button type='submit' className='submit primary' disabled={!name}>
+    <TextInput className='username'
+               placeHolder='Username'
+               onChange={updateName}
+               errors={userNameErrors}
+               maxLength={maxUsernameLength}/>
+    <button type='submit'
+            className='submit primary'
+            disabled={empty(name) || has(userNameErrors)}>
       Enter
     </button>
   </form>;

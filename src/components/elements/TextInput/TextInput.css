@@ -12,8 +12,8 @@
         color: rgb(102, 102, 102);
         background-image: linear-gradient(
                 transparent 50%,
-                white 50%,
-                white 58%,
+                white 45%,
+                white 65%,
                 transparent 60%
         );
         transition: top 300ms,

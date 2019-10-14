@@ -7,3 +7,4 @@ export {Reducers} from './Reducers';
 export {State} from './State';
 export {Store} from './Store';
 export {ReducerType} from './ReducerType';
+export {ErrorMessage} from './ErrorMessage';
