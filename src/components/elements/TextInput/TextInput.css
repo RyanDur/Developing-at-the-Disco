@@ -3,7 +3,7 @@
     width: 100%;
     margin: 0 0 1.2rem;
 
-    & .text-label {
+    & .title {
         position: absolute;
         z-index: 2;
         top: 1.2rem;
@@ -21,15 +21,15 @@
         line-height 300ms,
         color 300ms,
         width 300ms;
+    }
 
-        &.candidate {
-            border-radius: 30%;
-            top: -0.6rem;
-            font-size: 1.2rem;
-            line-height: 1.2rem;
-            width: 5.6rem;
-            color: rgb(0, 124, 135);
-        }
+    &.candidate .title {
+        border-radius: 30%;
+        top: -0.6rem;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+        width: 5.6rem;
+        color: rgb(0, 124, 135);
     }
 
     & .text {
@@ -43,12 +43,15 @@
 
         &:focus {
             outline: none;
-            border-radius: 0.4rem;
-            border: 0.1rem solid rgb(0, 124, 135);
         }
     }
 
-    & .text-length {
+    &.candidate .text {
+        border-radius: 0.4rem;
+        border: 0.1rem solid rgb(0, 124, 135);
+    }
+
+    & .max-length {
         position: absolute;
         line-height: 1.4rem;
         font-size: 1rem;
@@ -58,9 +61,9 @@
         right: 0.5rem;
         opacity: 0;
         transition: opacity 300ms;
+    }
 
-        &.candidate {
-            opacity: 1;
-        }
+    &.candidate .max-length {
+        opacity: 1;
     }
 }

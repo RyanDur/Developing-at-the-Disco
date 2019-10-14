@@ -20,11 +20,9 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
 
   const checkCandidate = () => updateText({text, isCandidate: has(text)});
 
-  return <article className={classes('text-input', className)}>
-    <label className={classes('text-label', (isCandidate && 'candidate'))}
-           htmlFor={`create-${className}`}>
-      {placeHolder}
-    </label>
+  return <article className={classes('text-input', (isCandidate && 'candidate'), className)}>
+    <label className='title'
+           htmlFor={`create-${className}`}>{placeHolder}</label>
     <input type='text'
            id={`create-${className}`}
            className='text'
@@ -33,10 +31,8 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
            onFocus={setCandidate}
            onBlur={checkCandidate}
            maxLength={maxLength}/>
-    <label className={classes('text-length', (isCandidate && 'candidate'))}
-           htmlFor={`create-${className}`}>
-      {`${text.length}/${maxLength}`}
-    </label>
-    {has(errors) && <MessageList className={'errors'} messages={errors}/>}
+    <label className='max-length'
+           htmlFor={`create-${className}`}>{`${text.length}/${maxLength}`}</label>
+    {has(errors) && <MessageList className='errors' messages={errors}/>}
   </article>;
 };
