@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ChangeEvent, useEffect, useState} from 'react';
 import {TextInputProps, TextInputState} from './types';
 import {classes, has} from '../../util/helpers';
-import {List} from '../List';
+import {MessageList} from '../List';
 import './TextInput.css';
 
 export const TextInput = ({onChange, className, maxLength, placeHolder, errors}: TextInputProps) => {
@@ -37,6 +37,6 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
            htmlFor={`create-${className}`}>
       {`${text.length}/${maxLength}`}
     </label>
-    {has(errors) && <List className={'errors'} items={errors}/>}
+    {has(errors) && <MessageList className={'errors'} messages={errors}/>}
   </article>;
 };
