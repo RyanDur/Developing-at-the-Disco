@@ -18,7 +18,7 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
 
   const setCandidate = () => updateText({text, isCandidate: true});
 
-  const checkCandidate = () => updateText({text, isCandidate: !!text});
+  const checkCandidate = () => updateText({text, isCandidate: has(text)});
 
   return <article className={classes('text-input', className)}>
     <label className={classes('text-label', (isCandidate && 'candidate'))}
