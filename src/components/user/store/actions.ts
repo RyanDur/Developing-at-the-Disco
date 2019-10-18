@@ -1,6 +1,4 @@
-import {AllAction, CreateAction, CurrentAction, UpdateAction, UserActions, CurrentUser} from './types';
-
-const all = (): AllAction => ({type: UserActions.ALL});
+import {CreateAction, CurrentAction, CurrentUser, UpdateAction, UserActions} from './types';
 
 const create = (name: string): CreateAction => ({type: UserActions.CREATE, name});
 
@@ -9,7 +7,6 @@ const current = (user: CurrentUser): CurrentAction => ({type: UserActions.CURREN
 const update = (user: CurrentUser): UpdateAction => ({type: UserActions.UPDATE, user});
 
 export {
-  all,
   create,
   update,
   current

@@ -4,7 +4,7 @@ export const initialState: UserState = {
   others: [] as OtherUser[]
 };
 
-export default (state: UserState = initialState, action: UserAction): UserState => {
+export default (state = initialState, action: UserAction): UserState => {
   switch (action.type) {
   case UserActions.CURRENT:
     return {...state, current: action.user};

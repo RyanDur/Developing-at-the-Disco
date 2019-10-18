@@ -1,11 +1,19 @@
-export {UserState} from './UserState';
-export {UserComponentState} from './UserComponentState';
-export {NewUser} from './NewUser';
-export {CurrentUser} from './CurrentUser';
-export {OtherUser} from './OtherUser';
-export {UserAction} from './UserAction';
-export {UserActions} from './UserActions';
-export {UpdateAction} from './UpdateAction';
-export {CreateAction} from './CreateAction';
-export {AllAction} from './AllAction';
-export {CurrentAction} from './CurrentAction';
+import {UserState} from './state/UserState';
+import {UserComponentState} from './state';
+import {CurrentUser, NewUser, OtherUser} from './user';
+import {CreateAction, CurrentAction, UpdateAction, UserActions} from './actions';
+
+type UserAction = CreateAction | UpdateAction | CurrentAction;
+
+export {
+  UserState,
+  UserComponentState,
+  NewUser,
+  CurrentUser,
+  OtherUser,
+  UserAction,
+  UserActions,
+  UpdateAction,
+  CreateAction,
+  CurrentAction
+};

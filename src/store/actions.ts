@@ -1,7 +1,7 @@
 import {Action} from './types';
 
 export enum StartUp {
-  init = '@@init@@'
+  init = '@@__init__@@'
 }
 
 interface StartUpAction extends Action<StartUp.init> {}

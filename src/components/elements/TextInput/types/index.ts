@@ -1,5 +1,4 @@
 import {ErrorMessage} from '../../../../store/types';
-import {ReactNode} from 'react';
 
 export interface TextInputProps {
   onChange: (text: string) => void;

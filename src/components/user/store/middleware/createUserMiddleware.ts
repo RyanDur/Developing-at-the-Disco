@@ -1,13 +1,27 @@
 import {Dispatch, Middleware} from '../../../../store/types';
-import {current} from '../actions';
 import {CurrentUser, UserAction, UserActions, UserState} from '../types';
 import {Create} from '../data';
+import {current} from '../actions';
+import {SignupErrors, SignupState} from '../../Signup/types';
+import {invalidSignup, SignupAction} from '../../Signup/actions';
+import {Handler} from '../data/create';
+import {Either, isRight} from 'fp-ts/lib/Either';
+import {Errors} from 'io-ts';
+import {logInvalid} from '../../../util/loggers/logInvalid';
 
-const onSuccess = (next: Dispatch) => (user: CurrentUser) => next(current(user));
+const handle = (next: Dispatch): Handler => ({
+  success: (user: Either<Errors, CurrentUser>) =>
+    logInvalid(user) && isRight(user) && next(current(user.right)),
+  clientError: (errors: Either<Errors, SignupErrors>) =>
+    logInvalid(errors) && isRight(errors) && next(invalidSignup(errors.right))
+});
 
-export const createUserMiddleware = (create: Create): Middleware<UserState, UserAction> =>
+type UserMiddlewareState = UserState | SignupState;
+type UserMiddlewareAction = UserAction | SignupAction;
+
+export const createUserMiddleware = (create: Create): Middleware<UserMiddlewareState, UserMiddlewareAction> =>
   () => (next) => (action) => {
     if (UserActions.CREATE === action.type) {
-      create({name: action.name}, onSuccess(next));
+      create({name: action.name}, handle(next));
     }
   };

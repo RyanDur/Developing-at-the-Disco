@@ -4,27 +4,47 @@ import {NewUser} from '../../src/components/user/store/types';
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
-      signup(name: NewUser, id?: Number): Chainable<Subject>;
+      signup(name: NewUser, id?: string): Chainable<Subject>;
+
+      signupClientError(name: NewUser, id?: string): Chainable<Subject>;
     }
   }
 }
 
-Cypress.Commands.add('signup', ({name}: NewUser, id = 1) => {
+Cypress.Commands.add('signup', ({name}: NewUser, id = '1') => {
   deferred.resolve({
     json: () => ({name, id}),
-    ok: true
+    status: 201
   });
   return cy.visit('/', {
     onBeforeLoad(win) {
       cy.stub(win, 'fetch')
-      .withArgs('http://localhost:3001/users')
-      .returns(deferred.promise);
+        .withArgs('http://localhost:3001/users')
+        .returns(deferred.promise);
     }
   })
-  .get('#create-user .username input')
-  .type(name)
-  .get('form')
-  .submit();
+    .get('#create-user .username input')
+    .type(name)
+    .get('form')
+    .submit();
+});
+
+Cypress.Commands.add('signupClientError', ({name}: NewUser, ...errors: string[]) => {
+  deferred.resolve({
+    json: () => ({username: name, errors}),
+    status: 400
+  });
+  return cy.visit('/', {
+    onBeforeLoad(win) {
+      cy.stub(win, 'fetch')
+        .withArgs('http://localhost:3001/users')
+        .returns(deferred.promise);
+    }
+  })
+    .get('#create-user .username input')
+    .type(name)
+    .get('form')
+    .submit();
 });
 
 // ***********************************************

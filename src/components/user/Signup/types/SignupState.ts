@@ -1,4 +1,3 @@
-export interface SignupState {
-  name: string;
-  isCandidate: boolean;
-}
+import {SignupErrors} from './SignupErrors';
+
+export type SignupState = Partial<SignupErrors>;

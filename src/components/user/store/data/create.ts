@@ -1,8 +1,16 @@
 import {endpoint} from '../../../../config';
+import {Errors, Type} from 'io-ts';
+import {Either} from 'fp-ts/lib/Either';
+import {SignupValidationGuard} from '../../Signup/types/UsernameValidation';
+import {CurrentUserGuard} from '../types/user/CurrentUser';
 
-type SuccessHandler<T> = (message: T) => void;
+export type Handle<T = any> = (message: T) => void;
+type SuccessHandler<T> = (body: Either<Errors, T>) => void;
+type ClientErrorHandler<T> = (body: Either<Errors, T>) => void;
 
 type Method = RequestInit;
+
+const {host, users} = endpoint;
 
 const post = (message: any): RequestInit => ({
   method: 'POST',
@@ -14,15 +22,41 @@ const post = (message: any): RequestInit => ({
   }
 });
 
-const http = <T>(method: Method, url: string, onSuccess: SuccessHandler<T>): void =>
-  void fetch(url, method)
+const http = (method: Method, url: string, {
+  clientError,
+  success,
+  successGuard: {decode: toSuccess},
+  clientErrorGuard: {decode: toClientError}
+}: Handler & ResponseTypeGuards): void => void fetch(`${host + url}`, method)
   .then(async (response: Response) => {
-    onSuccess(await response.json());
+    const body = await response.json();
+    switch (response.status) {
+    case 201:
+      return success(toSuccess(body));
+    case 400:
+      return clientError(toClientError(body));
+    default:
+      console.warn('response:', body);
+    }
   }).catch((er) => {
-    console.error('error: ' + er);
+    console.error('error:', er);
   });
 
-export type Create = <T>(message: any, onSuccess: SuccessHandler<T>) => void;
+export interface Handler<T = any> {
+  success: SuccessHandler<T>;
+  clientError: ClientErrorHandler<any>;
+}
 
-export const createUser: Create = (user, onSuccess) =>
-  http(post(user), endpoint.users, onSuccess);
+interface ResponseTypeGuards {
+  successGuard: Type<any>;
+  clientErrorGuard: Type<any>;
+}
+
+export type Create = (message: any, handle: Handler) => void;
+
+export const createUser: Create = (user, handle) =>
+  http(post(user), users, {
+    ...handle,
+    successGuard: CurrentUserGuard,
+    clientErrorGuard: SignupValidationGuard
+  });

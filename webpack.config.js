@@ -73,7 +73,8 @@ module.exports = {
     new FriendlyErrorsWebpackPlugin(),
     new DashboardPlugin(),
     new EnvironmentPlugin({
-      USERS_ENDPOINT: 'http://localhost:3001/users',
+      USERS_ENDPOINT: '/users',
+      HOST: 'http://localhost:3001',
       MAX_USERNAME_LENGTH: 256
     })
   ],

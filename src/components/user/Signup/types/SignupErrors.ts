@@ -1,5 +1,3 @@
-import {ErrorMessage} from '../../../../store/types';
+import {UsernameValidation} from './UsernameValidation';
 
-export interface SignupErrors {
-  username?: ErrorMessage[];
-}
+export type SignupErrors = UsernameValidation;
