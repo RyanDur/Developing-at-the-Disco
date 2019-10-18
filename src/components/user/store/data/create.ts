@@ -30,12 +30,11 @@ const http = (method: Method, url: string, {
 }: Handler & ResponseTypeGuards): void => void fetch(`${host + url}`, method)
   .then(async (response: Response) => {
     const body = await response.json();
-    switch (response.status) {
-    case 201:
-      return success(toSuccess(body));
-    case 400:
-      return clientError(toClientError(body));
-    default:
+    if (response.status === 201) {
+      success(toSuccess(body));
+    } else if (response.status === 400) {
+      clientError(toClientError(body));
+    } else {
       console.warn('response:', body);
     }
   }).catch((er) => {
