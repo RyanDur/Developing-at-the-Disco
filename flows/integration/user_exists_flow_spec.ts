@@ -24,7 +24,7 @@ describe('signing up pre-existing user', () => {
       .type(user.name)
       .get('form')
       .submit();
-    signup.get('#current-user .name').should('not.contain', user.name);
+    signup.get('#current-user .name').should('not.exist');
     signup.get('.text-input.username').should('have.class', 'invalid');
   });
 });
