@@ -23,17 +23,3 @@ jobs:
 
       - name: test
         run: yarn test:ci
-
-      - name: build
-        run: yarn build
-
-      - name: push to cf
-        uses: "louisthomas/cloud-foundry-cli-action@master"
-        env:
-          CF_API_ENDPOINT: api.run.pcfone.io
-          ORG: pivot-rdurling
-          SPACE: playground
-          USERNAME: rdurling@pivotal.io
-          APP_NAME: Developing-at-the-Disco
-          ARTIFACT_PATH: dist
-          PASSWORD: ${{ secrets.CF_PASSWORD }}
