@@ -61,7 +61,7 @@ describe('Signing up', () => {
 
   describe('when name already exists', () => {
     const message = 'some error message';
-    const errors = [message];
+    const errors = {value: 'some value', validations: [message]};
 
     beforeEach(async () => {
       subject = await render(<Signup userNameErrors={errors} {...props}/>);

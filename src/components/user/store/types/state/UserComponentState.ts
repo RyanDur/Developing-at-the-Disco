@@ -1,5 +1,7 @@
-import {UserState} from './UserState';
+import {UserStoreState} from './UserStoreState';
+import {SignupState} from '../../../Signup/types';
 
 export interface UserComponentState {
-  user: UserState;
+  users: UserStoreState;
+  signup: SignupState;
 }

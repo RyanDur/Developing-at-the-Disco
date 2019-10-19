@@ -100,5 +100,9 @@ describe('the text input', () => {
       expect(errors).not.toBeNull();
       expect(errors.innerHTML).toContain(message);
     });
+
+    it('should be marked as invalid', () => {
+      expect(textInput.getBy('.text-input').classList).toContain('invalid');
+    });
   });
 });

@@ -6,7 +6,7 @@ import {TextInput} from '../../elements';
 import {empty, has} from '../../util/helpers';
 import './Signup.css';
 
-export const Signup = ({createUser, userNameErrors}: SignupProps) => {
+export const Signup = ({createUser, userNameErrors = {}}: SignupProps) => {
   const [name, updateName] = useState('');
 
   const createNewUser = (event: FormEvent) => {
@@ -18,7 +18,7 @@ export const Signup = ({createUser, userNameErrors}: SignupProps) => {
     <TextInput className='username'
                placeHolder='Username'
                onChange={updateName}
-               errors={userNameErrors}
+               errors={userNameErrors.validations}
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'

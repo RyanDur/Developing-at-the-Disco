@@ -1,17 +1,16 @@
-import {UserState} from './state/UserState';
-import {UserComponentState} from './state';
+import {UserComponentState, UserStoreState} from './state';
 import {CurrentUser, NewUser, OtherUser} from './user';
 import {CreateAction, CurrentAction, UpdateAction, UserActions} from './actions';
 
-type UserAction = CreateAction | UpdateAction | CurrentAction;
+type UserStoreAction = CreateAction | UpdateAction | CurrentAction;
 
 export {
-  UserState,
+  UserStoreState,
   UserComponentState,
   NewUser,
   CurrentUser,
   OtherUser,
-  UserAction,
+  UserStoreAction,
   UserActions,
   UpdateAction,
   CreateAction,

@@ -5,12 +5,12 @@ import {createUserMiddleware} from '../middleware';
 import {Store} from '../../../../store/types';
 import {Handler} from '../data/create';
 import {CurrentUserGuard} from '../types/user/CurrentUser';
-import {NewUser, UserAction, UserState} from '../types';
+import {NewUser, UserStoreAction, UserStoreState} from '../types';
 
 describe('user store:', () => {
   const mockCreateUser = jest.fn();
   const username = 'Ryan';
-  let store: Store<UserState, UserAction>;
+  let store: Store<UserStoreState, UserStoreAction>;
 
   beforeEach(() => {
     store = createTestStore(reducer, [createUserMiddleware(mockCreateUser)]);

@@ -1,6 +1,6 @@
-import {ErrorMessage} from '../../../../store/types';
+import {Validation} from './UsernameValidation';
 
 export interface SignupProps {
   createUser: (name: string) => void;
-  userNameErrors?: ErrorMessage[];
+  userNameErrors?: Partial<Validation>;
 }

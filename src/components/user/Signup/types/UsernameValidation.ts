@@ -10,3 +10,4 @@ export const SignupValidationGuard = t.type({
 });
 
 export type UsernameValidation = t.TypeOf<typeof SignupValidationGuard>;
+export type Validation = t.TypeOf<typeof ValidationType>;

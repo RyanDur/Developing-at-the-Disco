@@ -20,7 +20,12 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
 
   const checkCandidate = () => updateText({text, isCandidate: has(text)});
 
-  return <article className={classes('text-input', (isCandidate && 'candidate'), className)}>
+  return <article className={classes(
+    'text-input',
+    (isCandidate && 'candidate'),
+    className,
+    (errors && 'invalid')
+  )}>
     <label className='title'
            htmlFor={`create-${className}`}>{placeHolder}</label>
     <input type='text'

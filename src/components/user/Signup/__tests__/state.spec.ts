@@ -1,27 +1,28 @@
 import {Store} from '../../../../store/types';
-import {NewUser, UserAction} from '../../store/types';
+import {NewUser, UserStoreAction} from '../../store/types';
 import {createTestStore} from '../../../../__tests__/support/createTestStore';
-import reducer, {initialState} from '../reducer';
+import reducer from '../reducer';
 import {createUserMiddleware} from '../../store/middleware';
 import {create} from '../../store/actions';
 import {SignupErrors, SignupState} from '../types';
 import {Handler} from '../../store/data/create';
 import {SignupValidationGuard} from '../types/UsernameValidation';
+import {selectUsernameErrors} from '../selectors';
 
 type CreateSignupErrors = (name: string) => SignupErrors;
 
 describe('signing up validations', () => {
   const mockCreateUser = jest.fn();
   const username: string = 'Ryan';
-  let store: Store<SignupState, UserAction>;
+  let store: Store<SignupState, UserStoreAction>;
 
   beforeEach(() => {
     console.warn = jest.fn();
     store = createTestStore(reducer, [createUserMiddleware(mockCreateUser)]);
   });
 
-  it('should be in its initial state', () => {
-    expect(store.getState()).toEqual(initialState);
+  it('should have no errors', () => {
+    expect(selectUsernameErrors(store.getState())).toBeUndefined();
   });
 
   describe('the username', () => {
@@ -37,7 +38,7 @@ describe('signing up validations', () => {
         handle.clientError(SignupValidationGuard.decode(anError(name)));
       });
       store.dispatch(create(username));
-      expect(store.getState()).toEqual(anError(username));
+      expect(selectUsernameErrors(store.getState())).toEqual(anError(username).username);
     });
   });
 
@@ -49,8 +50,8 @@ describe('signing up validations', () => {
       store.dispatch(create(username));
     });
 
-    it('should be validated', () => {
-      expect(store.getState()).toEqual(initialState);
+    it('should have no errors', () => {
+      expect(selectUsernameErrors(store.getState())).toBeUndefined();
     });
 
     it('should log the invalid error', () => {

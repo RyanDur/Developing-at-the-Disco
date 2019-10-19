@@ -1,5 +1,5 @@
 import {Dispatch, Middleware} from '../../../../store/types';
-import {CurrentUser, UserAction, UserActions, UserState} from '../types';
+import {CurrentUser, UserStoreAction, UserActions, UserStoreState} from '../types';
 import {Create} from '../data';
 import {current} from '../actions';
 import {SignupErrors, SignupState} from '../../Signup/types';
@@ -16,8 +16,8 @@ const handle = (next: Dispatch): Handler => ({
     logInvalid(errors) && isRight(errors) && next(invalidSignup(errors.right))
 });
 
-type UserMiddlewareState = UserState | SignupState;
-type UserMiddlewareAction = UserAction | SignupAction;
+type UserMiddlewareState = UserStoreState | SignupState;
+type UserMiddlewareAction = UserStoreAction | SignupAction;
 
 export const createUserMiddleware = (create: Create): Middleware<UserMiddlewareState, UserMiddlewareAction> =>
   () => (next) => (action) => {
