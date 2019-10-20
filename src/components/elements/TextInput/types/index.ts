@@ -1,11 +1,11 @@
-import {ErrorMessage} from '../../../../store/types';
+import {Validation} from '../../../user/Signup/types';
 
 export interface TextInputProps {
   onChange: (text: string) => void;
   className: string;
   maxLength: number;
   placeHolder: string;
-  errors?: ErrorMessage[];
+  errors?: Partial<Validation>;
 }
 
 export interface TextInputState {

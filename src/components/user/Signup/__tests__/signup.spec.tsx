@@ -61,7 +61,7 @@ describe('Signing up', () => {
 
   describe('when name already exists', () => {
     const message = 'some error message';
-    const errors = {value: 'some value', validations: [message]};
+    const errors = {value: name, validations: [message]};
 
     beforeEach(async () => {
       subject = await render(<Signup userNameErrors={errors} {...props}/>);
@@ -75,6 +75,14 @@ describe('Signing up', () => {
 
     it('should display the errors', () => {
       expect(subject.getBy('.username').innerHTML).toContain(message);
+    });
+
+    describe('change the name', () => {
+      it('should not be able to submit', () => {
+        subject.change(subject.getBy('.username input'), {target: {value: 'some name'}});
+        subject.focus(subject.getBy('.username input'));
+        expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeFalsy();
+      });
     });
   });
 });

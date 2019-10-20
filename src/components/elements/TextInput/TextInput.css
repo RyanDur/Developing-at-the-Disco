@@ -66,4 +66,8 @@
     &.candidate .max-length {
         opacity: 1;
     }
+
+    & .errors {
+        position: absolute;
+    }
 }

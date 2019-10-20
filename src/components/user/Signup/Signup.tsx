@@ -18,11 +18,11 @@ export const Signup = ({createUser, userNameErrors = {}}: SignupProps) => {
     <TextInput className='username'
                placeHolder='Username'
                onChange={updateName}
-               errors={userNameErrors.validations}
+               errors={userNameErrors}
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'
-            disabled={empty(name) || has(userNameErrors)}>
+            disabled={empty(name) || name === userNameErrors.value}>
       Enter
     </button>
   </form>;

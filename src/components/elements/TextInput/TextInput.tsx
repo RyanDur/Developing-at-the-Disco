@@ -5,7 +5,7 @@ import {classes, has} from '../../util/helpers';
 import {MessageList} from '../List';
 import './TextInput.css';
 
-export const TextInput = ({onChange, className, maxLength, placeHolder, errors}: TextInputProps) => {
+export const TextInput = ({onChange, className, maxLength, placeHolder, errors = {}}: TextInputProps) => {
   const [{text, isCandidate}, updateText] = useState<TextInputState>({
     text: '',
     isCandidate: false
@@ -24,7 +24,7 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
     'text-input',
     (isCandidate && 'candidate'),
     className,
-    (errors && 'invalid')
+    (errors.value === text && 'invalid')
   )}>
     <label className='title'
            htmlFor={`create-${className}`}>{placeHolder}</label>
@@ -38,6 +38,6 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors}:
            maxLength={maxLength}/>
     <label className='max-length'
            htmlFor={`create-${className}`}>{`${text.length}/${maxLength}`}</label>
-    {has(errors) && <MessageList className='errors' messages={errors}/>}
+    {errors.value === text && <MessageList className='errors' messages={errors.validations}/>}
   </article>;
 };

@@ -88,21 +88,38 @@ describe('the text input', () => {
   });
 
   describe('with error', () => {
-    const message = 'some error';
-    const props = {errors: [message], onChange: jest.fn(), className: 'Some-name', maxLength: 10, placeHolder: title};
+    const errors = {value: 'some error', validations: ['some validation']};
+
+    const props = {errors, onChange: jest.fn(), className: 'Some-name', maxLength: 10, placeHolder: title};
 
     beforeEach(async () => {
       textInput = await createTextInput(props);
+      textInput.change(textInput.getBy('.text'), {target: {value: errors.value}});
     });
 
     it('should display the errors', () => {
-      const errors = textInput.getBy('.errors');
-      expect(errors).not.toBeNull();
-      expect(errors.innerHTML).toContain(message);
+      const errorsElement = textInput.getBy('.errors');
+      expect(errorsElement).not.toBeNull();
+      expect(errorsElement.innerHTML).toContain(errors.validations[0]);
     });
 
     it('should be marked as invalid', () => {
       expect(textInput.getBy('.text-input').classList).toContain('invalid');
+    });
+
+    describe('fixing the input', () => {
+      beforeEach(() => {
+        textInput.change(textInput.getBy('.text'), {target: {value: 'different'}});
+      });
+
+      it('should unmark the input as invalid', () => {
+        expect(textInput.getBy('.text-input').classList).not.toContain('invalid');
+      });
+
+      it('should not display the errors', () => {
+        const errorsElement = textInput.getBy('.errors');
+        expect(errorsElement).toBeNull();
+      });
     });
   });
 });
