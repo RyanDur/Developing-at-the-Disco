@@ -3,7 +3,7 @@ import {FormEvent, useState} from 'react';
 import {SignupProps} from './types';
 import {maxUsernameLength} from '../../../config';
 import {TextInput} from '../../elements';
-import {empty, has} from '../../util/helpers';
+import {empty} from '../../util/helpers';
 import './Signup.css';
 
 export const Signup = ({createUser, userNameErrors = {}}: SignupProps) => {
