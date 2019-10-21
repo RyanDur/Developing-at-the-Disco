@@ -15,6 +15,7 @@
 
 // Import commands.ts using ES2015 syntax:
 import './commands';
+import {clientError} from './fake/clientError';
+import {success} from './fake/success';
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+export {clientError, success};

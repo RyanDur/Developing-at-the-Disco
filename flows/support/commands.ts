@@ -1,12 +1,20 @@
-import deferred from './fake/deferred';
 import {NewUser} from '../../src/components/user/store/types';
 
-// declare global {
-//   namespace Cypress {
-//     interface Chainable<Subject> {
-//     }
-//   }
-// }
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject> {
+      signup: (user: NewUser, config: Object) => Chainable<Subject>;
+    }
+  }
+}
+
+Cypress.Commands.add('signup', (user, config) => {
+  return cy.visit('/', config)
+    .get('#create-user .username input')
+    .type(user.name)
+    .get('form')
+    .submit();
+});
 
 // ***********************************************
 // This example commands.js shows you how to

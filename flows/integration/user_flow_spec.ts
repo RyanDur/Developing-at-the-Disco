@@ -1,32 +1,21 @@
 import {NewUser} from '../../src/components/user/store/types';
-import deferred from '../support/fake/deferred';
+import {success} from '../support';
 
 describe('a user', () => {
   describe('signing up', () => {
-    it('should have to create a user', () => {
-      const submit = cy.visit('/', success)
-        .get('#create-user .username input')
-        .type(user.name)
-        .get('form')
-        .submit();
-
-      submit.get('#current-user .name').should('contain', user.name);
+    it('should show the new user', () => {
+      cy.signup(user, success(user, cy))
+      .get('#current-user .name').should('contain', user.name);
     });
+
+    it('should show the other users', () => {
+      cy.signup(user, success(user, cy))
+        .get('.other-users .user').should('have.length', 2);
+    });
+
   });
 });
 
 const user: NewUser = {
   name: 'Benedict Cumberbatch'
-};
-
-const success = {
-  onBeforeLoad(win: Window) {
-    deferred.resolve({
-      json: () => ({name: user.name, id: 'id'}),
-      status: 201
-    });
-    cy.stub(win, 'fetch')
-      .withArgs('http://localhost:3001/users')
-      .returns(deferred.promise);
-  }
 };
