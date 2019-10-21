@@ -82,13 +82,22 @@
     }
 
     & .errors {
-        position: absolute;
+        position: relative;
+        height: 0;
         color: rgb(158, 0, 36);
+        padding: 0 1.2rem;
+        font-size: 1.2rem;
+        line-height: 1.4rem;
+        z-index: -1;
+        animation: 500ms ease-in 0ms 1 slideInFromTop;
+    }
+}
 
-        & li {
-            padding: 0 1.2rem;
-            font-size: 1.2rem;
-            line-height: 1.4rem;
-        }
+@keyframes slideInFromTop {
+    0% {
+        bottom: 3rem;
+    }
+    100% {
+        bottom: 0;
     }
 }
