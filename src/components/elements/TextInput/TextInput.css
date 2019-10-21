@@ -2,10 +2,11 @@
     position: relative;
     width: 100%;
     margin: 0 0 1.2rem;
+    z-index: 1;
 
     & .title {
         position: absolute;
-        z-index: 2;
+        z-index: 1;
         top: 1.2rem;
         margin: 0 1.2rem;
         width: 20.5%;
@@ -23,6 +24,21 @@
         width 300ms;
     }
 
+    &.candidate.invalid {
+        & .text {
+            color: rgb(158, 0, 36);
+            border: 0.1rem solid rgb(158, 0, 36);
+        }
+
+        & .title {
+            color: rgb(158, 0, 36);
+        }
+
+        & .max-length {
+            color: rgb(158, 0, 36);
+        }
+    }
+
     &.candidate .title {
         border-radius: 30%;
         top: -0.6rem;
@@ -38,7 +54,6 @@
         padding: 0 1.2rem;
         border-radius: 0.4rem;
         position: relative;
-        z-index: 1;
         border: 0.1rem solid rgb(153, 153, 153);
 
         &:focus {
@@ -56,7 +71,6 @@
         line-height: 1.4rem;
         font-size: 1rem;
         color: rgb(102, 102, 102);
-        z-index: 1;
         bottom: 0.1rem;
         right: 0.5rem;
         opacity: 0;
@@ -69,5 +83,6 @@
 
     & .errors {
         position: absolute;
+        color: rgb(158, 0, 36);;
     }
 }
