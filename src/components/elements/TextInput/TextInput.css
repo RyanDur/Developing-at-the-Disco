@@ -83,6 +83,12 @@
 
     & .errors {
         position: absolute;
-        color: rgb(158, 0, 36);;
+        color: rgb(158, 0, 36);
+
+        & li {
+            padding: 0 1.2rem;
+            font-size: 1.2rem;
+            line-height: 1.4rem;
+        }
     }
 }

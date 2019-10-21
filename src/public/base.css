@@ -7,12 +7,12 @@ html {
     & body,
     & #root {
         min-height: 100vh;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
     }
 
     & * {
         font-family: "Roboto", sans-serif;
-        font-size: 1.4rem;
-        line-height: 1.6rem;
     }
 
     & *,
