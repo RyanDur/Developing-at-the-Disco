@@ -1,27 +1,24 @@
 import {Dispatch, Middleware} from '../../../../store/types';
-import {CurrentUser, UserStoreAction, UserActions, UserStoreState} from '../types';
-import {Create} from '../data';
+import {CurrentUser, UserActions} from '../types';
 import {current} from '../actions';
-import {SignupErrors, SignupState} from '../../Signup/types';
-import {invalidSignup, SignupAction} from '../../Signup/actions';
-import {Handler} from '../data/create';
+import {SignupErrors} from '../../Signup/types';
+import {invalidSignup} from '../../Signup/actions';
 import {Either, isRight} from 'fp-ts/lib/Either';
 import {Errors} from 'io-ts';
-import {logInvalid} from '../../../util/loggers/logInvalid';
+import {UserMiddlewareAction, UserMiddlewareState} from './types';
+import {Create, Handler} from '../data/types';
+import {logErrors} from '../../../util/loggers';
 
 const handle = (next: Dispatch): Handler => ({
   success: (user: Either<Errors, CurrentUser>) =>
-    logInvalid(user) && isRight(user) && next(current(user.right)),
+    isRight(user) ? next(current(user.right)) : logErrors(user.left),
   clientError: (errors: Either<Errors, SignupErrors>) =>
-    logInvalid(errors) && isRight(errors) && next(invalidSignup(errors.right))
+    isRight(errors) ? next(invalidSignup(errors.right)) : logErrors(errors.left)
 });
 
-type UserMiddlewareState = UserStoreState | SignupState;
-type UserMiddlewareAction = UserStoreAction | SignupAction;
-
 export const createUserMiddleware = (create: Create): Middleware<UserMiddlewareState, UserMiddlewareAction> =>
-  () => (next) => (action) => {
-    if (UserActions.CREATE === action.type) {
-      create({name: action.name}, handle(next));
+  ({dispatch}) => () => (action) => {
+    if (action.type === UserActions.CREATE) {
+      create(action.name, handle(dispatch));
     }
   };

@@ -1,32 +1,50 @@
 import {NewUser} from '../../src/components/user/store/types';
 
-interface Config {
+interface ResponseSetup {
   status: Number;
   response: Object;
-  config?: Object;
+}
+
+interface Setup {
+  post?: ResponseSetup;
+  get?: ResponseSetup;
 }
 
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
-      signup: (user: NewUser, config: Config) => Chainable<Subject>;
+      signup: (user: NewUser, setup: Setup, config?: Object) => Chainable<Subject>;
     }
   }
 }
 
-Cypress.Commands.add('signup', (user, {status, response, config}) => {
-  return cy.route({
+Cypress.Commands.add('signup', (user, setup, config) => {
+  cy.route({
     method: 'POST',
     url: '**/users',
-    status,
-    response
-  }).as('apiCall')
-    .visit('/', config)
+    status: setup.post.status,
+    response: setup.post.response
+  }).as('createUser');
+
+  if (setup.get) {
+    cy.route({
+      method: 'GET',
+      url: '**/users?exclude=*',
+      status: setup.get.status,
+      response: setup.get.response
+    }).as('getOtherUsers');
+  }
+
+  cy.visit('/', config)
     .get('#create-user .username input')
     .type(user.name)
     .get('form')
     .submit()
-    .wait('@apiCall');
+    .wait('@createUser');
+
+  if (setup.get) {
+    cy.wait('@getOtherUsers');
+  }
 });
 
 // ***********************************************

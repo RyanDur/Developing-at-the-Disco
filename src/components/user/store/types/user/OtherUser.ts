@@ -1,5 +1,8 @@
-import {NewUser} from './NewUser';
+import * as t from 'io-ts';
 
-export interface OtherUser extends NewUser {
-  id: Number;
-}
+export const OtherUserGuard = t.type({
+  id: t.string,
+  name: t.string
+});
+
+export type OtherUser = t.TypeOf<typeof OtherUserGuard>;

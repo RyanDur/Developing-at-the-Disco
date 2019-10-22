@@ -1,3 +1,5 @@
+import {Username} from './Username';
+
 export interface NewUser {
-  name: string;
+  name: Username;
 }

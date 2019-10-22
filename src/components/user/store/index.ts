@@ -1,8 +1,11 @@
-import {createUser} from './data';
-import {createUserMiddleware} from './middleware';
+import {userClient} from './data';
+import {createUserMiddleware, getOtherUsersMiddleware} from './middleware';
 import reducer from './reducer';
 
-const userMiddleware = [createUserMiddleware(createUser)];
+const userMiddleware = [
+  createUserMiddleware(userClient.create),
+  getOtherUsersMiddleware(userClient.getAll)
+];
 const userReducer = reducer;
 
 export {userMiddleware, userReducer};

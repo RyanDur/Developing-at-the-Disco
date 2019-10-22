@@ -1,6 +1,6 @@
 export enum UserActions {
-  ALL = 'users',
-  CREATE = 'sign up',
+  OTHERS = 'other users',
+  CREATE = 'sign up user',
   UPDATE = 'user update',
   CURRENT = 'current user'
 }

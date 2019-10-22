@@ -5,9 +5,10 @@ import reducer from '../reducer';
 import {createUserMiddleware} from '../../store/middleware';
 import {create} from '../../store/actions';
 import {SignupErrors, SignupState} from '../types';
-import {Handler} from '../../store/data/create';
 import {SignupValidationGuard} from '../types/UsernameValidation';
 import {selectUsernameErrors} from '../selectors';
+import {Handler} from '../../store/data/types';
+import {Username} from '../../store/types/user';
 
 type CreateSignupErrors = (name: string) => SignupErrors;
 
@@ -34,9 +35,10 @@ describe('signing up validations', () => {
     });
 
     it('should be validated', () => {
-      mockCreateUser.mockImplementation(({name}: NewUser, handle: Handler) => {
+      mockCreateUser.mockImplementation((name: Username, handle: Handler) => {
         handle.clientError(SignupValidationGuard.decode(anError(name)));
       });
+
       store.dispatch(create(username));
       expect(selectUsernameErrors(store.getState())).toEqual(anError(username).username);
     });

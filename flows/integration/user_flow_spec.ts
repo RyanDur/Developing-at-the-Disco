@@ -1,27 +1,28 @@
 import {NewUser} from '../../src/components/user/store/types';
 
-describe('a user', () => {
-  describe('signing up', () => {
+describe('a user signing up', () => {
+  describe('with valid user information', () => {
     before(() => {
       cy.server();
       cy.signup(user, {
-        status: 201,
-        response: {name: user.name, id: 'id'}
+        post: {status: 201, response: {name: user.name, id: 'id'}},
+        get: {status: 200, response: [{name: 'Devon', id: 'other-id'}]}
       });
     });
 
     it('should show the new user', () => {
-      cy.get('#current-user .name')
-        .should('contain', user.name);
+      cy.get('#current-user .name').should('contain', user.name);
     });
   });
 
-  describe('an invalid username', () => {
+  describe('with invalid user information', () => {
     before(() => {
       cy.server();
       cy.signup(user, {
-        status: 400,
-        response: {username: {value: user.name, validations: ['USERNAME_EXISTS']}}
+        post: {
+          status: 400,
+          response: {username: {value: user.name, validations: ['USERNAME_EXISTS']}}
+        }
       });
     });
 
@@ -33,7 +34,6 @@ describe('a user', () => {
       cy.get('#current-user .name').should('not.exist');
     });
   });
-
 });
 
 const user: NewUser = {

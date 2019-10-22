@@ -30,16 +30,18 @@ const enhance = <S, A extends Action = AnyAction>(
   store: Store<S, A>,
   middlewares: Array<Middleware<S, A>>
 ): Store<S, A> => {
+  const dispatch = (action: A): void => {
+    wares.forEach(ware => ware(action));
+    store.dispatch(action);
+  };
+
   const wares = middlewares
-  .map(ware => ware(store))
-  .map(ware => ware(store.dispatch));
+    .map(ware => ware({...store, dispatch}))
+    .map(ware => ware(store.dispatch));
 
   return ({
     ...store,
-    dispatch: (action: A): void => {
-      wares.forEach(ware => ware(action));
-      store.dispatch(action);
-    }
+    dispatch
   });
 };
 
