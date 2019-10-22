@@ -15,7 +15,4 @@
 
 // Import commands.ts using ES2015 syntax:
 import './commands';
-import {clientError} from './fake/clientError';
-import {success} from './fake/success';
-
-export {clientError, success};
+import './fake/mockFetch';

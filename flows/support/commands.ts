@@ -1,19 +1,32 @@
 import {NewUser} from '../../src/components/user/store/types';
 
+interface Config {
+  status: Number;
+  response: Object;
+  config?: Object;
+}
+
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
-      signup: (user: NewUser, config: Object) => Chainable<Subject>;
+      signup: (user: NewUser, config: Config) => Chainable<Subject>;
     }
   }
 }
 
-Cypress.Commands.add('signup', (user, config) => {
-  return cy.visit('/', config)
+Cypress.Commands.add('signup', (user, {status, response, config}) => {
+  return cy.route({
+    method: 'POST',
+    url: '**/users',
+    status,
+    response
+  }).as('apiCall')
+    .visit('/', config)
     .get('#create-user .username input')
     .type(user.name)
     .get('form')
-    .submit();
+    .submit()
+    .wait('@apiCall');
 });
 
 // ***********************************************
