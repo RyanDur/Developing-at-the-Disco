@@ -2,9 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
-const WebpackNotifierPlugin = require('webpack-notifier');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const DashboardPlugin = require("webpack-dashboard/plugin");
 const EnvironmentPlugin = require("webpack").EnvironmentPlugin;
 
 module.exports = {
@@ -19,6 +17,7 @@ module.exports = {
     port: process.env.PORT,
     overlay: true
   },
+  stats: 'minimal',
   target: 'node',
   module: {
     rules: [
@@ -69,9 +68,7 @@ module.exports = {
     }),
     new HtmlWebpackRootPlugin(),
     new CspHtmlWebpackPlugin(),
-    new WebpackNotifierPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-    new DashboardPlugin(),
     new EnvironmentPlugin({
       USERS_ENDPOINT: '/users',
       HOST: 'http://localhost:3001',
