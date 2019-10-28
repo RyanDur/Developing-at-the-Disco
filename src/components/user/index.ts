@@ -1,4 +1,5 @@
 import Signup, {reducer as signupReducer} from './Signup';
+import Others from './Others';
 import Info from './Info';
 import {
   userMiddleware,
@@ -21,5 +22,6 @@ export {
   Signup,
   Info,
   userMiddleware,
-  userReducers
+  userReducers,
+  Others
 };

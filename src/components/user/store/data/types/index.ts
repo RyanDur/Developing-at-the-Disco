@@ -5,3 +5,5 @@ export {Method} from './Method';
 export {Create} from './Create';
 export {GetAll} from './GetAll';
 export {UserClient} from './UserClient';
+export {OtherUsersPage} from './OtherUsersPage';
+export {OtherUsersPageGuard} from './OtherUsersPage';

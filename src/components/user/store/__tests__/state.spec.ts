@@ -5,8 +5,8 @@ import {createUserMiddleware, getOtherUsersMiddleware} from '../middleware';
 import {Store} from '../../../../store/types';
 import {CurrentUserGuard} from '../types/user/CurrentUser';
 import {NewUser, UserStoreAction, UserStoreState} from '../types';
-import {OtherUsersGuard, UserId, Username} from '../types/user';
-import {Handler} from '../data/types';
+import {UserId, Username} from '../types/user';
+import {Handler, OtherUsersPageGuard} from '../data/types';
 
 describe('user store:', () => {
   const mockCreateUser = jest.fn();
@@ -16,7 +16,7 @@ describe('user store:', () => {
   let store: Store<UserStoreState, UserStoreAction>;
 
   beforeEach(() => {
-    store = createTestStore(reducer, [
+    store = createTestStore({users: reducer}, [
       createUserMiddleware(mockCreateUser),
       getOtherUsersMiddleware(mockGetOtherUsers)
     ]);
@@ -24,7 +24,7 @@ describe('user store:', () => {
 
   describe('on start', () => {
     it('should have an initial state', () => {
-      expect(store.getState()).toEqual(initialState);
+      expect(store.getState().users).toEqual(initialState);
     });
   });
 
@@ -40,14 +40,26 @@ describe('user store:', () => {
 
       beforeEach(() => {
         mockCreateUser.mockReset();
-        mockCreateUser.mockImplementation((name: Username, handleCreate: Handler) => {
-          const decode = CurrentUserGuard.decode({name, id});
-          handleCreate.success(decode);
+        mockCreateUser.mockImplementation((name: NewUser, handleCreate: Handler) => {
+          handleCreate.success(CurrentUserGuard.decode({...name, id}));
         });
 
         mockGetOtherUsers.mockReset();
         mockGetOtherUsers.mockImplementation((currentUserId: UserId, handleGet: Handler) => {
-          handleGet.success(OtherUsersGuard.decode(otherUsers));
+          const decode = OtherUsersPageGuard.decode({
+            content: otherUsers,
+            totalPages: 1,
+            totalElements: 1,
+            size: 1,
+            number: 0,
+            sort: {},
+            pageable: {},
+            numberOfElements: 1,
+            first: true,
+            last: true,
+            empty: false
+          });
+          handleGet.success(decode);
         });
 
         store.dispatch(create(username));
@@ -55,11 +67,11 @@ describe('user store:', () => {
 
       it('should update the current user', () => {
         const expected = {name: username, id};
-        expect(store.getState().current).toEqual(expected);
+        expect(store.getState().users.current).toEqual(expected);
       });
 
       it('should get all the other users', () => {
-        expect(store.getState().others).toEqual(otherUsers);
+        expect(store.getState().users.others).toEqual(otherUsers);
       });
     });
   });
@@ -79,7 +91,7 @@ describe('user store:', () => {
     });
 
     it('should not create the current user', () => {
-      expect(store.getState()).toEqual(initialState);
+      expect(store.getState().users).toEqual(initialState);
     });
   });
 });

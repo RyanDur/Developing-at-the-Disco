@@ -1,4 +1,4 @@
-import {Username} from '../../types/user';
+import {NewUser} from '../../types/user';
 import {Handler} from './Handler';
 
-export type Create = (name: Username, handle: Handler) => void;
+export type Create = (user: NewUser, handle: Handler) => void;

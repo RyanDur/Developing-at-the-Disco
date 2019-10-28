@@ -11,14 +11,15 @@ import {logErrors} from '../../../util/loggers';
 
 const handle = (next: Dispatch): Handler => ({
   success: (user: Either<Errors, CurrentUser>) =>
-    isRight(user) ? next(current(user.right)) : logErrors(user.left),
-  clientError: (errors: Either<Errors, SignupErrors>) =>
-    isRight(errors) ? next(invalidSignup(errors.right)) : logErrors(errors.left)
+    isRight(user) ? next(current(user.right)) : logErrors(user),
+  clientError: (errors: Either<Errors, SignupErrors>) => {
+    return isRight(errors) ? next(invalidSignup(errors.right)) : logErrors(errors);
+  }
 });
 
 export const createUserMiddleware = (create: Create): Middleware<UserMiddlewareState, UserMiddlewareAction> =>
   ({dispatch}) => () => (action) => {
     if (action.type === UserActions.CREATE) {
-      create(action.name, handle(dispatch));
+      create({name: action.name}, handle(dispatch));
     }
   };

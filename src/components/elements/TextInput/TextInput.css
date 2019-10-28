@@ -88,6 +88,10 @@
             & .text {
                 border: 0.1rem solid rgb(158, 0, 36);
             }
+
+            & .max-length {
+                color: rgb(158, 0, 36);
+            }
         }
     }
 }

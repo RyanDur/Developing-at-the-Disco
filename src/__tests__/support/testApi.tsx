@@ -3,6 +3,7 @@ import {ReactElement, ReactNode} from 'react';
 import ReactDOM from 'react-dom';
 import {act, Simulate} from 'react-dom/test-utils';
 import * as ShallowRenderer from 'react-test-renderer/shallow';
+import {has} from '../../components/util/helpers';
 
 let container: HTMLElement = null;
 
@@ -59,7 +60,9 @@ export const shallowRender = (Component: ReactElement): ShallowTestRender => {
     shallow.render(Component, container);
   });
   const element = shallow.getRenderOutput();
+  const children = element.props.children;
   return {
-    contains: (node) => element.props.children.type === node.type
+    contains: (node: JSX.Element) => has(children) && (children.type === node.type || has(children.filter((child: JSX.Element) => child)) &&
+      has(children.filter((elem: JSX.Element) => elem.type === node.type)))
   };
 };

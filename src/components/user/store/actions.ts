@@ -1,8 +1,9 @@
-import {CreateAction, CurrentAction, CurrentUser, OtherUser, UpdateAction, UserActions} from './types';
+import {CreateAction, CurrentAction, CurrentUser, UpdateAction, UserActions} from './types';
 import {OtherUsersAction} from './types/actions';
 import {Username} from './types/user';
+import {OtherUsersPage} from './data/types';
 
-const others = (otherUsers: OtherUser[]): OtherUsersAction => ({type: UserActions.OTHERS, otherUsers});
+const others = (otherUsersPage: OtherUsersPage): OtherUsersAction => ({type: UserActions.OTHERS, otherUsers: otherUsersPage.content});
 
 const create = (name: Username): CreateAction => ({type: UserActions.CREATE, name});
 

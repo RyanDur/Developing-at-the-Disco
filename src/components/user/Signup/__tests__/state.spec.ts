@@ -4,13 +4,12 @@ import {createTestStore} from '../../../../__tests__/support/createTestStore';
 import reducer from '../reducer';
 import {createUserMiddleware} from '../../store/middleware';
 import {create} from '../../store/actions';
-import {SignupErrors, SignupState} from '../types';
+import {SignupState, UsernameValidation} from '../types';
 import {SignupValidationGuard} from '../types/UsernameValidation';
 import {selectUsernameErrors} from '../selectors';
 import {Handler} from '../../store/data/types';
-import {Username} from '../../store/types/user';
 
-type CreateSignupErrors = (name: string) => SignupErrors;
+type CreateSignupErrors = (name: string) => UsernameValidation;
 
 describe('signing up validations', () => {
   const mockCreateUser = jest.fn();
@@ -27,7 +26,7 @@ describe('signing up validations', () => {
   });
 
   describe('the username', () => {
-    const anError: CreateSignupErrors = (name): SignupErrors => ({
+    const anError: CreateSignupErrors = (name) => ({
       username: {
         value: name,
         validations: ['some error']
@@ -35,12 +34,14 @@ describe('signing up validations', () => {
     });
 
     it('should be validated', () => {
-      mockCreateUser.mockImplementation((name: Username, handle: Handler) => {
-        handle.clientError(SignupValidationGuard.decode(anError(name)));
+      mockCreateUser.mockImplementation((newUser: NewUser, handle: Handler) => {
+        const decode = SignupValidationGuard.decode(anError(newUser.name));
+        handle.clientError(decode);
       });
 
       store.dispatch(create(username));
-      expect(selectUsernameErrors(store.getState())).toEqual(anError(username).username);
+      const signupErrors = anError(username);
+      expect(store.getState().username).toEqual(signupErrors.username);
     });
   });
 

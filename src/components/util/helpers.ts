@@ -6,7 +6,7 @@ const emptyObject = (obj: Object) =>
 
 const emptyArray = (arr: any[]) => arr.length === 0;
 
-export const not = (val: boolean) => !val;
+export const not = (val: any) => !val;
 
 export const empty = (obj: any) =>
   not(obj) ||

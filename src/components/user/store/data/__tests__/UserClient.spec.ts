@@ -2,6 +2,7 @@ import {endpoint} from '../../../../../config';
 import {right} from 'fp-ts/lib/Either';
 import {CurrentUser, OtherUsers} from '../../types/user';
 import {userClient} from '../userClient';
+import {OtherUsersPage} from '../types';
 
 const fetchMock = require('fetch-mock');
 
@@ -17,8 +18,19 @@ describe('the user client', () => {
   const currentUser: CurrentUser = {name: 'Ryan', id: '1'};
   const otherUsers: OtherUsers = [
     {name: 'Chirag', id: 'Taylor'},
-    {name: 'Chris ', id: 'Schuster'}]
-  ;
+    {name: 'Chris ', id: 'Schuster'}];
+  const page: OtherUsersPage = {
+    empty: false,
+    first: true,
+    last: true,
+    number: 0,
+    numberOfElements: 2,
+    pageable: {},
+    size: 2,
+    sort: {},
+    totalElements: 3,
+    totalPages: 1,
+    content: otherUsers};
   const mockHandle = {
     success: jest.fn(),
     clientError: jest.fn()
@@ -40,7 +52,7 @@ describe('the user client', () => {
           headers: {'Content-Type': 'application/json'}
         });
 
-        create(currentUser.name, mockHandle);
+        create({name: currentUser.name}, mockHandle);
 
         setTimeout(() => {
           expect(mockHandle.success).toHaveBeenCalledWith(right(currentUser));
@@ -57,7 +69,7 @@ describe('the user client', () => {
           status: 400,
           headers: {'Content-Type': 'application/json'}
         });
-        create(currentUser.name, mockHandle);
+        create({name: currentUser.name}, mockHandle);
         setTimeout(() => {
           expect(mockHandle.clientError).toHaveBeenCalledWith(right(body));
           done();
@@ -69,12 +81,12 @@ describe('the user client', () => {
   describe('getting all the other users', () => {
     describe('success', () => {
       it('should handle the response of getting all the other users', (done) => {
-        fetchMock.get(`end:${endpoint.users}?exclude=${currentUser.id}`, otherUsers);
+        fetchMock.get(`end:${endpoint.users}?exclude=${currentUser.id}&page=0&size=10`, page);
 
         getAll(currentUser.id, mockHandle);
 
         setTimeout(() => {
-          expect(mockHandle.success).toHaveBeenCalledWith(right(otherUsers));
+          expect(mockHandle.success).toHaveBeenCalledWith(right(page));
           done();
         });
       });

@@ -6,12 +6,36 @@ describe('a user signing up', () => {
       cy.server();
       cy.signup(user, {
         post: {status: 201, response: {name: user.name, id: 'id'}},
-        get: {status: 200, response: [{name: 'Devon', id: 'other-id'}]}
+        get: {
+          status: 200, response: {
+            content: [
+              {name: 'Devon', id: 'other-id'},
+              {name: 'David', id: 'other-id'},
+              {name: 'Andrew', id: 'other-id'},
+              {name: 'Andrew', id: 'other-id'},
+              {name: 'Caren', id: 'other-id'}
+            ],
+            last: true,
+            first: true,
+            empty: false,
+            size: 1,
+            totalElements: 5,
+            number: 0,
+            sort: {},
+            totalPages: 1,
+            numberOfElements: 10,
+            pageable: {}
+          }
+        }
       });
     });
 
     it('should show the new user', () => {
       cy.get('#current-user .name').should('contain', user.name);
+    });
+
+    it('should show the other users', () => {
+      cy.get('.other-users li').should('have.length', 5);
     });
   });
 
