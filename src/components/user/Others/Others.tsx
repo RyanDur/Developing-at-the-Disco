@@ -1,14 +1,13 @@
 import * as React from 'react';
-import {OtherUsers} from '../store/types/user';
+import {OtherUsersPage} from '../store/data/types';
 
 interface OthersProps {
-  others: OtherUsers;
+  others: OtherUsersPage;
 }
 
 export const Others = ({others}: OthersProps) => {
   return <ul className='other-users'>
-    {others.map(user => {
-      return <li key={user.id}>{user.name}</li>;
-    })}
+    {others.content.map(user =>
+      <li key={user.id}>{user.name}</li>)}
   </ul>;
 };

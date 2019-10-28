@@ -3,7 +3,7 @@ import {OtherUsersAction} from './types/actions';
 import {Username} from './types/user';
 import {OtherUsersPage} from './data/types';
 
-const others = (otherUsersPage: OtherUsersPage): OtherUsersAction => ({type: UserActions.OTHERS, otherUsers: otherUsersPage.content});
+const others = (otherUsersPage: OtherUsersPage): OtherUsersAction => ({type: UserActions.OTHERS, otherUsersPage});
 
 const create = (name: Username): CreateAction => ({type: UserActions.CREATE, name});
 

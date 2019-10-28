@@ -11,7 +11,7 @@ describe('a user signing up', () => {
             content: [
               {name: 'Devon', id: 'other-id'},
               {name: 'David', id: 'other-id'},
-              {name: 'Andrew', id: 'other-id'},
+              {name: 'Frances', id: 'other-id'},
               {name: 'Andrew', id: 'other-id'},
               {name: 'Caren', id: 'other-id'}
             ],

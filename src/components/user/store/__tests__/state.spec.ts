@@ -37,6 +37,19 @@ describe('user store:', () => {
 
     describe('on success', () => {
       const otherUsers = [{name: 'Hayes', id: 'David'}];
+      const otherUsersPage = {
+        content: otherUsers,
+        totalPages: 1,
+        totalElements: 1,
+        size: 1,
+        number: 0,
+        sort: {},
+        pageable: {},
+        numberOfElements: 1,
+        first: true,
+        last: true,
+        empty: false
+      };
 
       beforeEach(() => {
         mockCreateUser.mockReset();
@@ -46,19 +59,7 @@ describe('user store:', () => {
 
         mockGetOtherUsers.mockReset();
         mockGetOtherUsers.mockImplementation((currentUserId: UserId, handleGet: Handler) => {
-          const decode = OtherUsersPageGuard.decode({
-            content: otherUsers,
-            totalPages: 1,
-            totalElements: 1,
-            size: 1,
-            number: 0,
-            sort: {},
-            pageable: {},
-            numberOfElements: 1,
-            first: true,
-            last: true,
-            empty: false
-          });
+          const decode = OtherUsersPageGuard.decode(otherUsersPage);
           handleGet.success(decode);
         });
 
@@ -71,7 +72,7 @@ describe('user store:', () => {
       });
 
       it('should get all the other users', () => {
-        expect(store.getState().users.others).toEqual(otherUsers);
+        expect(store.getState().users.others).toEqual(otherUsersPage);
       });
     });
   });

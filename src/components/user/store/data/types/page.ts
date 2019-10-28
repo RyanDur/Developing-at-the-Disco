@@ -16,7 +16,7 @@ const Pageable = t.partial({
   unpaged: t.boolean
 });
 
-export const Page = (guard: Type<any>) => t.type({
+export const Page = <T>(guard: Type<T>) => t.type({
   content: guard,
   pageable: Pageable,
   last: t.boolean,
