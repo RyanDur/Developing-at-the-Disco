@@ -43,8 +43,6 @@ describe('user store:', () => {
         totalElements: 1,
         size: 1,
         number: 0,
-        sort: {},
-        pageable: {},
         numberOfElements: 1,
         first: true,
         last: true,

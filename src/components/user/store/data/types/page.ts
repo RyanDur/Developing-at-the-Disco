@@ -7,7 +7,7 @@ const Sort = t.partial({
   empty: t.boolean
 });
 
-const Pageable = t.partial({
+const Pageable = t.type({
   sort: Sort,
   offset: t.number,
   pageSize: t.number,
@@ -18,14 +18,14 @@ const Pageable = t.partial({
 
 export const Page = <T>(guard: Type<T>) => t.type({
   content: guard,
-  pageable: Pageable,
-  last: t.boolean,
-  totalPages: t.number,
-  totalElements: t.number,
   size: t.number,
   number: t.number,
-  sort: Sort,
+  totalPages: t.number,
+  totalElements: t.number,
   numberOfElements: t.number,
+  last: t.boolean,
   first: t.boolean,
-  empty: t.boolean
+  empty: t.boolean,
+  pageable: t.union([Pageable, t.undefined]),
+  sort: t.union([Sort, t.undefined])
 });

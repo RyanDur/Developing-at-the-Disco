@@ -2,7 +2,6 @@ import {endpoint} from '../../../../../config';
 import {right} from 'fp-ts/lib/Either';
 import {CurrentUser, OtherUsers} from '../../types/user';
 import {userClient} from '../userClient';
-import {OtherUsersPage} from '../types';
 
 const fetchMock = require('fetch-mock');
 
@@ -19,15 +18,13 @@ describe('the user client', () => {
   const otherUsers: OtherUsers = [
     {name: 'Chirag', id: 'Taylor'},
     {name: 'Chris ', id: 'Schuster'}];
-  const page: OtherUsersPage = {
+  const page = {
     empty: false,
     first: true,
     last: true,
     number: 0,
     numberOfElements: 2,
-    pageable: {},
     size: 2,
-    sort: {},
     totalElements: 3,
     totalPages: 1,
     content: otherUsers};

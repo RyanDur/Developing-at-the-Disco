@@ -21,10 +21,8 @@ describe('a user signing up', () => {
             size: 1,
             totalElements: 5,
             number: 0,
-            sort: {},
             totalPages: 1,
             numberOfElements: 10,
-            pageable: {}
           }
         }
       });
