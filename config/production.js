@@ -8,7 +8,6 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {EnvironmentPlugin} = require("webpack");
 
 exports.production = (paths) => merge([common(paths), {
-    mode: 'production',
     devtool: 'source-map',
     plugins: [
         new CleanWebpackPlugin(),

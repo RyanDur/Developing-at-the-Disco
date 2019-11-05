@@ -6,7 +6,7 @@
   "scripts": {
     "flows": "cypress open",
     "flows:silent": "cypress run",
-    "build": "webpack --mode production",
+    "build": "webpack --env production",
     "start": "webpack-dev-server",
     "start:open": "webpack-dev-server --open",
     "test:flows": "start-server-and-test start http://localhost:8080 flows",

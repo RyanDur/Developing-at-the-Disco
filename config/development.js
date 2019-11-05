@@ -9,7 +9,6 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {EnvironmentPlugin} = require("webpack");
 
 exports.development = (paths) => merge([common(paths), {
-    mode: 'production',
     devtool: 'source-map',
     devServer: {
         contentBase: './dist',
