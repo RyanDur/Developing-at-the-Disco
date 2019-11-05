@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {EnvironmentPlugin} = require("webpack");
 
 exports.production = (paths) => merge([common(paths), {
     mode: 'production',
@@ -18,6 +19,9 @@ exports.production = (paths) => merge([common(paths), {
             }
         }),
         new HtmlWebpackRootPlugin(),
-        new CspHtmlWebpackPlugin()
+        new CspHtmlWebpackPlugin(),
+        new EnvironmentPlugin({
+            HOST: 'https://deafbeavers.apps.pcfone.io'
+        })
     ]
 }, loadCSS({sourceMap: true})]);

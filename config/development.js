@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {EnvironmentPlugin} = require("webpack");
 
 exports.development = (paths) => merge([common(paths), {
     mode: 'production',
@@ -27,6 +28,9 @@ exports.development = (paths) => merge([common(paths), {
             }
         }),
         new HtmlWebpackRootPlugin(),
-        new CspHtmlWebpackPlugin()
+        new CspHtmlWebpackPlugin(),
+        new EnvironmentPlugin({
+            HOST: 'http://localhost:3001'
+        })
     ]
 }, loadCSS({sourceMap: true})]);
