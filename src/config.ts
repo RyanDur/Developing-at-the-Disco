@@ -1,6 +1,6 @@
 export const endpoint = {
-  users: process.env.USERS_ENDPOINT,
+  users: '/users'
 };
 
-export const host = process.env.HOST;
-export const maxUsernameLength = parseInt(process.env.MAX_USERNAME_LENGTH, 10);
+export const host = 'https://deafbeavers.apps.pcfone.io';
+export const maxUsernameLength = 256;

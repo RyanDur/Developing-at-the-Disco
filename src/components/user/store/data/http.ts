@@ -1,7 +1,7 @@
-import {host} from '../../../../config';
 import {Handler, Method, ResponseTypeGuards} from './types';
 import {Endpoint} from './types/Endpoint';
 import {logError, logResponse} from '../../../util/loggers';
+import {host} from '../../../../config';
 
 export const http = (
   method: Method,

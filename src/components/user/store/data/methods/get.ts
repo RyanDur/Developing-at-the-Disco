@@ -1,10 +1,7 @@
 import {Method} from '../types';
+import {base} from './base';
 
 export const get = (): Method => ({
-  method: 'Get',
-  mode: 'cors',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
+  ...base,
+  method: 'Get'
 });

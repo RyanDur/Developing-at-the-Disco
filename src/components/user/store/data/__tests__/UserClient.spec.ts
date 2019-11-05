@@ -78,7 +78,7 @@ describe('the user client', () => {
   describe('getting all the other users', () => {
     describe('success', () => {
       it('should handle the response of getting all the other users', (done) => {
-        fetchMock.get(`end:${endpoint.users}?exclude=${currentUser.id}&page=0&size=10`, page);
+        fetchMock.get(`end:${endpoint.users}?exclude=${currentUser.id}&page=0&size=${Number.MAX_SAFE_INTEGER}`, page);
 
         getAll(currentUser.id, mockHandle);
 
