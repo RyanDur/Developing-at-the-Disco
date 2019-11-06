@@ -1,6 +1,6 @@
 export const endpoint = {
-  users: '/users'
+  users: process.env.USERS_ENDPOINT
 };
 
 export const host = process.env.HOST;
-export const maxUsernameLength = 256;
+export const maxUsernameLength = parseInt(process.env.USERNAME_MAX_LENGTH, 10);

@@ -1,4 +1,6 @@
 const merge = require('webpack-merge');
+const {EnvironmentPlugin} = require("webpack");
+
 exports.common = ({dist}) => merge([{
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
@@ -22,5 +24,11 @@ exports.common = ({dist}) => merge([{
                 loader: 'source-map-loader'
             }
         ]
-    }
+    },
+    plugins: [
+        new EnvironmentPlugin({
+            USERS_ENDPOINT: '/users',
+            USERNAME_MAX_LENGTH: 256
+        })
+    ]
 }]);
