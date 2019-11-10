@@ -26,10 +26,15 @@ export interface TestRender {
   blur: (element: HTMLInputElement, eventData?: Object) => void;
   submit: (form: HTMLFormElement, eventData?: Object) => void;
   click: (form: HTMLElement) => void;
+  transition: (element: HTMLElement) => void;
+  animate: (by: HTMLElement) => void;
 }
 
 export interface ShallowTestRender {
+  container: HTMLElement;
   contains: (node: JSX.Element) => ReactNode;
+  onSceneEnd: () => void;
+  onAnimationEnd: () => void;
 }
 
 export const render = (Component: ReactElement): TestRender => {
@@ -38,8 +43,7 @@ export const render = (Component: ReactElement): TestRender => {
   });
   return {
     container,
-    getBy: <T extends HTMLElement>(selector: string) =>
-      container.querySelector(`${selector}`) as T,
+    getBy: (selector: string) => container.querySelector(`${selector}`),
     get: (node) => container.querySelector(`${node.key}`),
     focus: (element: HTMLElement, event: Object) =>
       Simulate.focus(element, event as any),
@@ -50,7 +54,11 @@ export const render = (Component: ReactElement): TestRender => {
     submit: (form: HTMLFormElement, event: Object) =>
       Simulate.submit(form, event as any),
     click: (element: HTMLElement) =>
-      Simulate.click(element)
+      Simulate.click(element),
+    transition: (element: HTMLElement) =>
+      Simulate.transitionEnd(element),
+    animate: (element: HTMLElement) =>
+      Simulate.animationEnd(element)
   };
 };
 
@@ -59,10 +67,27 @@ export const shallowRender = (Component: ReactElement): ShallowTestRender => {
   act(() => {
     shallow.render(Component, container);
   });
-  const element = shallow.getRenderOutput();
-  const children = element.props.children;
+  let rendered = shallow.getRenderOutput();
+  let children = rendered.props.children;
   return {
-    contains: (node: JSX.Element) => has(children) && (children.type === node.type || has(children.filter((child: JSX.Element) => child)) &&
+    container,
+    onSceneEnd: () => {
+      if (has(children)) {
+        children.props.onSceneEnd();
+        rendered = shallow.getRenderOutput();
+        children = rendered.props.children;
+      }
+    },
+    onAnimationEnd: () => {
+      if (has(children)) {
+        children.props.onAnimationEnd();
+        rendered = shallow.getRenderOutput();
+        children = rendered.props.children;
+      }
+    },
+    contains: (node: JSX.Element) =>
+      has(children) && (children.type === node.type ||
+      has(children.filter((child: JSX.Element) => child)) &&
       has(children.filter((elem: JSX.Element) => elem.type === node.type)))
   };
 };

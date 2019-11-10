@@ -1,15 +1,21 @@
 import * as React from 'react';
+import {useState} from 'react';
+import {Signup} from '../../user';
+import {classes, not} from '../../util/helpers';
 import './Main.css';
-import {Others, Signup} from '../../user';
 
 interface MainProps {
-  noCurrentUser: boolean;
-  otherUsers: boolean;
+  hasCurrentUser: boolean;
 }
 
-export const Main = ({noCurrentUser, otherUsers}: MainProps) => {
+export const Main = ({hasCurrentUser}: MainProps) => {
+  const [sceneIsDone, isSceneDone] = useState(false);
+  const [offScreen, isOffScreen] = useState(false);
+
   return <main id='content'>
-    {noCurrentUser && <Signup/>}
-    {otherUsers && <Others/>}
+    {not(hasCurrentUser && sceneIsDone && offScreen) &&
+    <Signup className={classes(sceneIsDone && 'remove')}
+            onAnimationEnd={() => isOffScreen(true)}
+            onSceneEnd={() => isSceneDone(true)}/>}
   </main>;
 };

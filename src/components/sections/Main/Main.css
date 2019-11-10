@@ -3,4 +3,18 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    & .remove {
+        position: relative;
+        animation: 1000ms ease-out 0ms 1 remove;
+    }
+}
+
+@keyframes remove {
+    0% {
+        right: 0;
+    }
+    100% {
+        right: 100%;
+    }
 }

@@ -22,7 +22,7 @@ describe('a user signing up', () => {
             totalElements: 5,
             number: 0,
             totalPages: 1,
-            numberOfElements: 10,
+            numberOfElements: 10
           }
         }
       });
@@ -30,10 +30,6 @@ describe('a user signing up', () => {
 
     it('should show the new user', () => {
       cy.get('#current-user .name').should('contain', user.name);
-    });
-
-    it('should show the other users', () => {
-      cy.get('.other-users li').should('have.length', 5);
     });
   });
 
