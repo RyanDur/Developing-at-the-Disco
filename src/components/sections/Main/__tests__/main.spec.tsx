@@ -5,17 +5,25 @@ import {Signup} from '../../../user';
 
 describe('the main section', () => {
   describe('when there is a user', () => {
-    describe('when animation ends', () => {
+    describe('when signup has ended', () => {
       it('should not have a way to sign up a user', async () => {
         const subject = await shallowRender(<Main {...{hasCurrentUser: true}}/>);
-        await subject.onSceneEnd();
-        await subject.onAnimationEnd();
+        subject.onSceneEnd();
+        subject.onAnimationEnd();
         expect(subject.contains(<Signup/>)).not.toBeTruthy();
+      });
+
+      describe('when the scene has not ended', () => {
+        it('should not have a way to sign up a user', async () => {
+          const subject = await shallowRender(<Main {...{hasCurrentUser: true}}/>);
+          subject.onAnimationEnd();
+          expect(subject.contains(<Signup/>)).toBeTruthy();
+        });
       });
     });
 
-    describe('when animation has not ended', () => {
-      it('should not have a way to sign up a user', async () => {
+    describe('when signup has not ended', () => {
+      it('should have a way to sign up a user', async () => {
         const subject = await shallowRender(<Main {...{hasCurrentUser: true}}/>);
         expect(subject.contains(<Signup/>)).toBeTruthy();
       });
@@ -23,7 +31,7 @@ describe('the main section', () => {
   });
 
   describe('when there is no user', () => {
-    describe('when animation ends', () => {
+    describe('when signup ends', () => {
       it('should have a way to sign up a user ', async () => {
         const subject = await shallowRender(<Main {...{hasCurrentUser: false}}/>);
         await subject.onSceneEnd();
@@ -31,8 +39,8 @@ describe('the main section', () => {
       });
     });
 
-    describe('when animation has not ended', () => {
-      it('should not have a way to sign up a user', async () => {
+    describe('when signup has not ended', () => {
+      it('should have a way to sign up a user', async () => {
         const subject = await shallowRender(<Main {...{hasCurrentUser: true}}/>);
         expect(subject.contains(<Signup/>)).toBeTruthy();
       });

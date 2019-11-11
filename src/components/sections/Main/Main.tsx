@@ -13,9 +13,9 @@ export const Main = ({hasCurrentUser}: MainProps) => {
   const [offScreen, isOffScreen] = useState(false);
 
   return <main id='content'>
-    {not(hasCurrentUser && sceneIsDone && offScreen) &&
-    <Signup className={classes(sceneIsDone && 'remove')}
-            onAnimationEnd={() => isOffScreen(true)}
+    {not(offScreen) &&
+    <Signup className={classes(hasCurrentUser && sceneIsDone && 'remove')}
+            onAnimationEnd={() => sceneIsDone && isOffScreen(true)}
             onSceneEnd={() => isSceneDone(true)}/>}
   </main>;
 };

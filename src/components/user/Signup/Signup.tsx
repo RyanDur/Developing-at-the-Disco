@@ -33,16 +33,19 @@ export const Signup =
         isSubmitted(true);
       }
     };
-
     const translate = ({value, validations = []}: Partial<Validation>): Validation => ({
       value,
       validations: validations.map(validation => signupText[validation])
     });
-
-    const disabled =
-      empty(name) ||
-      name === userNameErrors.value ||
-      submitted;
+    const invalid = empty(name) || name === userNameErrors.value;
+    const disabled = invalid || submitted;
+    const onTransitionEnd = () => {
+      if (submitted && not(invalid)) {
+        onSceneEnd();
+      } else {
+        isSubmitted(false);
+      }
+    };
 
     return <form id='create-user'
                  onSubmit={createNewUser}
@@ -55,9 +58,7 @@ export const Signup =
                  maxLength={maxUsernameLength}/>
       <button type='submit'
               className='submit primary'
-              onTransitionEnd={() => {
-                if (submitted) onSceneEnd();
-              }}
+              onTransitionEnd={onTransitionEnd}
               disabled={disabled}>
         Enter
       </button>
