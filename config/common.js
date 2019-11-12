@@ -7,7 +7,8 @@ exports.common = ({dist}) => merge([{
     },
     target: 'node',
     output: {
-        filename: 'bundle.js',
+        chunkFilename: "[name].[chunkhash:4].js",
+        filename: '[name].[chunkhash:4].js',
         path: dist
     },
     module: {
