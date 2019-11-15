@@ -60,7 +60,6 @@
 
     &.candidate {
         & .title {
-            border-radius: 30%;
             top: -0.6rem;
             font-size: 1.2rem;
             line-height: 1.2rem;

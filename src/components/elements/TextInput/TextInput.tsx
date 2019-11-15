@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEvent, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {TextInputProps} from './types';
 import {classes, has} from '../../util/helpers';
 import {MessageList} from '../List';
