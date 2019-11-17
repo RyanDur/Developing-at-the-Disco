@@ -1,4 +1,4 @@
-const {loadCSS} = require('./parts');
+const {loadCSS, loadImages} = require('./parts');
 const {common} = require('./common');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -23,4 +23,12 @@ exports.production = (paths) => merge([common(paths), {
             HOST: 'https://deafbeavers.apps.pcfone.io'
         })
     ]
-}, loadCSS({sourceMap: true})]);
+},
+    loadCSS({sourceMap: true}),
+    loadImages({
+        options: {
+            limit: 15000,
+            name: "[name].[ext]",
+        },
+    })
+]);

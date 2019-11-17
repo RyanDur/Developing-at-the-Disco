@@ -1,5 +1,5 @@
-const {loadCSS} = require('./loaders');
+const loaders = require('./loaders');
 
 module.exports = {
-    loadCSS
+    ...loaders
 };

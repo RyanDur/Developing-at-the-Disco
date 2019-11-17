@@ -1,5 +1,5 @@
 const {common} = require('./common');
-const {loadCSS} = require('./parts');
+const {loadCSS, loadImages} = require('./parts');
 const merge = require('webpack-merge');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -32,4 +32,7 @@ exports.development = (paths) => merge([common(paths), {
             HOST: 'http://localhost:3001'
         })
     ]
-}, loadCSS({sourceMap: true})]);
+},
+    loadCSS({sourceMap: true}),
+    loadImages()
+]);
