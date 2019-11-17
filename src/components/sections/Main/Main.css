@@ -15,6 +15,6 @@
         right: 0;
     }
     100% {
-        right: 65vw;
+        right: 65vmax;
     }
 }
