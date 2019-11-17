@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useLayoutEffect, useState} from 'react';
+import {useState} from 'react';
 import {Signup} from '../../user';
 import {classes, not} from '../../util/helpers';
 import './Main.css';
