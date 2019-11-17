@@ -7,7 +7,10 @@ jest.mock('../../../../config', () => ({
 }));
 
 describe('Signing up', () => {
-  const props = {createUser: jest.fn(), onSceneEnd: jest.fn()};
+  const props = {
+    createUser: jest.fn(),
+    onSceneEnd: jest.fn()
+  };
   const mockPreventDefault = jest.fn();
   const name = 'YaY';
   let subject: TestRender = null;
@@ -53,6 +56,10 @@ describe('Signing up', () => {
           it('should end the scene', () => {
             subject.transition(subject.getBy('button'));
             expect(props.onSceneEnd).toHaveBeenCalledTimes(1);
+          });
+
+          it('should inform the state the scene is done', () => {
+
           });
 
           it('should not be able to submit again', () => {

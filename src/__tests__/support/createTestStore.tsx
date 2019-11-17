@@ -15,7 +15,7 @@ const TestElement = <S, A extends Action = AnyAction>(props: TestProps<S, A>) =>
 };
 
 export const createTestStore = <S, A extends Action = AnyAction>
-(reducer: ReducerType<S, A>, middlewares: Array<Middleware<S, A>>) => {
+(reducer: ReducerType<S, A>, middlewares: Array<Middleware<S, A>> = []) => {
 
   const createTestProvider = () => (): ReactElement => {
     const store = createStore(reducer, middlewares);

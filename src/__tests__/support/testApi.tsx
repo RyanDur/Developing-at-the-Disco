@@ -28,6 +28,7 @@ export interface TestRender {
   click: (form: HTMLElement) => void;
   transition: (element: HTMLElement) => void;
   animate: (by: HTMLElement) => void;
+  contains: (element: string) => boolean;
 }
 
 export interface ShallowTestRender {
@@ -58,7 +59,8 @@ export const render = (Component: ReactElement): TestRender => {
     transition: (element: HTMLElement) =>
       Simulate.transitionEnd(element),
     animate: (element: HTMLElement) =>
-      Simulate.animationEnd(element)
+      Simulate.animationEnd(element),
+    contains: (node: string) => container.innerHTML.includes(node)
   };
 };
 

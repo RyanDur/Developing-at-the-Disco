@@ -1,22 +1,20 @@
 import Signup, {reducer as signupReducer} from './Signup';
 import Others from './Others';
 import Info from './Info';
-import {
-  userMiddleware,
-  userReducer
-} from './store';
-import {UserStoreAction} from './store/types';
+import {userMiddleware, userReducer} from './store';
+import {UserStoreAction, UserStoreState} from './store/types';
 import {SignupAction} from './Signup/actions';
 import {SignupState} from './Signup/types';
-import {UserStoreState} from './store/types';
+import {UserScenesAction, userScenesReducer, UserScenesState} from './scenes';
 
 const userReducers = {
   users: userReducer,
-  signup: signupReducer
+  signup: signupReducer,
+  userScenes: userScenesReducer
 };
 
-export type UserAction = UserStoreAction | SignupAction;
-export type UserState = SignupState | UserStoreState;
+export type UserAction = UserStoreAction | SignupAction | UserScenesAction;
+export type UserState = SignupState | UserStoreState | UserScenesState;
 
 export {
   Signup,
