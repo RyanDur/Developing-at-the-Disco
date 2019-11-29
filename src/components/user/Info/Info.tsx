@@ -2,14 +2,13 @@ import * as React from 'react';
 import {InfoProps} from './types';
 import './Info.css';
 
-export const Info = ({name}: InfoProps) => {
-  return <figure id='current-user'>
-    <img className='avatar'
+export const Info = ({name}: InfoProps) =>
+  <figure id='current-user-info'>
+    <img className='avatar enter'
          src={require(__dirname + '/assets/images/duck.svg')}
-         alt='current user avatar'
+         alt={`${name}'s avatar`}
          title='duck'/>
-    <figcaption className='name'>
+    <figcaption className='name fade-in'>
       {name}
     </figcaption>
   </figure>;
-};

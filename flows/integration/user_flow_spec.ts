@@ -29,7 +29,7 @@ describe('a user signing up', () => {
     });
 
     it('should show the new user', () => {
-      cy.get('#current-user .name').should('contain', user.name);
+      cy.get('#current-user-info .name').should('contain', user.name);
     });
   });
 
@@ -49,7 +49,7 @@ describe('a user signing up', () => {
     });
 
     it('should not show the name as the current user', () => {
-      cy.get('#current-user .name').should('not.exist');
+      cy.get('#current-user-info .name').should('not.exist');
     });
   });
 });

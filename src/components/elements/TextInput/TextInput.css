@@ -11,7 +11,7 @@
         top: 1.2rem;
         margin: 0 1.2rem;
         width: 20.5%;
-        color: rgb(102, 102, 102);
+        color: var(--666666);
         background-image: linear-gradient(
                 transparent 50%,
                 white 45%,
@@ -30,7 +30,7 @@
         height: 4rem;
         padding: 0 1.2rem;
         border-radius: 0.4rem;
-        border: 0.1rem solid rgb(153, 153, 153);
+        border: 0.1rem solid var(--999999);
 
         &:focus {
             outline: none;
@@ -41,7 +41,7 @@
         position: absolute;
         line-height: 1.4rem;
         font-size: 1rem;
-        color: rgb(102, 102, 102);
+        color: var(--666666);
         bottom: 0.1rem;
         right: 0.5rem;
         opacity: 0;
@@ -50,7 +50,7 @@
 
     & .errors {
         position: absolute;
-        color: rgb(158, 0, 36);
+        color: var(--9e0024);
         padding: 0 1.2rem;
         font-size: 1.2rem;
         line-height: 1.4rem;
@@ -64,12 +64,12 @@
             font-size: 1.2rem;
             line-height: 1.2rem;
             width: 5.6rem;
-            color: rgb(0, 124, 135);
+            color: var(--007c87);
         }
 
         & .text {
             border-radius: 0.4rem;
-            border: 0.1rem solid rgb(0, 124, 135);
+            border: 0.1rem solid var(--007c87);
         }
 
         & .max-length {
@@ -77,19 +77,19 @@
         }
 
         &.invalid {
-            color: rgb(158, 0, 36);
+            color: var(--9e0024);
 
             & .title {
-                color: rgb(158, 0, 36);
+                color: var(--9e0024);
                 transition: none;
             }
 
             & .text {
-                border: 0.1rem solid rgb(158, 0, 36);
+                border: 0.1rem solid var(--9e0024);
             }
 
             & .max-length {
-                color: rgb(158, 0, 36);
+                color: var(--9e0024);
             }
         }
     }

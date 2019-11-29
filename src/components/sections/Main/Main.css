@@ -1,12 +1,16 @@
 #content {
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
 
-    & .remove {
+    & .signup {
         position: relative;
-        animation: 1000ms ease-out 0ms 1 remove;
+        top: 20rem;
+
+        &.remove {
+            position: relative;
+            animation: 500ms ease-out 0ms 1 remove;
+        }
     }
 }
 

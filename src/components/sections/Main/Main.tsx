@@ -22,7 +22,7 @@ export const Main = ({hasCurrentUser, onSceneEnd}: MainProps) => {
 
   return <main id='content'>
     {not(offScreen) &&
-    <Signup className={classes(hasCurrentUser && sceneIsDone && 'remove')}
+    <Signup className={classes('signup', hasCurrentUser && sceneIsDone && 'remove')}
             onAnimationEnd={onAnimationEnd}
             onSceneEnd={() => isSceneDone(true)}/>}
   </main>;

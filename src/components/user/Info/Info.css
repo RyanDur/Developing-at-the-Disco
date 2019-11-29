@@ -1,10 +1,57 @@
-#current-user {
+#current-user-info {
     display: flex;
     flex-direction: column;
     align-items: center;
 
     & .avatar {
         width: 5rem;
-        height: 5rem;
+
+        &.enter {
+            animation: 1000ms ease-in-out 0ms 1 avatar-enter;
+        }
+    }
+
+    & .fade-in {
+        animation: 300ms ease-in-out 0ms 1 fade-in;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        margin: 3rem;
+    }
+    100% {
+        opacity: 1;
+        margin: 0;
+    }
+}
+
+@keyframes avatar-enter {
+    0% {
+        position: relative;
+        transform-style: preserve-3d;
+        bottom: 3rem;
+        margin: 16rem 0 0;
+        transform: rotateY(360deg);
+        opacity: 0;
+        width: 13rem;
+    }
+    30% {
+        opacity: 1;
+    }
+    40% {
+        bottom: 0;
+    }
+    45% {
+        width: 13rem;
+    }
+    50% {
+        transform: rotateY(0deg);
+        margin: 16rem 0 0;
+    }
+    100% {
+        margin: 0;
+        width: 5rem;
     }
 }

@@ -8,6 +8,6 @@ interface HeaderProps {
 
 export const Header = ({hasCurrentUser}: HeaderProps) => {
   return <header id='main-header'>
-    {hasCurrentUser && <Info/>}
+    {hasCurrentUser && <Info className='user-info-enter'/>}
   </header>;
 };

@@ -5,15 +5,15 @@ button {
     border-radius: 0.4rem;
 
     &.primary {
-        background-color: rgb(0, 124, 135);
-        color: rgb(255, 255, 255);
+        background-color: var(--007c87);
+        color: var(--ffffff);
 
         &:hover {
-            background-color: rgb(3, 90, 97);
+            background-color: var(--035a61);
         }
 
         &:focus {
-            background-color: rgb(0, 143, 155);
+            background-color: var(--008f9b);
         }
     }
 }
