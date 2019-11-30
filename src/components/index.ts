@@ -1,22 +1,23 @@
 import {UserAction, userMiddleware, userReducers, UserState} from './user';
-import {UserComponentState} from './user/store/types';
+import {Components} from './Components';
 import {Reducers} from '../store/types';
-import {Header, Main} from './sections';
+import {UserComponentState} from './user/store/types';
+
+type ComponentAction = UserAction;
+type ComponentState = UserState;
+type ConnectedState = UserComponentState;
 
 const middleware = [
   ...userMiddleware
 ];
 
-type ComponentAction = UserAction;
-type ComponentState = UserState;
-
-export type ConnectedState = UserComponentState;
-
-const reducers: Reducers<ComponentState, ComponentAction> = userReducers;
+const reducers: Reducers<ComponentState, ComponentAction> = {
+  ...userReducers
+};
 
 export {
   middleware,
   reducers,
-  Header,
-  Main
+  Components,
+  ConnectedState
 };
