@@ -5,6 +5,14 @@
 
     & .avatar {
         width: 5rem;
+
+        &.enter {
+            animation: 1000ms ease-in-out 0ms 1 avatar-enter;
+        }
+    }
+
+    & .fade-in {
+        animation: 300ms ease-in-out 0ms 1 fade-in;
     }
 }
 
