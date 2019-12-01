@@ -1,29 +1,24 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {Signup} from '../../user';
-import {classes, not} from '../../util/helpers';
-import './Main.css';
+import {classes} from '../../util/helpers';
+import './Authorization.css';
 
 interface MainProps {
   hasCurrentUser: boolean;
-  onSceneEnd: (isEnded: boolean) => void;
+  signupEnded: (ended: boolean) => void;
 }
 
-export const Main = ({hasCurrentUser, onSceneEnd}: MainProps) => {
+export const Authorization = ({hasCurrentUser, signupEnded}: MainProps) => {
   const [sceneIsDone, isSceneDone] = useState(false);
-  const [offScreen, isOffScreen] = useState(false);
 
   const onAnimationEnd = () => {
-    if (sceneIsDone) {
-      isOffScreen(true);
-      onSceneEnd(true);
-    }
+    if (sceneIsDone) signupEnded(true);
   };
 
   return <main id='content'>
-    {not(offScreen) &&
     <Signup className={classes('signup', hasCurrentUser && sceneIsDone && 'remove')}
             onAnimationEnd={onAnimationEnd}
-            onSceneEnd={() => isSceneDone(true)}/>}
+            onSceneEnd={() => isSceneDone(true)}/>
   </main>;
 };

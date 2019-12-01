@@ -1,6 +1,6 @@
 import {render, shallowRender, ShallowTestRender, TestRender} from '../../../../__tests__/support/testApi';
 import * as React from 'react';
-import {Main} from '../Main';
+import {Authorization} from '../Authorization';
 import {Signup} from '../../../user';
 
 jest.mock(
@@ -12,8 +12,8 @@ jest.mock(
   }
 );
 
-describe('the main section', () => {
-  const onSceneEnd = jest.fn();
+describe('the authorization section', () => {
+  const signupEnded = jest.fn();
 
   describe('when there is a user', () => {
     describe('when signup has ended', () => {
@@ -21,15 +21,11 @@ describe('the main section', () => {
 
       beforeEach(async () => {
         jest.resetAllMocks();
-        subject = await render(<Main {...{hasCurrentUser: true, onSceneEnd}}/>);
-      });
-
-      it('should not have a way to sign up a user', async () => {
-        expect(subject.contains('hello')).not.toBeTruthy();
+        subject = await render(<Authorization {...{hasCurrentUser: true, signupEnded}}/>);
       });
 
       it('should inform that this components scene has ended', async () => {
-        expect(onSceneEnd).toHaveBeenCalledTimes(1);
+        expect(signupEnded).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -38,7 +34,7 @@ describe('the main section', () => {
 
       beforeEach(async () => {
         jest.resetAllMocks();
-        subject = await shallowRender(<Main {...{hasCurrentUser: true, onSceneEnd}}/>);
+        subject = await shallowRender(<Authorization {...{hasCurrentUser: true, signupEnded}}/>);
       });
 
       it('should have a way to sign up a user', () => {
@@ -46,7 +42,7 @@ describe('the main section', () => {
       });
 
       it('should not inform that this components scene has ended', () => {
-        expect(onSceneEnd).not.toHaveBeenCalled();
+        expect(signupEnded).not.toHaveBeenCalled();
       });
     });
   });
@@ -56,7 +52,7 @@ describe('the main section', () => {
       let subject: ShallowTestRender;
 
       beforeEach(async () => {
-        subject = await shallowRender(<Main {...{hasCurrentUser: false, onSceneEnd}}/>);
+        subject = await shallowRender(<Authorization {...{hasCurrentUser: false, signupEnded}}/>);
         await subject.onSceneEnd();
       });
 
@@ -65,7 +61,7 @@ describe('the main section', () => {
       });
 
       it('should not inform that this components scene has ended', () => {
-        expect(onSceneEnd).not.toHaveBeenCalled();
+        expect(signupEnded).not.toHaveBeenCalled();
       });
     });
 
@@ -73,7 +69,7 @@ describe('the main section', () => {
       let subject: ShallowTestRender;
 
       beforeEach(async () => {
-        subject = await shallowRender(<Main {...{hasCurrentUser: true, onSceneEnd}}/>);
+        subject = await shallowRender(<Authorization {...{hasCurrentUser: true, signupEnded}}/>);
       });
 
       it('should have a way to sign up a user', () => {
@@ -81,7 +77,7 @@ describe('the main section', () => {
       });
 
       it('should not inform that this components scene has ended', () => {
-        expect(onSceneEnd).not.toHaveBeenCalled();
+        expect(signupEnded).not.toHaveBeenCalled();
       });
     });
   });

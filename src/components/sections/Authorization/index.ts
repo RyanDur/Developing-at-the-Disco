@@ -1,4 +1,4 @@
-import {Main} from './Main';
+import {Authorization} from './Authorization';
 import {connect} from '../../../store';
 import {ConnectedState} from '../../index';
 import {has} from '../../util/helpers';
@@ -11,6 +11,6 @@ export default connect(
     hasCurrentUser: has(users.current)
   }),
   (dispatch: Dispatch<UserAction>) => ({
-    onSceneEnd: (isEnded: boolean) => dispatch(signupDone(isEnded))
+    signupEnded: (isEnded: boolean) => dispatch(signupDone(isEnded))
   })
-)(Main);
+)(Authorization);
