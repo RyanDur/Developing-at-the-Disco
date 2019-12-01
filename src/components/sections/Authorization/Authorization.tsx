@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {Signup} from '../../user';
 import {classes} from '../../util/helpers';
 import './Authorization.css';
+import {navigate} from 'hookrouter';
 
 interface MainProps {
   hasCurrentUser: boolean;
@@ -13,7 +14,10 @@ export const Authorization = ({hasCurrentUser, signupEnded}: MainProps) => {
   const [sceneIsDone, isSceneDone] = useState(false);
 
   const onAnimationEnd = () => {
-    if (sceneIsDone) signupEnded(true);
+    if (sceneIsDone) {
+      signupEnded(true);
+      navigate('/');
+    }
   };
 
   return <main id='content'>

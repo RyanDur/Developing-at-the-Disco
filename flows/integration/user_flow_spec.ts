@@ -1,6 +1,13 @@
 import {NewUser} from '../../src/components/user/store/types';
 
 describe('a user signing up', () => {
+  it('should be on the authorization page', () => {
+    cy.visit('/');
+    cy.location().should(loc => {
+      expect(loc.pathname).to.eq('/authorization');
+    });
+  });
+
   describe('with valid user information', () => {
     before(() => {
       cy.server();
@@ -31,6 +38,12 @@ describe('a user signing up', () => {
     it('should show the new user', () => {
       cy.get('#current-user-info .name').should('contain', user.name);
     });
+
+    it('should be on the home page', () => {
+      cy.location().should(loc => {
+        expect(loc.pathname).to.eq('/');
+      });
+    });
   });
 
   describe('with invalid user information', () => {
@@ -50,6 +63,12 @@ describe('a user signing up', () => {
 
     it('should not show the name as the current user', () => {
       cy.get('#current-user-info .name').should('not.exist');
+    });
+
+    it('should be on the authorization page', () => {
+      cy.location().should(loc => {
+        expect(loc.pathname).to.eq('/authorization');
+      });
     });
   });
 });

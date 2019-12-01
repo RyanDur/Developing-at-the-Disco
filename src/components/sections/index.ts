@@ -1,7 +1,7 @@
 import Header from './Header';
-import Main from './Authorization';
+import Authorization from './Authorization';
 
 export {
   Header,
-  Main
+  Authorization
 };
