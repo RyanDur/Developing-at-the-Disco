@@ -23,7 +23,7 @@ exports.development = (paths) => merge([common(paths), {
         new HtmlWebpackPlugin({
             title: 'Home',
             meta: {
-                viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
+                viewport: "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
             }
         }),
         new HtmlWebpackRootPlugin(),
