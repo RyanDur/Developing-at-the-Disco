@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Signup} from '../Signup';
+import {Signup, translate} from '../Signup';
 import {render, TestRender, useDispatchSpy, useSelectorSpy} from '../../../../__tests__/support/testApi';
 import {create} from '../../store/actions';
-import {translate} from '../selectors';
 
 jest.mock('../../../../config', () => ({
   maxUsernameLength: 30
@@ -77,7 +76,7 @@ describe('Signing up', () => {
             const errors = {value: name, validations: ['USERNAME_EXISTS']};
 
             beforeEach(async () => {
-              mockSelector.mockImplementation(() => translate(errors));
+              mockSelector.mockImplementation(() => errors);
               subject = await render(<Signup {...props}/>);
               subject.change(subject.getBy('.username input'), {target: {value: name}});
               subject.focus(subject.getBy('.username input'));

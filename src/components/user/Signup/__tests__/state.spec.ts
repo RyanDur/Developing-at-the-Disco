@@ -1,4 +1,4 @@
-import {NewUser} from '../../store/types';
+import {NewUser, UserComponentState} from '../../store/types';
 import reducer from '../reducer';
 import {createUserMiddleware} from '../../store/middleware';
 import {create} from '../../store/actions';
@@ -23,7 +23,7 @@ describe('signing up validations', () => {
   });
 
   it('should have no errors', () => {
-    expect(selectUsernameErrors(store.getState().signup)).toBeUndefined();
+    expect(selectUsernameErrors(store.getState() as UserComponentState)).toBeUndefined();
   });
 
   describe('the username', () => {
@@ -55,7 +55,7 @@ describe('signing up validations', () => {
     });
 
     it('should have no errors', () => {
-      expect(selectUsernameErrors(store.getState().signup)).toBeUndefined();
+      expect(selectUsernameErrors(store.getState() as UserComponentState)).toBeUndefined();
     });
 
     it('should log the invalid error', () => {

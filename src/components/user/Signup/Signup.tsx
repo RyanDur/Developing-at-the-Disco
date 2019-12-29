@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FormEvent, useState} from 'react';
-import {SignupProps} from './types';
+import {SignupProps, Validation} from './types';
 import {maxUsernameLength} from '../../../config';
 import {TextInput} from '../../elements';
 import {empty, not} from '../../util/helpers';
@@ -8,6 +8,15 @@ import {useDispatch, useSelector} from '../../../store/reactRedux';
 import {selectUsernameErrors} from './selectors';
 import {create} from '../store/actions';
 import './Signup.css';
+
+const signupText: Record<string, string> = {
+  USERNAME_EXISTS: 'Username already exists.'
+};
+
+export const translate = ({value, validations = []}: Partial<Validation>): Validation => ({
+  value,
+  validations: validations.map(validation => signupText[validation])
+});
 
 export const Signup = ({
   className,
@@ -45,7 +54,7 @@ export const Signup = ({
     <TextInput className='username'
                placeHolder='Username'
                onChange={updateName}
-               errors={userNameErrors}
+               errors={translate(userNameErrors)}
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'
