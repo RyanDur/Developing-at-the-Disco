@@ -1,11 +1,21 @@
 import * as React from 'react';
-import {UnconnectedProps} from './types/UnconnectedProps';
-import {TestElementProps} from './types/TestElementProps';
+import {ComponentProps} from 'react';
+import {useDispatch, useSelector} from '../../reactRedux';
+import {AnyAction} from '../../redux/types';
 
-export const TestElement = ({value, func, children, other}: TestElementProps & UnconnectedProps) =>
-  <section>
+interface TestProps {
+  testActions: AnyAction[];
+}
+
+export const TestElement = ({testActions = [], children}: ComponentProps<any> & TestProps) => {
+  const {value, other} = useSelector(state => state);
+  const dispatch = useDispatch();
+  return <section>
     <div id='value'>{value}</div>
     <div id='other'>{other}</div>
-    <button onClick={func}/>
+    <button onClick={() => {
+      testActions.forEach(dispatch);
+    }}/>
     {children}
   </section>;
+};

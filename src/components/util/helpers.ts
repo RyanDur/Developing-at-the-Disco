@@ -14,3 +14,8 @@ export const empty = (obj: any) =>
   emptyArray(obj);
 
 export const has = (content: any) => not(empty(content));
+
+export const remove = (item: any, items: any[]): any[] => {
+  const index: number = items.indexOf(item);
+  return [...items.slice(0, index), ...items.slice(index + 1)];
+};

@@ -1,4 +1,11 @@
-import {render, shallowRender, ShallowTestRender, TestRender} from '../../../../__tests__/support/testApi';
+import {
+  render,
+  shallowRender,
+  ShallowTestRender,
+  TestRender,
+  useDispatchSpy,
+  useSelectorSpy
+} from '../../../../__tests__/support/testApi';
 import * as React from 'react';
 import {Authorization} from '../Authorization';
 import {Signup} from '../../../user';
@@ -13,19 +20,22 @@ jest.mock(
 );
 
 describe('the authorization section', () => {
-  const signupEnded = jest.fn();
+  const mockSelector = jest.fn();
+  const mockDispatch = jest.fn();
+  useDispatchSpy(mockDispatch);
+  useSelectorSpy(mockSelector);
 
   describe('when there is a user', () => {
     describe('when signup has ended', () => {
       let subject: TestRender;
 
       beforeEach(async () => {
-        jest.resetAllMocks();
-        subject = await render(<Authorization {...{hasCurrentUser: true, signupEnded}}/>);
+        mockSelector.mockImplementation(() => true);
+        subject = await render(<Authorization/>);
       });
 
       it('should inform that this components scene has ended', async () => {
-        expect(signupEnded).toHaveBeenCalledTimes(1);
+        expect(mockDispatch).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -34,7 +44,8 @@ describe('the authorization section', () => {
 
       beforeEach(async () => {
         jest.resetAllMocks();
-        subject = await shallowRender(<Authorization {...{hasCurrentUser: true, signupEnded}}/>);
+        mockSelector.mockImplementation(() => true);
+        subject = await shallowRender(<Authorization/>);
       });
 
       it('should have a way to sign up a user', () => {
@@ -42,7 +53,7 @@ describe('the authorization section', () => {
       });
 
       it('should not inform that this components scene has ended', () => {
-        expect(signupEnded).not.toHaveBeenCalled();
+        expect(mockDispatch).not.toHaveBeenCalled();
       });
     });
   });
@@ -52,7 +63,8 @@ describe('the authorization section', () => {
       let subject: ShallowTestRender;
 
       beforeEach(async () => {
-        subject = await shallowRender(<Authorization {...{hasCurrentUser: false, signupEnded}}/>);
+        mockSelector.mockImplementation(() => false);
+        subject = await shallowRender(<Authorization/>);
         await subject.onSceneEnd();
       });
 
@@ -61,7 +73,7 @@ describe('the authorization section', () => {
       });
 
       it('should not inform that this components scene has ended', () => {
-        expect(signupEnded).not.toHaveBeenCalled();
+        expect(mockDispatch).not.toHaveBeenCalled();
       });
     });
 
@@ -69,7 +81,8 @@ describe('the authorization section', () => {
       let subject: ShallowTestRender;
 
       beforeEach(async () => {
-        subject = await shallowRender(<Authorization {...{hasCurrentUser: true, signupEnded}}/>);
+        mockSelector.mockImplementation(() => true);
+        subject = await shallowRender(<Authorization/>);
       });
 
       it('should have a way to sign up a user', () => {
@@ -77,7 +90,7 @@ describe('the authorization section', () => {
       });
 
       it('should not inform that this components scene has ended', () => {
-        expect(signupEnded).not.toHaveBeenCalled();
+        expect(mockDispatch).not.toHaveBeenCalled();
       });
     });
   });

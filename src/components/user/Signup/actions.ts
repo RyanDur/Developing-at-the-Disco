@@ -1,5 +1,5 @@
-import {Action} from '../../../store/types';
 import {SignupErrors} from './types';
+import {Action} from '../../../store/redux/types';
 
 export enum SignupValidations {
   INVALID_SIGNUP = 'INVALID_SIGNUP'

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {act, Simulate} from 'react-dom/test-utils';
 import * as ShallowRenderer from 'react-test-renderer/shallow';
 import {has} from '../../components/util/helpers';
+import * as MyReactRedux from '../../store/reactRedux';
 
 let container: HTMLElement = null;
 
@@ -37,6 +38,12 @@ export interface ShallowTestRender {
   onSceneEnd: () => void;
   onAnimationEnd: () => void;
 }
+
+export const useSelectorSpy = (mockSelector: jest.Mock) => jest.spyOn(MyReactRedux, 'useSelector')
+  .mockImplementation(mockSelector);
+
+export const useDispatchSpy = (mockDispatch: jest.Mock) => jest.spyOn(MyReactRedux, 'useDispatch')
+  .mockImplementation(() => mockDispatch);
 
 export const render = (Component: ReactElement): TestRender => {
   act(() => {

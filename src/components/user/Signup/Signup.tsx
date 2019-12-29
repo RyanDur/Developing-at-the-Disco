@@ -1,66 +1,57 @@
 import * as React from 'react';
 import {FormEvent, useState} from 'react';
-import {SignupProps, Validation} from './types';
+import {SignupProps} from './types';
 import {maxUsernameLength} from '../../../config';
 import {TextInput} from '../../elements';
 import {empty, not} from '../../util/helpers';
+import {useDispatch, useSelector} from '../../../store/reactRedux';
+import {selectUsernameErrors} from './selectors';
+import {create} from '../store/actions';
 import './Signup.css';
 
-const signupText: Record<string, string> = {
-  USERNAME_EXISTS: 'Username already exists.'
-};
+export const Signup = ({
+  className,
+  onSceneEnd = () => undefined,
+  onAnimationEnd = () => undefined
+}: SignupProps) => {
+  const userNameErrors = useSelector(selectUsernameErrors) || {};
+  const dispatch = useDispatch();
+  const [name, updateName] = useState('');
+  const [submitted, isSubmitted] = useState(false);
 
-interface LocalProps {
-  onSceneEnd?: () => void;
-  onAnimationEnd?: () => void;
-  className?: string;
-}
+  const invalid = empty(name) || name === userNameErrors.value;
+  const disabled = invalid || submitted;
 
-export const Signup =
-  ({
-     createUser,
-     className,
-     userNameErrors = {},
-     onSceneEnd = () => undefined,
-     onAnimationEnd = () => undefined
-   }: SignupProps & LocalProps) => {
-    const [name, updateName] = useState('');
-    const [submitted, isSubmitted] = useState(false);
-    const createNewUser = (event: FormEvent) => {
-      event.preventDefault();
-      if (not(disabled)) {
-        createUser(name);
-        isSubmitted(true);
-      }
-    };
-    const translate = ({value, validations = []}: Partial<Validation>): Validation => ({
-      value,
-      validations: validations.map(validation => signupText[validation])
-    });
-    const invalid = empty(name) || name === userNameErrors.value;
-    const disabled = invalid || submitted;
-    const onTransitionEnd = () => {
-      if (submitted && not(invalid)) {
-        onSceneEnd();
-      } else {
-        isSubmitted(false);
-      }
-    };
-
-    return <form id='create-user'
-                 onSubmit={createNewUser}
-                 className={className}
-                 onAnimationEnd={onAnimationEnd}>
-      <TextInput className='username'
-                 placeHolder='Username'
-                 onChange={updateName}
-                 errors={translate(userNameErrors)}
-                 maxLength={maxUsernameLength}/>
-      <button type='submit'
-              className='submit primary'
-              onTransitionEnd={onTransitionEnd}
-              disabled={disabled}>
-        Enter
-      </button>
-    </form>;
+  const createNewUser = (event: FormEvent) => {
+    event.preventDefault();
+    if (not(disabled)) {
+      dispatch(create(name));
+      isSubmitted(true);
+    }
   };
+
+  const onTransitionEnd = () => {
+    if (submitted && not(invalid)) {
+      onSceneEnd();
+    } else {
+      isSubmitted(false);
+    }
+  };
+
+  return <form id='create-user'
+               onSubmit={createNewUser}
+               className={className}
+               onAnimationEnd={onAnimationEnd}>
+    <TextInput className='username'
+               placeHolder='Username'
+               onChange={updateName}
+               errors={userNameErrors}
+               maxLength={maxUsernameLength}/>
+    <button type='submit'
+            className='submit primary'
+            onTransitionEnd={onTransitionEnd}
+            disabled={disabled}>
+      Sign Up
+    </button>
+  </form>;
+};

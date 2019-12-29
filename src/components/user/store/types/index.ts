@@ -1,9 +1,9 @@
 import {UserComponentState, UserStoreState} from './state';
 import {CurrentUser, NewUser, OtherUser} from './user';
 import {CreateAction, CurrentAction, OtherUsersAction, UpdateAction, UserActions} from './actions';
-import {OtherAction} from '../../../../store/__tests__/types';
+import {SomeOtherAction} from '../../../../store/__tests__/support/types';
 
-type UserStoreAction = CreateAction | UpdateAction | CurrentAction | OtherAction | OtherUsersAction;
+type UserStoreAction = CreateAction | UpdateAction | CurrentAction | SomeOtherAction | OtherUsersAction;
 
 export {
   UserStoreState,

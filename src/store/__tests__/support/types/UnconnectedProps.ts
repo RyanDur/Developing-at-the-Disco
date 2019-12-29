@@ -1,3 +1,3 @@
 export interface UnconnectedProps {
-  other: string;
+  value: string;
 }

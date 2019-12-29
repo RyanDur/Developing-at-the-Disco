@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {InfoProps} from './types';
 import './Info.css';
+import {useSelector} from '../../../store/reactRedux';
+import {currentUserName} from './selectors';
 
-export const Info = ({name}: InfoProps) =>
-  <figure id='current-user-info'>
+export const Info = () => {
+  const name = useSelector(currentUserName);
+  return <figure id='current-user-info'>
     <img className='avatar enter'
          src={require(__dirname + '/assets/images/duck.svg')}
          alt={`${name}'s avatar`}
@@ -12,3 +14,4 @@ export const Info = ({name}: InfoProps) =>
       {name}
     </figcaption>
   </figure>;
+};

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {createProvider} from './store';
 import Components, {middleware, reducers} from './components';
 import './public/base.css';
+import {createProvider} from './store/reactRedux';
+import {combineReducers, createStore} from './store/redux';
 
-const Provider = createProvider(reducers, middleware);
+const Provider = createProvider(createStore(combineReducers(reducers), middleware));
 
 ReactDOM.render(
   <Provider>

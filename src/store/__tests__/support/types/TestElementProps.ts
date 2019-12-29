@@ -1,4 +1,8 @@
-import {DispatchProps, State} from '../../../types';
 import {ComponentProps} from 'react';
+import {State} from '../../../redux/types';
 
-export type TestElementProps = State & DispatchProps & ComponentProps<any>;
+export interface TestDispatchProps {
+  someFunction: () => void;
+}
+
+export type TestElementProps = State & TestDispatchProps & ComponentProps<any>;

@@ -1,6 +1,6 @@
-import {State} from '../../../../../store/types';
-import {CurrentUser, OtherUser} from '../user';
+import {CurrentUser} from '../user';
 import {OtherUsersPage} from '../../data/types';
+import {State} from '../../../../../store/redux/types';
 
 export interface UserStoreState extends State {
   current?: CurrentUser;

@@ -1,4 +1,4 @@
-import {Action} from '../../../store/types';
+import {Action} from '../../../store/redux/types';
 
 export enum UserScenesActions {
   SIGNUP_DONE = 'Signup done'

@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
 import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
-
-interface ComponentsState {
-  unauthorized: boolean;
-}
+import {useSelector} from '../store/reactRedux';
+import {checkAuthorization} from './selectors';
 
 const routes = {
   '/': () => <Header/>,
   '/authorization': () => <Authorization/>
 };
 
-export const Components = ({unauthorized}: ComponentsState) => {
+export const Components = () => {
+  const unauthorized = useSelector(checkAuthorization);
   const routeResult = useRoutes(routes);
 
   useEffect(() => {

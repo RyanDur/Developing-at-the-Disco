@@ -8,7 +8,8 @@
     "no-duplicate-imports": false,
     "ter-indent": [
       true,
-      2
+      2,
+      {"SwitchCase": 1}
     ],
     "quotemark": [
       true,
@@ -20,6 +21,7 @@
     "class-name": true,
     "interface-name": [true, "never-prefix"],
     "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "no-object-literal-type-assertion": false,
     "no-implicit-dependencies": [true, "dev"],
     "no-submodule-imports": false,
     "jsx-key": true,

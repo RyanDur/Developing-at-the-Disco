@@ -1,9 +1,7 @@
 import {UserAction, userMiddleware, userReducers, UserState} from './user';
 import {Components} from './Components';
-import {Reducers} from '../store/types';
 import {UserComponentState} from './user/store/types';
-import {connect} from '../store';
-import {has, not} from './util/helpers';
+import {Reducers} from '../store/redux/types';
 
 type ComponentAction = UserAction;
 type ComponentState = UserState;
@@ -24,6 +22,4 @@ export {
   ConnectedState
 };
 
-export default connect(({users, userScenes}: ConnectedState) => ({
-  unauthorized: not(users.current || userScenes.signupDone)
-}))(Components);
+export default Components;

@@ -1,13 +1,13 @@
-import {createTestStore} from '../../../../__tests__/support/createTestStore';
 import reducer, {UserScenesState} from '../reducer';
 import {signupDone, UserScenesAction} from '../actions';
-import {Store} from '../../../../store/types';
+import {createStore} from '../../../../store/redux';
+import {Store} from '../../../../store/redux/types';
 
 describe('user scenes', () => {
   let store: Store<UserScenesState, UserScenesAction>;
 
   beforeEach(() => {
-    store = createTestStore(reducer);
+    store = createStore(reducer);
   });
 
   it('should be in its initial state', () => {

@@ -2,20 +2,20 @@ import * as React from 'react';
 import {useState} from 'react';
 import {Signup} from '../../user';
 import {classes} from '../../util/helpers';
-import './Authorization.css';
 import {navigate} from 'hookrouter';
+import {useDispatch, useSelector} from '../../../store/reactRedux';
+import {checkForCurrentUser} from './selectors';
+import {signupDone} from '../../user/scenes';
+import './Authorization.css';
 
-interface MainProps {
-  hasCurrentUser: boolean;
-  signupEnded: (ended: boolean) => void;
-}
-
-export const Authorization = ({hasCurrentUser, signupEnded}: MainProps) => {
+export const Authorization = () => {
   const [sceneIsDone, isSceneDone] = useState(false);
+  const hasCurrentUser = useSelector(checkForCurrentUser);
+  const dispatch = useDispatch();
 
   const onAnimationEnd = () => {
     if (sceneIsDone) {
-      signupEnded(true);
+      dispatch(signupDone(true));
       navigate('/');
     }
   };

@@ -1,4 +1,4 @@
-import {Dispatch} from './Dispatch';
+import {Dispatch} from '../redux/types';
 
 export interface AppContext<S> {
   state: S;

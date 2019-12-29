@@ -1,12 +1,12 @@
 import reducer, {initialState} from '../reducer';
 import {create, update} from '../actions';
-import {createTestStore} from '../../../../__tests__/support/createTestStore';
 import {createUserMiddleware, getOtherUsersMiddleware} from '../middleware';
-import {Store} from '../../../../store/types';
 import {CurrentUserGuard} from '../types/user/CurrentUser';
 import {NewUser, UserStoreAction, UserStoreState} from '../types';
 import {UserId, Username} from '../types/user';
 import {Handler, OtherUsersPageGuard} from '../data/types';
+import {Store} from '../../../../store/redux/types';
+import {combineReducers, createStore} from '../../../../store/redux';
 
 describe('user store:', () => {
   const mockCreateUser = jest.fn();
@@ -16,7 +16,7 @@ describe('user store:', () => {
   let store: Store<UserStoreState, UserStoreAction>;
 
   beforeEach(() => {
-    store = createTestStore({users: reducer}, [
+    store = createStore(combineReducers({users: reducer}), [
       createUserMiddleware(mockCreateUser),
       getOtherUsersMiddleware(mockGetOtherUsers)
     ]);
