@@ -1,14 +1,12 @@
-import {UserAction, userMiddleware, userReducers, UserState} from './user';
 import {Components} from './Components';
-import {UserComponentState} from './user/store/types';
 import {Reducers} from '../store/redux/types';
+import {UserAction, userMiddlewares, userReducers, UserState} from './user';
 
 type ComponentAction = UserAction;
 type ComponentState = UserState;
-type ConnectedState = UserComponentState;
 
 const middleware = [
-  ...userMiddleware
+  ...userMiddlewares
 ];
 
 const reducers: Reducers<ComponentState, ComponentAction> = {
@@ -18,8 +16,7 @@ const reducers: Reducers<ComponentState, ComponentAction> = {
 export {
   middleware,
   reducers,
-  Components,
-  ConnectedState
+  ComponentState
 };
 
 export default Components;

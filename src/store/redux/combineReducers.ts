@@ -1,7 +1,7 @@
-import {Action, AnyAction, AnyStates, Reducer, Reducers, States} from './types';
+import {Action, AnyAction, AnyState, Reducer, Reducers, State} from './types';
 
 export const combineReducers =
-  <S extends States = AnyStates, A extends Action = AnyAction>
+  <S extends State = AnyState, A extends Action = AnyAction>
   (reducers: Reducers<S, A>): Reducer<S, A> => {
     const keys: string[] = Object.keys(reducers);
     return (prevState: S = {} as S, action: A) =>

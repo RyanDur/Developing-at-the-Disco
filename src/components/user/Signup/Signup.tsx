@@ -5,9 +5,9 @@ import {maxUsernameLength} from '../../../config';
 import {TextInput} from '../../elements';
 import {empty, not} from '../../util/helpers';
 import {useDispatch, useSelector} from '../../../store/reactRedux';
-import {selectUsernameErrors} from './selectors';
-import {create} from '../store/actions';
+import {create} from '../store/action';
 import './Signup.css';
+import {selectUsernameErrors} from '../store/selectors';
 
 const signupText: Record<string, string> = {
   USERNAME_EXISTS: 'Username already exists.'

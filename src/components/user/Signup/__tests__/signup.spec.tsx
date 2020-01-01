@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Signup, translate} from '../Signup';
+import {Signup} from '../Signup';
 import {render, TestRender, useDispatchSpy, useSelectorSpy} from '../../../../__tests__/support/testApi';
-import {create} from '../../store/actions';
+import {create} from '../../store/action';
 
 jest.mock('../../../../config', () => ({
   maxUsernameLength: 30

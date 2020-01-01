@@ -1,29 +1,33 @@
-import {NewUser, UserComponentState} from '../../store/types';
-import reducer from '../reducer';
-import {createUserMiddleware} from '../../store/middleware';
-import {create} from '../../store/actions';
-import {UsernameValidation} from '../types';
-import {SignupValidationGuard} from '../types/UsernameValidation';
-import {selectUsernameErrors} from '../selectors';
-import {Handler} from '../../store/data/types';
+import {UsernameValidation} from '../../Signup/types';
 import {Store} from '../../../../store/redux/types';
 import {combineReducers, createStore} from '../../../../store/redux';
-import {UserMiddlewareAction, UserMiddlewareState} from '../../store/middleware/types';
+import {createUserMiddleware} from '../middleware';
+import {selectUsernameErrors} from '../selectors';
+import {NewUser, UserErrorsState, UserState} from '../types';
+import {Handler} from '../data/types';
+import {SignupValidationGuard} from '../../Signup/types/UsernameValidation';
+import {create} from '../action';
+import * as userReducers from '../reducer';
+import {UserAction} from '../action/types';
 
 type CreateSignupErrors = (name: string) => UsernameValidation;
+
+interface TestState extends UserState {
+  userErrors: UserErrorsState;
+}
 
 describe('signing up validations', () => {
   const mockCreateUser = jest.fn();
   const username: string = 'Ryan';
-  let store: Store<UserMiddlewareState, UserMiddlewareAction>;
+  let store: Store<TestState, UserAction>;
 
   beforeEach(() => {
     console.warn = jest.fn();
-    store = createStore(combineReducers({signup: reducer}), [createUserMiddleware(mockCreateUser)]);
+    store = createStore(combineReducers(userReducers), [createUserMiddleware(mockCreateUser)]);
   });
 
   it('should have no errors', () => {
-    expect(selectUsernameErrors(store.getState() as UserComponentState)).toBeUndefined();
+    expect(selectUsernameErrors(store.getState())).toBeUndefined();
   });
 
   describe('the username', () => {
@@ -42,7 +46,7 @@ describe('signing up validations', () => {
 
       store.dispatch(create(username));
       const signupErrors = anError(username);
-      expect(store.getState().signup).toEqual(signupErrors);
+      expect(store.getState().userErrors).toEqual(signupErrors);
     });
   });
 
@@ -55,7 +59,7 @@ describe('signing up validations', () => {
     });
 
     it('should have no errors', () => {
-      expect(selectUsernameErrors(store.getState() as UserComponentState)).toBeUndefined();
+      expect(selectUsernameErrors(store.getState())).toBeUndefined();
     });
 
     it('should log the invalid error', () => {

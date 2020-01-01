@@ -1,22 +1,24 @@
-import reducer, {initialState} from '../reducer';
-import {create, update} from '../actions';
+import {create, update} from '../action';
 import {createUserMiddleware, getOtherUsersMiddleware} from '../middleware';
 import {CurrentUserGuard} from '../types/user/CurrentUser';
-import {NewUser, UserStoreAction, UserStoreState} from '../types';
-import {UserId, Username} from '../types/user';
+import {NewUser, UserId, Username} from '../types/user';
 import {Handler, OtherUsersPageGuard} from '../data/types';
 import {Store} from '../../../../store/redux/types';
-import {combineReducers, createStore} from '../../../../store/redux';
+import {createStore} from '../../../../store/redux';
+import {UsersState} from '../types';
+import {users} from '../reducer';
+import {initialState} from '../reducer/users';
+import {UserAction} from '../action/types';
 
 describe('user store:', () => {
   const mockCreateUser = jest.fn();
   const mockGetOtherUsers = jest.fn();
   const username: Username = 'Travis';
   const id: UserId = '3' as UserId;
-  let store: Store<UserStoreState, UserStoreAction>;
+  let store: Store<UsersState, UserAction>;
 
   beforeEach(() => {
-    store = createStore(combineReducers({users: reducer}), [
+    store = createStore(users, [
       createUserMiddleware(mockCreateUser),
       getOtherUsersMiddleware(mockGetOtherUsers)
     ]);
@@ -24,7 +26,7 @@ describe('user store:', () => {
 
   describe('on start', () => {
     it('should have an initial state', () => {
-      expect(store.getState().users).toEqual(initialState);
+      expect(store.getState()).toEqual(initialState);
     });
   });
 
@@ -66,11 +68,11 @@ describe('user store:', () => {
 
       it('should update the current user', () => {
         const expected = {name: username, id};
-        expect(store.getState().users.current).toEqual(expected);
+        expect(store.getState().current).toEqual(expected);
       });
 
       it('should get all the other users', () => {
-        expect(store.getState().users.others).toEqual(otherUsersPage);
+        expect(store.getState().others).toEqual(otherUsersPage);
       });
     });
   });
@@ -90,7 +92,7 @@ describe('user store:', () => {
     });
 
     it('should not create the current user', () => {
-      expect(store.getState().users).toEqual(initialState);
+      expect(store.getState()).toEqual(initialState);
     });
   });
 });

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
 import {useSelector} from '../store/reactRedux';
-import {checkAuthorization} from './selectors';
+import {checkAuthorization} from './user/store/selectors';
 
 const routes = {
   '/': () => <Header/>,

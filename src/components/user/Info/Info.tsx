@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Info.css';
 import {useSelector} from '../../../store/reactRedux';
-import {currentUserName} from './selectors';
+import {currentUserName} from '../store/selectors';
 
 export const Info = () => {
   const name = useSelector(currentUserName);
