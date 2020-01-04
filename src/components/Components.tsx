@@ -3,18 +3,24 @@ import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
 import {useSelector} from '../store/reactRedux';
 import {checkAuthorization} from './user/store/selectors';
+import {not} from './util/helpers';
+
+enum paths {
+  home = '/',
+  auth = '/authorization'
+}
 
 const routes = {
-  '/': () => <Header/>,
-  '/authorization': () => <Authorization/>
+  [paths.home]: () => <Header/>,
+  [paths.auth]: () => <Authorization/>
 };
 
 export const Components = () => {
-  const unauthorized = useSelector(checkAuthorization);
+  const authorized = useSelector(checkAuthorization);
   const routeResult = useRoutes(routes);
 
   useEffect(() => {
-    if (unauthorized) navigate('/authorization');
+    if (not(authorized)) navigate(paths.auth);
   });
 
   return routeResult;

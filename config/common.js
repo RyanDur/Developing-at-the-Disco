@@ -9,7 +9,8 @@ exports.common = ({dist}) => merge([{
     output: {
         chunkFilename: "[name].[chunkhash:4].js",
         filename: '[name].[chunkhash:4].js',
-        path: dist
+        path: dist,
+        publicPath: '/'
     },
     module: {
         rules: [

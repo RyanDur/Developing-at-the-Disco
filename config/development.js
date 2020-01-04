@@ -14,7 +14,8 @@ exports.development = (paths) => merge([common(paths), {
         contentBase: './dist',
         host: process.env.HOST,
         port: process.env.PORT,
-        overlay: true
+        overlay: true,
+        historyApiFallback: true,
     },
     stats: 'minimal',
     plugins: [
