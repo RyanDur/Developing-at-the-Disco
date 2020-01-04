@@ -1,2 +1,1 @@
-pushstate: enabled
 location_include: includes/*.conf
