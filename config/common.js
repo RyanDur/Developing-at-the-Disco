@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const {EnvironmentPlugin} = require("webpack");
+const CopyPlugin = require('copy-webpack-plugin');
 
 exports.common = ({dist}) => merge([{
     resolve: {
@@ -31,6 +32,9 @@ exports.common = ({dist}) => merge([{
         new EnvironmentPlugin({
             USERS_ENDPOINT: '/users',
             USERNAME_MAX_LENGTH: 256
-        })
+        }),
+        new CopyPlugin([{
+            from: 'includes/nginx.conf', to: '.'
+        }])
     ]
 }]);
