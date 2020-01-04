@@ -34,7 +34,7 @@ exports.common = ({dist}) => merge([{
             USERNAME_MAX_LENGTH: 256
         }),
         new CopyPlugin([{
-            from: 'includes/nginx.conf', to: '.'
+            from: 'Staticfile', to: '.'
         }])
     ]
 }]);
