@@ -1,1 +1,1 @@
-location_include: /config/*.conf
+location_include: includes/*.conf
