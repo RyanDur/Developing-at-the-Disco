@@ -3,4 +3,4 @@ applications:
   - name: Developing_at_the_disco
     path: ./dist
     buildpacks:
-      - staticfile_buildpack
+      - nginx_buildpack
