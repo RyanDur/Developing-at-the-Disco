@@ -1,5 +1,5 @@
 import {createStore} from '../createStore';
-import {Listener, Store, Unsubscribe} from '../types';
+import {Listener, State, Store, Unsubscribe} from '../types';
 import {
   MiddlewareAction,
   OtherMiddlewareAction,
@@ -25,8 +25,8 @@ import {
   someInitialState,
   testReducer
 } from '../../__tests__/support/TestReducers';
-import Mock = jest.Mock;
 import {has} from '../../util/helpers';
+import Mock = jest.Mock;
 
 type CombinedActions = SomeActions | MiddlewareAction | OtherMiddlewareAction;
 type CombinedStates = SomeState | SomeStates;
@@ -139,6 +139,17 @@ describe('creating the store', () => {
 
       expect(() => store.dispatch(someAction))
         .toThrowError('Do not call "getState" while the state is updating.');
+    });
+  });
+
+  describe('when given an initial state', () => {
+    it('should be initialised with it', () => {
+      const initialState: State = {value: 'initial value passed in on creation'};
+      const store = createStore<SomeState>((state: SomeState) => {
+        return state;
+      }, undefined, initialState);
+
+      expect(store.getState()).toEqual(initialState);
     });
   });
 });

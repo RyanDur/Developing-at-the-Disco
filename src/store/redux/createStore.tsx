@@ -24,9 +24,9 @@ const enhance = <S extends State = AnyState, A extends Action = AnyAction>(
 
 export const createStore = <S extends State = AnyState, A extends Action = AnyAction>(
   reducer: Reducer<S, A>,
-  middlewares?: Array<Middleware<S, A>>
+  middlewares?: Array<Middleware<S, A>>,
+  state?: S
 ): Store<S, A> => {
-  let state: S;
   let listeners: Listener[] = [];
   let updatingState = false;
 
