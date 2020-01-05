@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Reducer} from 'react';
-import {Action, AnyAction, AnyState, Listener, Middleware, State, Store, Unsubscribe} from './types';
+import {Action, AnyAction, AnyState, Dispatch, Listener, Middleware, State, Store, Unsubscribe} from './types';
 import {start} from './actions';
 import {remove} from '../util/helpers';
 
@@ -8,7 +8,7 @@ const enhance = <S extends State = AnyState, A extends Action = AnyAction>(
   store: Store<S, A>,
   middlewares: Array<Middleware<S, A>>
 ): Store<S, A> => {
-  const enhancedDispatch = (action: A): void => {
+  const enhancedDispatch: Dispatch<A> = (action) => {
     partiallyApplied.forEach(middleware => middleware(action));
     store.dispatch(action);
   };
