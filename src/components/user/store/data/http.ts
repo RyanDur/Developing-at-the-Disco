@@ -1,7 +1,7 @@
 import {Handler, Method, ResponseTypeGuards} from './types';
 import {Endpoint} from './types/Endpoint';
-import {logError, logResponse} from '../../../util/loggers';
 import {host} from '../../../../config';
+import {logError, logResponse} from '../../../../store/util/loggers';
 
 export const http = (
   method: Method,
@@ -12,12 +12,12 @@ export const http = (
   .then(async (response: Response): Promise<void> => {
     const body = await response.json();
     switch (response.status) {
-    case 200:
-    case 201:
-      return success(guard.success.decode(body));
-    case 400:
-      return clientError(guard.clientError.decode(body));
-    default:
-      logResponse(body);
+      case 200:
+      case 201:
+        return success(guard.success.decode(body));
+      case 400:
+        return clientError(guard.clientError.decode(body));
+      default:
+        logResponse(body);
     }
   }).catch(logError);

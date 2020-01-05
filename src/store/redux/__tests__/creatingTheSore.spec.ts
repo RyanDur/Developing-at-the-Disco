@@ -25,8 +25,8 @@ import {
   someInitialState,
   testReducer
 } from '../../__tests__/support/TestReducers';
-import {has} from '../../../components/util/helpers';
 import Mock = jest.Mock;
+import {has} from '../../util/helpers';
 
 type CombinedActions = SomeActions | MiddlewareAction | OtherMiddlewareAction;
 type CombinedStates = SomeState | SomeStates;

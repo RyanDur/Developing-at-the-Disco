@@ -2,20 +2,20 @@ import * as React from 'react';
 import {Reducer} from 'react';
 import {Action, AnyAction, AnyState, Listener, Middleware, State, Store, Unsubscribe} from './types';
 import {start} from './actions';
-import {remove} from '../../components/util/helpers';
+import {remove} from '../util/helpers';
 
 const enhance = <S, A extends Action = AnyAction>(
   store: Store<S, A>,
   middlewares: Array<Middleware<S, A>>
 ): Store<S, A> => {
   const dispatch = (action: A): void => {
-    wares.forEach(ware => ware(action));
+    partiallyApplied.forEach(middleware => middleware(action));
     store.dispatch(action);
   };
 
-  const wares = middlewares
-    .map(ware => ware({...store, dispatch}))
-    .map(ware => ware(store.dispatch));
+  const partiallyApplied = middlewares
+    .map(middleware => middleware({...store, dispatch}))
+    .map(middleware => middleware(store.dispatch));
 
   return ({
     ...store,
@@ -24,7 +24,9 @@ const enhance = <S, A extends Action = AnyAction>(
 };
 
 export const createStore = <S extends State = AnyState, A extends Action = AnyAction>(
-  reducer: Reducer<S, A>, middlewares?: Array<Middleware<S, A>>): Store<S, A> => {
+  reducer: Reducer<S, A>,
+  middlewares?: Array<Middleware<S, A>>
+): Store<S, A> => {
   let state: S;
   let listeners: Listener[] = [];
   let updatingState = false;

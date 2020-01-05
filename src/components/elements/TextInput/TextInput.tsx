@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {TextInputProps} from './types';
-import {classes, has} from '../../util/helpers';
 import {MessageList} from '../List';
 import './TextInput.css';
+import {join, has} from '../../../store/util/helpers';
 
 export const TextInput = ({onChange, className, maxLength, placeHolder, errors = {}}: TextInputProps) => {
   const [text, updateText] = useState('');
@@ -11,7 +11,7 @@ export const TextInput = ({onChange, className, maxLength, placeHolder, errors =
 
   useEffect(() => onChange(text));
 
-  return <article className={classes(
+  return <article className={join(
     'text-input',
     (isCandidate && 'candidate'),
     className,

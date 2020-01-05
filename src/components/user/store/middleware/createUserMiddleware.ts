@@ -4,9 +4,9 @@ import {SignupErrors} from '../../Signup/types';
 import {Either, isRight} from 'fp-ts/lib/Either';
 import {Errors} from 'io-ts';
 import {Create, Handler} from '../data/types';
-import {logErrors} from '../../../util/loggers';
 import {Action, Dispatch, Middleware, State} from '../../../../store/redux/types';
 import {UserAction, UserActions} from '../action/types';
+import {logErrors} from '../../../../store/util/loggers';
 
 const handle = (next: Dispatch): Handler => ({
   success: (user: Either<Errors, CurrentUser>) =>

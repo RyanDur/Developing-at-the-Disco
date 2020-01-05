@@ -1,5 +1,4 @@
-export const classes = (...classList: string[]) =>
-  classList.filter(className => !!className).join(' ');
+export const join = (...list: string[]) => list.filter(has).join(' ');
 
 const emptyObject = (obj: Object) =>
   Object.getOwnPropertyNames(obj).length === 0;

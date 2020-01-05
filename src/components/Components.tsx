@@ -3,7 +3,7 @@ import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
 import {useSelector} from '../store/reactRedux';
 import {checkAuthorization} from './user/store/selectors';
-import {not} from './util/helpers';
+import {not} from '../store/util/helpers';
 
 enum paths {
   home = '/',

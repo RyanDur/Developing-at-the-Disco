@@ -3,10 +3,10 @@ import {Either} from 'fp-ts/lib/Either';
 import {isRight} from 'fp-ts/lib/These';
 import {Errors} from 'io-ts';
 import {GetAll, Handler, OtherUsersPage} from '../data/types';
-import {logErrors} from '../../../util/loggers';
 import {Action, Dispatch, Middleware, State} from '../../../../store/redux/types';
 import {UserAction, UserActions} from '../action/types';
 import {UserState} from '../types/state';
+import {logErrors} from '../../../../store/util/loggers';
 
 const handle = (next: Dispatch): Handler => ({
   success: (users: Either<Errors, OtherUsersPage>) =>
