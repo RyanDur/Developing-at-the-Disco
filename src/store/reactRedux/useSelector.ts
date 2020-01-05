@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
-import {Context} from './store';
+import {Context} from './Provider';
 import {AnyState} from '../redux/types';
 
 type Selector = (state: AnyState) => any;

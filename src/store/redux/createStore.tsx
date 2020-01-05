@@ -4,23 +4,22 @@ import {Action, AnyAction, AnyState, Listener, Middleware, State, Store, Unsubsc
 import {start} from './actions';
 import {remove} from '../util/helpers';
 
-const enhance = <S, A extends Action = AnyAction>(
+const enhance = <S extends State = AnyState, A extends Action = AnyAction>(
   store: Store<S, A>,
   middlewares: Array<Middleware<S, A>>
 ): Store<S, A> => {
-  const dispatch = (action: A): void => {
+  const enhancedDispatch = (action: A): void => {
     partiallyApplied.forEach(middleware => middleware(action));
     store.dispatch(action);
   };
 
+  const enhancedStore = {...store, dispatch: enhancedDispatch};
+
   const partiallyApplied = middlewares
-    .map(middleware => middleware({...store, dispatch}))
+    .map(middleware => middleware(enhancedStore))
     .map(middleware => middleware(store.dispatch));
 
-  return ({
-    ...store,
-    dispatch
-  });
+  return enhancedStore;
 };
 
 export const createStore = <S extends State = AnyState, A extends Action = AnyAction>(
@@ -42,7 +41,7 @@ export const createStore = <S extends State = AnyState, A extends Action = AnyAc
       updatingState = false;
       listeners.forEach(listener => listener());
     },
-    subscribe(listener: () => void): Unsubscribe {
+    subscribe: (listener: Listener): Unsubscribe => {
       listeners = [...listeners, listener];
       return (): void => {
         listeners = remove(listener, listeners);

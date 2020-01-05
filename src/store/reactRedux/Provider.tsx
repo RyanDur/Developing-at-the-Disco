@@ -4,7 +4,10 @@ import {Action, AnyAction, AnyState, State, States, Store} from '../redux/types'
 
 export const Context = React.createContext(undefined);
 
-export const createProvider = <S extends State | States = AnyState, A extends Action = AnyAction>
-(store: Store<S, A>) => ({children}: ComponentProps<any>) => {
+interface ProviderProps<S extends State | States = AnyState, A extends Action = AnyAction> {
+  store: Store<S, A>;
+}
+
+export const Provider = ({store, children}: ProviderProps | ComponentProps<any>) => {
   return <Context.Provider value={store}>{children}</Context.Provider>;
 };

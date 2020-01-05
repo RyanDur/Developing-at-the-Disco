@@ -8,19 +8,19 @@ import {
   testMiddleware,
   testReducer
 } from '../../__tests__/support';
-import {createProvider} from '../store';
 import {createStore} from '../../redux';
 import {TestElement} from '../../__tests__/support/TestElement';
 import {otherTestMiddleware} from '../../__tests__/support/testMiddlewares';
 import {someInitialState} from '../../__tests__/support/TestReducers';
+import {Provider} from '../Provider';
 
 describe('Connecting components to the state.', () => {
   let subject: TestRender, getBy: TestRender['getBy'], click: TestRender['click'];
 
   describe('without middleware', () => {
     beforeEach(() => {
-      const Provider = createProvider(createStore(testReducer));
-      subject = render(<Provider><TestElement testActions={[someAction]}/></Provider>);
+      const store = createStore(testReducer);
+      subject = render(<Provider store={store}><TestElement testActions={[someAction]}/></Provider>);
       getBy = subject.getBy;
     });
 
@@ -35,8 +35,12 @@ describe('Connecting components to the state.', () => {
 
   describe('with middleware', () => {
     beforeEach(() => {
-      const Provider = createProvider(createStore(anotherTestReducer, [testMiddleware, otherTestMiddleware]));
-      subject = render(<Provider><TestElement testActions={[middlewareAction, otherMiddlewareAction]}/></Provider>);
+      const store = createStore(anotherTestReducer, [testMiddleware, otherTestMiddleware]);
+      subject = render(
+        <Provider store={store}>
+          <TestElement testActions={[middlewareAction, otherMiddlewareAction]}/>
+        </Provider>
+      );
       click = subject.click;
       subject.click(getBy('button'));
     });
