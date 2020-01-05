@@ -27,11 +27,17 @@ export const createStore = <S extends State = AnyState, A extends Action = AnyAc
   reducer: Reducer<S, A>, middlewares?: Array<Middleware<S, A>>): Store<S, A> => {
   let state: S;
   let listeners: Listener[] = [];
+  let updatingState = false;
 
   const store: Store<S> = {
-    getState: () => state,
+    getState: () => {
+      if (updatingState) throw new Error('Do not call "getState" while the state is updating.');
+      return state;
+    },
     dispatch: (action: A) => {
+      updatingState = true;
       state = reducer(state, action);
+      updatingState = false;
       listeners.forEach(listener => listener());
     },
     subscribe(listener: () => void): Unsubscribe {

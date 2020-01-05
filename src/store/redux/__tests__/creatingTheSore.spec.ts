@@ -25,6 +25,7 @@ import {
   someInitialState,
   testReducer
 } from '../../__tests__/support/TestReducers';
+import {has} from '../../../components/util/helpers';
 import Mock = jest.Mock;
 
 type CombinedActions = SomeActions | MiddlewareAction | OtherMiddlewareAction;
@@ -126,6 +127,18 @@ describe('creating the store', () => {
       unsubscribe();
       store.dispatch(someAction);
       expect(listener).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('when getting the state', () => {
+    it('should not happen while the the state is updating', () => {
+      const store = createStore((state) => {
+        has(store) && store.getState();
+        return state;
+      });
+
+      expect(() => store.dispatch(someAction))
+        .toThrowError('Do not call "getState" while the state is updating.');
     });
   });
 });
