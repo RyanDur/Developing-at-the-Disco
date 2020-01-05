@@ -10,8 +10,7 @@ exports.common = ({dist}) => merge([{
     output: {
         chunkFilename: "[name].[chunkhash:4].js",
         filename: '[name].[chunkhash:4].js',
-        path: dist,
-        publicPath: '/'
+        path: dist
     },
     module: {
         rules: [
@@ -34,7 +33,7 @@ exports.common = ({dist}) => merge([{
             USERNAME_MAX_LENGTH: 256
         }),
         new CopyPlugin([{
-            from: 'Staticfile', to: '.'
+            from: 'config/Staticfile', to: '.'
         }])
     ]
 }]);
