@@ -1,4 +1,4 @@
-import {Reducer} from '../../../../store/redux/types';
+import {Reducer} from '../../../../lib/redux/types';
 import {SignupValidations, UserErrorsAction} from '../action/types';
 import {UserErrorsState} from '../types';
 

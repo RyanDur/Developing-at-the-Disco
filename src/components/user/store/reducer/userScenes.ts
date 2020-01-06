@@ -1,5 +1,5 @@
 import {UserScenesAction, UserScenesActions} from '../action/types';
-import {Reducer} from '../../../../store/redux/types';
+import {Reducer} from '../../../../lib/redux/types';
 import {UserScenesState} from '../types';
 
 const initialState: UserScenesState = {

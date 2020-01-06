@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {TextInputProps} from './types';
 import {MessageList} from '../List';
 import './TextInput.css';
-import {join, has} from '../../../store/util/helpers';
+import {join, has} from '../../../lib/util/helpers';
 
 export const TextInput = ({onChange, className, maxLength, placeHolder, errors = {}}: TextInputProps) => {
   const [text, updateText] = useState('');

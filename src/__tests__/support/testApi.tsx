@@ -3,8 +3,8 @@ import {ReactElement, ReactNode} from 'react';
 import ReactDOM from 'react-dom';
 import {act, Simulate} from 'react-dom/test-utils';
 import * as ShallowRenderer from 'react-test-renderer/shallow';
-import * as MyReactRedux from '../../store/reactRedux';
-import {has} from '../../store/util/helpers';
+import * as MyReactRedux from '../../lib/react-redux';
+import {has} from '../../lib/util/helpers';
 
 let container: HTMLElement = null;
 

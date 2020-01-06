@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
-import {useSelector} from '../store/reactRedux';
+import {useSelector} from '../lib/react-redux';
 import {checkAuthorization} from './user/store/selectors';
-import {not} from '../store/util/helpers';
+import {not} from '../lib/util/helpers';
 
 enum paths {
   home = '/',

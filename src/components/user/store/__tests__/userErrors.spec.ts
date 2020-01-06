@@ -1,6 +1,6 @@
 import {UsernameValidation} from '../../Signup/types';
-import {Store} from '../../../../store/redux/types';
-import {combineReducers, createStore} from '../../../../store/redux';
+import {Store} from '../../../../lib/redux/types';
+import {combineReducers, createStore} from '../../../../lib/redux';
 import {createUserMiddleware} from '../middleware';
 import {selectUsernameErrors} from '../selectors';
 import {NewUser, UserErrorsState, UserState} from '../types';

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Components, {middleware, reducers} from './components';
+import {combineReducers, createStore} from './lib/redux';
+import {Provider} from './lib/react-redux';
 import './public/base.css';
-import {combineReducers, createStore} from './store/redux';
-import {Provider} from './store/reactRedux';
 
 const store = createStore(combineReducers(reducers), middleware);
 

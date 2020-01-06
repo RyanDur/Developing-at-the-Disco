@@ -1,5 +1,5 @@
 import {Components} from './Components';
-import {Reducers} from '../store/redux/types';
+import {Reducers} from '../lib/redux/types';
 import {UserAction, userMiddlewares, userReducers, UserState} from './user';
 
 type ComponentAction = UserAction;

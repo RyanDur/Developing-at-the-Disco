@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Info} from '../../user';
-import {useSelector} from '../../../store/reactRedux';
+import {useSelector} from '../../../lib/react-redux';
 import './Header.css';
 import {checkForCurrentUserReady} from '../../user/store/selectors';
 

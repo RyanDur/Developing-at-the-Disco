@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Reducer} from 'react';
 import {Action, AnyAction, AnyState, Dispatch, Listener, Middleware, State, Store, Unsubscribe} from './types';
 import {start} from './actions';
-import {remove} from '../util/helpers';
+import {has, remove} from '../util/helpers';
 
 const enhance = <S extends State = AnyState, A extends Action = AnyAction>(
   store: Store<S, A>,
@@ -51,5 +51,5 @@ export const createStore = <S extends State = AnyState, A extends Action = AnyAc
 
   store.dispatch(start() as A);
 
-  return middlewares ? enhance(store, middlewares) : store;
+  return has(middlewares) ? enhance(store, middlewares) : store;
 };

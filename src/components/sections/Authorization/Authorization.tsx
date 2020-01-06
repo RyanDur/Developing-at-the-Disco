@@ -2,10 +2,10 @@ import * as React from 'react';
 import {useState} from 'react';
 import {Signup} from '../../user';
 import {navigate} from 'hookrouter';
-import {useDispatch, useSelector} from '../../../store/reactRedux';
+import {useDispatch, useSelector} from '../../../lib/react-redux';
 import {signupDone} from '../../user/store/action';
 import {checkForCurrentUser} from '../../user/store/selectors';
-import {join} from '../../../store/util/helpers';
+import {join} from '../../../lib/util/helpers';
 import './Authorization.css';
 
 export const Authorization = () => {

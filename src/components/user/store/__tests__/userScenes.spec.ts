@@ -1,5 +1,5 @@
-import {createStore} from '../../../../store/redux';
-import {Store} from '../../../../store/redux/types';
+import {createStore} from '../../../../lib/redux';
+import {Store} from '../../../../lib/redux/types';
 import {UserScenesState} from '../types';
 import {UserScenesAction} from '../action/types';
 import {signupDone} from '../action';

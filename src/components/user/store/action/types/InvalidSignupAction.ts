@@ -1,4 +1,4 @@
-import {Action} from '../../../../../store/redux/types';
+import {Action} from '../../../../../lib/redux/types';
 import {SignupErrors} from '../../../Signup/types';
 import {SignupValidations} from './SignupValidations';
 

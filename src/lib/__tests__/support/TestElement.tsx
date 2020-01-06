@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ComponentProps} from 'react';
-import {useDispatch, useSelector} from '../../reactRedux';
+import {useDispatch, useSelector} from '../../react-redux';
 import {AnyAction} from '../../redux/types';
 
 interface TestProps {

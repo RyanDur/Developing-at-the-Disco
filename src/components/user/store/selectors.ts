@@ -1,5 +1,5 @@
 import {UserState} from './types/state';
-import {has} from '../../../store/util/helpers';
+import {has} from '../../../lib/util/helpers';
 
 export const selectUsernameErrors = ({userErrors}: UserState) =>
   userErrors.username;
