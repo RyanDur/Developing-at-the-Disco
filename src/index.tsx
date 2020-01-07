@@ -6,11 +6,11 @@ import {clientStorage} from './lib/redux-storage';
 import {Provider} from './lib/react-redux';
 import './public/base.css';
 
-const {state, storageListener} = clientStorage();
+const {state, storeUpdateListener} = clientStorage();
 
 const store = createStore(combineReducers(reducers), middleware, state);
 
-store.subscribe(storageListener(store));
+store.subscribe(storeUpdateListener(store));
 
 ReactDOM.render(
   <Provider store={store}>

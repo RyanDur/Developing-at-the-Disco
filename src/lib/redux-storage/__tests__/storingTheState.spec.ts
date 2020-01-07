@@ -15,12 +15,12 @@ describe('storing the state in the client', () => {
     mockWindowProperty('localStorage', behaviors);
 
     it('should put it in the local storage', () => {
-      const {storageListener} = clientStorage();
+      const {storeUpdateListener} = clientStorage();
       const store = createStore((state: SomeState) => {
         return state;
       }, undefined, someState);
 
-      storageListener(store)();
+      storeUpdateListener(store)();
 
       expect(behaviors.setItem).toBeCalledWith('state', JSON.stringify(someState));
     });
@@ -33,12 +33,12 @@ describe('storing the state in the client', () => {
 
     it('should allow the use of another name', () => {
       const name = 'anotherName';
-      const {storageListener} = clientStorage(name);
+      const {storeUpdateListener} = clientStorage(name);
       const store = createStore((state: SomeState) => {
         return state;
       }, undefined, someState);
 
-      storageListener(store)();
+      storeUpdateListener(store)();
 
       expect(behaviors.setItem).toBeCalledWith(name, JSON.stringify(someState));
     });
