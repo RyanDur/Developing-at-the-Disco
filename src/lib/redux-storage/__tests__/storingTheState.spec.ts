@@ -4,8 +4,9 @@ import {clientStorage} from '../ClientStorage';
 import {createStore} from '../../redux';
 
 describe('storing the state in the client', () => {
+  const someState: SomeState = {value: 'look at my state'};
+
   describe('when there is state', () => {
-    const someState: SomeState = {value: 'look at my state'};
     const behaviors = {
       setItem: jest.fn(),
       getItem: jest.fn(() => JSON.stringify(someState)),
@@ -28,6 +29,18 @@ describe('storing the state in the client', () => {
       const {state} = clientStorage();
 
       expect(state).toEqual(someState);
+    });
+
+    it('should allow the use of another name', () => {
+      const name = 'anotherName';
+      const {storageListener} = clientStorage(name);
+      const store = createStore((state: SomeState) => {
+        return state;
+      }, undefined, someState);
+
+      storageListener(store)();
+
+      expect(behaviors.setItem).toBeCalledWith(name, JSON.stringify(someState));
     });
   });
 
