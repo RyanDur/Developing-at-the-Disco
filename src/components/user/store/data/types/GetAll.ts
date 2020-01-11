@@ -1,4 +1,4 @@
 import {UserId} from '../../types/user';
-import {Handler} from './Handler';
+import {Handlers} from './Handlers';
 
-export type GetAll = (exclude: UserId, handle: Handler) => void;
+export type GetAll = (exclude: UserId, handle: Handlers) => void;

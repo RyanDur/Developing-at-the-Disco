@@ -1,4 +1,4 @@
 import {Action, AnyAction, Dispatch} from '../../../../lib/redux/types';
-import {Handler} from '../data/types';
+import {ResponseHandler} from '../data/types';
 
-export type Handle = <A extends Action = AnyAction>(next: Dispatch) => Handler;
+export type Handle = <A extends Action = AnyAction>(next: Dispatch) => ResponseHandler;

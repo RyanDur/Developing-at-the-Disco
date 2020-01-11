@@ -1,24 +1,19 @@
 import {CurrentUser, UserState} from '../types';
 import {current, invalidSignup} from '../action';
 import {SignupErrors} from '../../Signup/types';
-import {Either, isRight} from 'fp-ts/lib/Either';
-import {Errors} from 'io-ts';
-import {Create, Handler} from '../data/types';
-import {Action, Dispatch, Middleware, State} from '../../../../lib/redux/types';
+import {ResponseHandler} from '../data/types';
+import {Middleware} from '../../../../lib/redux/types';
 import {UserAction, UserActions} from '../action/types';
-import {logErrors} from '../../../loggers';
+import {userClient} from '../data';
 
-const handle = (next: Dispatch): Handler => ({
-  success: (user: Either<Errors, CurrentUser>) =>
-    isRight(user) ? next(current(user.right)) : logErrors(user),
-  clientError: (errors: Either<Errors, SignupErrors>) =>
-    isRight(errors) ? next(invalidSignup(errors.right)) : logErrors(errors)
+const handle: ResponseHandler = (dispatch) => ({
+  onSuccess: (user: CurrentUser) => dispatch(current(user)),
+  onClientError: (errors: SignupErrors) => dispatch(invalidSignup(errors))
 });
 
-export const createUserMiddleware = <S extends State = UserState, A extends Action = UserAction>
-(create: Create): Middleware<S, A> =>
+export const createUserMiddleware: Middleware<UserState, UserAction> =
   ({dispatch}) => () => (action) => {
     if (action.type === UserActions.CREATE) {
-      create({name: action.name}, handle(dispatch));
+      userClient.create({name: action.name}, handle(dispatch));
     }
   };

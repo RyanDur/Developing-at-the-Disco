@@ -1,7 +1,7 @@
-import {endpoint} from '../../../../../config';
-import {right} from 'fp-ts/lib/Either';
+import {endpoint, host} from '../../../../../config';
 import {CurrentUser, OtherUsers} from '../../types/user';
 import {userClient} from '../userClient';
+import DoneCallback = jest.DoneCallback;
 
 const fetchMock = require('fetch-mock');
 
@@ -11,6 +11,15 @@ jest.mock('../../../../../config', () => ({
   },
   host: 'http://some-host'
 }));
+
+const waitUntil = (done: DoneCallback) => ({
+  then: (expectation: () => void) => {
+    setTimeout(() => {
+      expectation();
+      done();
+    });
+  }
+});
 
 describe('the user client', () => {
   const {create, getAll} = userClient;
@@ -27,23 +36,23 @@ describe('the user client', () => {
     size: 2,
     totalElements: 3,
     totalPages: 1,
-    content: otherUsers};
+    content: otherUsers
+  };
   const mockHandle = {
-    success: jest.fn(),
-    clientError: jest.fn()
+    onSuccess: jest.fn(),
+    onClientError: jest.fn()
   };
 
   beforeEach(() => {
     fetchMock.reset();
-    mockHandle.success.mockReset();
-    mockHandle.clientError.mockReset();
+    mockHandle.onSuccess.mockReset();
+    mockHandle.onClientError.mockReset();
   });
 
   describe('creating a user', () => {
-
     describe('success', () => {
       it('should handle the response of creating a user', (done) => {
-        fetchMock.post(`end:${endpoint.users}`, {
+        fetchMock.post(`${host}${endpoint.users}`, {
           body: currentUser,
           status: 201,
           headers: {'Content-Type': 'application/json'}
@@ -51,9 +60,8 @@ describe('the user client', () => {
 
         create({name: currentUser.name}, mockHandle);
 
-        setTimeout(() => {
-          expect(mockHandle.success).toHaveBeenCalledWith(right(currentUser));
-          done();
+        waitUntil(done).then(() => {
+          expect(mockHandle.onSuccess).toHaveBeenCalledWith(currentUser);
         });
       });
     });
@@ -61,15 +69,16 @@ describe('the user client', () => {
     describe('client error', () => {
       it('should handle client errors', (done) => {
         const body = {username: {value: 'John Stamos', validations: ['USERNAME_UNIQUE']}};
-        fetchMock.post(`end:${endpoint.users}`, {
+        fetchMock.post(`${host}${endpoint.users}`, {
           body,
           status: 400,
           headers: {'Content-Type': 'application/json'}
         });
+
         create({name: currentUser.name}, mockHandle);
-        setTimeout(() => {
-          expect(mockHandle.clientError).toHaveBeenCalledWith(right(body));
-          done();
+
+        waitUntil(done).then(() => {
+          expect(mockHandle.onClientError).toHaveBeenCalledWith(body);
         });
       });
     });
@@ -78,13 +87,12 @@ describe('the user client', () => {
   describe('getting all the other users', () => {
     describe('success', () => {
       it('should handle the response of getting all the other users', (done) => {
-        fetchMock.get(`end:${endpoint.users}?exclude=${currentUser.id}&page=0&size=${Number.MAX_SAFE_INTEGER}`, page);
+        fetchMock.get(`${host}${endpoint.users}?exclude=${currentUser.id}&page=0&size=${Number.MAX_SAFE_INTEGER}`, page);
 
         getAll(currentUser.id, mockHandle);
 
-        setTimeout(() => {
-          expect(mockHandle.success).toHaveBeenCalledWith(right(page));
-          done();
+        waitUntil(done).then(() => {
+          expect(mockHandle.onSuccess).toHaveBeenCalledWith(page);
         });
       });
     });

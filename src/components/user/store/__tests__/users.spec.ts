@@ -1,14 +1,14 @@
 import {create, update} from '../action';
 import {createUserMiddleware, getOtherUsersMiddleware} from '../middleware';
-import {CurrentUserGuard} from '../types/user/CurrentUser';
 import {NewUser, UserId, Username} from '../types/user';
-import {Handler, OtherUsersPageGuard} from '../data/types';
+import {Handlers} from '../data/types';
 import {Store} from '../../../../lib/redux/types';
 import {createStore} from '../../../../lib/redux';
 import {UsersState} from '../types';
 import {users} from '../reducer';
 import {initialState} from '../reducer/users';
 import {UserAction} from '../action/types';
+import {userClient} from '../data';
 
 describe('user store:', () => {
   const mockCreateUser = jest.fn();
@@ -17,10 +17,15 @@ describe('user store:', () => {
   const id: UserId = '3' as UserId;
   let store: Store<UsersState, UserAction>;
 
+  const createSpy = jest.spyOn(userClient, 'create');
+  const getAllSpy = jest.spyOn(userClient, 'getAll');
+
   beforeEach(() => {
+    createSpy.mockImplementation(mockCreateUser);
+    getAllSpy.mockImplementation(mockGetOtherUsers);
     store = createStore(users, [
-      createUserMiddleware(mockCreateUser),
-      getOtherUsersMiddleware(mockGetOtherUsers)
+      createUserMiddleware,
+      getOtherUsersMiddleware
     ]);
   });
 
@@ -53,14 +58,13 @@ describe('user store:', () => {
 
       beforeEach(() => {
         mockCreateUser.mockReset();
-        mockCreateUser.mockImplementation((name: NewUser, handleCreate: Handler) => {
-          handleCreate.success(CurrentUserGuard.decode({...name, id}));
+        mockCreateUser.mockImplementation((name: NewUser, handleCreate: Handlers) => {
+          handleCreate.onSuccess({...name, id});
         });
 
         mockGetOtherUsers.mockReset();
-        mockGetOtherUsers.mockImplementation((currentUserId: UserId, handleGet: Handler) => {
-          const decode = OtherUsersPageGuard.decode(otherUsersPage);
-          handleGet.success(decode);
+        mockGetOtherUsers.mockImplementation((currentUserId: UserId, handleGet: Handlers) => {
+          handleGet.onSuccess(otherUsersPage);
         });
 
         store.dispatch(create(username));
@@ -74,25 +78,6 @@ describe('user store:', () => {
       it('should get all the other users', () => {
         expect(store.getState().others).toEqual(otherUsersPage);
       });
-    });
-  });
-
-  describe('getting an incorrect response', () => {
-    beforeEach(() => {
-      console.warn = jest.fn();
-      mockCreateUser.mockReset();
-      mockCreateUser.mockImplementation(({name}: NewUser, handle: Handler) => {
-        handle.success(CurrentUserGuard.decode({name, goo: 33}));
-      });
-      store.dispatch(create(username));
-    });
-
-    it('should log it', () => {
-      expect(console.warn).toHaveBeenCalled();
-    });
-
-    it('should not create the current user', () => {
-      expect(store.getState()).toEqual(initialState);
     });
   });
 });
