@@ -1,5 +1,4 @@
 import {default as React} from 'react';
-import {render, TestRender} from '../../../__tests__/support/testApi';
 import {
   anotherTestReducer,
   middlewareAction,
@@ -13,6 +12,7 @@ import {TestElement} from '../../__tests__/support/TestElement';
 import {otherTestMiddleware} from '../../__tests__/support/testMiddlewares';
 import {someInitialState} from '../../__tests__/support/TestReducers';
 import {Provider} from '../Provider';
+import {render, TestRender} from '../../../app/__tests__/support/testApi';
 
 describe('Connecting components to the state.', () => {
   let subject: TestRender, getBy: TestRender['getBy'], click: TestRender['click'];

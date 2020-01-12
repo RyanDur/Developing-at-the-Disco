@@ -1,4 +1,4 @@
-import {NewUser} from '../../src/components/user/store/types';
+import {NewUser} from '../../src/app/store/user/types';
 
 interface ResponseSetup {
   status: Number;
