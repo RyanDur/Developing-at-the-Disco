@@ -8,3 +8,4 @@ export {GetAll} from './GetAll';
 export {UserClient} from './UserClient';
 export {OtherUsersPage} from './OtherUsersPage';
 export {OtherUsersPageGuard} from './OtherUsersPage';
+export {HttpRequest} from './HttpRequest';

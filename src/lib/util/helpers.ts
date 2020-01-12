@@ -13,6 +13,7 @@ export const empty = (obj: any) =>
   emptyArray(obj);
 
 export const has = (content: any) => not(empty(content));
+export const notEmpty = has;
 
 export const remove = (item: any, items: any[]): any[] => {
   const index: number = items.indexOf(item);

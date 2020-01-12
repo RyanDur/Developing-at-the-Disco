@@ -47,7 +47,7 @@
     "html-webpack-root-plugin": "^0.10.0",
     "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "^6.0.0",
-    "io-ts": "^2.0.1",
+    "io-ts": "^2.0.4",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.8.0",
     "mock-socket": "^9.0.2",
