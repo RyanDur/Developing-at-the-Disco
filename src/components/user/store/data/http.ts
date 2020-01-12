@@ -14,8 +14,8 @@ export const http = (
     onClientError = logError
   }: Handlers,
   {
-    clientError,
-    success
+    success,
+    clientError
   }: ResponseTypeGuards
 ): void => void fetch(`${host + path}`, request)
   .then(async (response: Response) => {

@@ -2,8 +2,8 @@ import {SignupValidationGuard} from '../../Signup/types/UsernameValidation';
 import {CurrentUserGuard} from '../types/user/CurrentUser';
 import {OtherUsersPageGuard, UserClient} from './types';
 import {http} from './http';
-import {get, post} from './methods';
 import {endpoint} from '../../../../config';
+import {get, post} from './method';
 
 const usersEndpoint = endpoint.users;
 

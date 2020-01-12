@@ -1,9 +1,9 @@
-import {get} from '../get';
+import {get} from '../index';
 
 describe('creating the http request', () => {
-  describe('for get', () => {
+  describe('get', () => {
     describe('with params', () => {
-      it('should be in the correct format', () => {
+      it('should be the correct path', () => {
         const actual = get('some-path', {
           param1: 'some-param',
           param2: 'other-param',
@@ -15,7 +15,7 @@ describe('creating the http request', () => {
       });
     });
     describe('without params', () => {
-      it('should be in the correct format', () => {
+      it('should be the correct path', () => {
         const actual = get('some-path');
 
         expect(actual.path).toEqual('some-path');
