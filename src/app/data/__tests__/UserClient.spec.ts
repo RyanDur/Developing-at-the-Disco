@@ -1,8 +1,8 @@
-import {userClient} from '../userClient';
 import DoneCallback = jest.DoneCallback;
 import {CurrentUser, OtherUsers} from '../../store/user/types';
 import {endpoint, host} from '../../../config';
 import {get} from '../method';
+import {userClient} from '..';
 
 const fetchMock = require('fetch-mock');
 

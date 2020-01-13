@@ -1,7 +1,7 @@
+import {endpoint} from '../../../config';
+import {http} from '../http';
+import {get, post} from '../method';
 import {CurrentUserGuard, OtherUsersPageGuard, SignupValidationGuard, UserClient} from './types';
-import {http} from './http';
-import {get, post} from './method';
-import {endpoint} from '../../config';
 
 const usersEndpoint = endpoint.users;
 

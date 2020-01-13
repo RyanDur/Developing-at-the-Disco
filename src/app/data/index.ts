@@ -1,1 +1,1 @@
-export {userClient} from './userClient';
+export {userClient} from './user/userClient';

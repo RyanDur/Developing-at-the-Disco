@@ -4,7 +4,7 @@ import {maxUsernameLength} from '../../../../config';
 import {TextInput} from '../../elements';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {empty, not} from '../../../../lib/util/helpers';
-import {selectUsernameErrors} from '../../../store/selectors';
+import {selectUsernameErrors} from '../../../store/selector';
 import {create} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
 import {SignupProps} from './types';

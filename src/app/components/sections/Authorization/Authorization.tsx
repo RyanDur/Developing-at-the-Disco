@@ -5,7 +5,7 @@ import {navigate} from 'hookrouter';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {join} from '../../../../lib/util/helpers';
 import './Authorization.css';
-import {checkForCurrentUser} from '../../../store/selectors';
+import {checkForCurrentUser} from '../../../store/selector';
 import {signupDone} from '../../../store/user/action';
 
 export const Authorization = () => {
