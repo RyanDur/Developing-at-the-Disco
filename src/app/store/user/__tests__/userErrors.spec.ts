@@ -1,14 +1,12 @@
 import {createUserMiddleware} from '../middleware';
-import {NewUser, UserErrorsState, UserState} from '../types';
+import {Handlers, NewUser, UserErrorsState, UsernameValidation, UserState} from '../types';
 import {create} from '../action';
 import * as userReducers from '../reducer';
 import {UserAction} from '../action/types';
-import {UsernameValidation} from '../../../components/user/Signup/types';
 import {Store} from '../../../../lib/redux/types';
 import {userClient} from '../../../data';
 import {combineReducers, createStore} from '../../../../lib/redux';
 import {selectUsernameErrors} from '../../selectors';
-import {Handlers} from '../../../data/types';
 
 type CreateSignupErrors = (name: string) => UsernameValidation;
 

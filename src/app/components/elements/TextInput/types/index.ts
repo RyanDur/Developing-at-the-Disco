@@ -1,4 +1,4 @@
-import {Validation} from '../../../user/Signup/types';
+import {Validation} from '../../../../store/user/types';
 
 export interface TextInputProps {
   onChange: (text: string) => void;

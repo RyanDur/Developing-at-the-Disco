@@ -1,19 +1,20 @@
 import * as React from 'react';
 import {FormEvent, useState} from 'react';
-import {SignupProps, Validation} from './types';
 import {maxUsernameLength} from '../../../../config';
 import {TextInput} from '../../elements';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
-import './Signup.css';
 import {empty, not} from '../../../../lib/util/helpers';
 import {selectUsernameErrors} from '../../../store/selectors';
 import {create} from '../../../store/user/action';
+import {Validation} from '../../../store/user/types';
+import {SignupProps} from './types';
+import './Signup.css';
 
 const signupText: Record<string, string> = {
   USERNAME_EXISTS: 'Username already exists.'
 };
 
-export const translate = ({value, validations = []}: Partial<Validation>): Validation => ({
+export const translate = ({value, validations = []}: Validation): Validation => ({
   value,
   validations: validations.map(validation => signupText[validation])
 });

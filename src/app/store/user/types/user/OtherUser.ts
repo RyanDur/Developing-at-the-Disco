@@ -1,8 +1,4 @@
 import * as t from 'io-ts';
-
-export const OtherUserGuard = t.type({
-  id: t.string,
-  name: t.string
-});
+import {OtherUserGuard} from '../../../../data/types/OtherUser';
 
 export type OtherUser = t.TypeOf<typeof OtherUserGuard>;

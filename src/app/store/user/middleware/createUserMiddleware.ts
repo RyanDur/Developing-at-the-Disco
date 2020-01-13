@@ -1,8 +1,6 @@
-import {CurrentUser, UserState} from '../types';
+import {CurrentUser, ResponseHandler, SignupErrors, UserState} from '../types';
 import {current, invalidSignup} from '../action';
 import {UserAction, UserActions} from '../action/types';
-import {ResponseHandler} from '../../../data/types';
-import {SignupErrors} from '../../../components/user/Signup/types';
 import {Middleware} from '../../../../lib/redux/types';
 import {userClient} from '../../../data';
 

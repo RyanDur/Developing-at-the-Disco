@@ -1,8 +1,8 @@
 import {userClient} from '../userClient';
 import DoneCallback = jest.DoneCallback;
-import {CurrentUser} from '../../store/user/types';
-import {OtherUsers} from '../../store/user/types/user';
+import {CurrentUser, OtherUsers} from '../../store/user/types';
 import {endpoint, host} from '../../../config';
+import {get} from '../method';
 
 const fetchMock = require('fetch-mock');
 
@@ -88,7 +88,12 @@ describe('the user client', () => {
   describe('getting all the other users', () => {
     describe('success', () => {
       it('should handle the response of getting all the other users', (done) => {
-        fetchMock.get(`${host}${endpoint.users}?exclude=${currentUser.id}&page=0&size=${Number.MAX_SAFE_INTEGER}`, page);
+        const request = get(endpoint.users, {
+          exclude: currentUser.id,
+          page: 0,
+          size: Number.MAX_SAFE_INTEGER
+        });
+        fetchMock.get(`${host}${request.path}`, page);
 
         getAll(currentUser.id, mockHandle);
 

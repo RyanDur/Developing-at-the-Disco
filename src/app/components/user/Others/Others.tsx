@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {OtherUsersPage} from '../../../data/types';
-import {OtherUser} from '../../../store/user/types';
+import {OtherUser, OtherUsersPage} from '../../../store/user/types';
 
 interface OthersProps {
   others: OtherUsersPage;

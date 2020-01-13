@@ -1,14 +1,13 @@
 import {create, update} from '../action';
 import {createUserMiddleware, getOtherUsersMiddleware} from '../middleware';
 import {NewUser, UserId, Username} from '../types/user';
-import {UsersState} from '../types';
+import {Handlers, UsersState} from '../types';
 import {users} from '../reducer';
 import {initialState} from '../reducer/users';
 import {UserAction} from '../action/types';
 import {Store} from '../../../../lib/redux/types';
 import {userClient} from '../../../data';
 import {createStore} from '../../../../lib/redux';
-import {Handlers} from '../../../data/types';
 
 describe('user store:', () => {
   const mockCreateUser = jest.fn();

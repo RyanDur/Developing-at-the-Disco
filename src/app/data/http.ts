@@ -1,8 +1,9 @@
-import {Handlers, HttpRequest, ResponseTypeGuards} from './types';
+import {HttpRequest, ResponseTypeGuards} from './types';
 import {fold} from 'fp-ts/lib/Either';
 import {pipe} from 'fp-ts/lib/pipeable';
 import {host} from '../../config';
 import {logError, logResponse} from './loggers';
+import {Handlers} from '../store/user/types';
 
 export const http = (
   {

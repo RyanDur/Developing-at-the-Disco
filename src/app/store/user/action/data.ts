@@ -1,6 +1,5 @@
 import {CreateAction, CurrentAction, OtherUsersAction, UpdateAction, UserActions} from './types';
-import {CurrentUser, Username} from '../types/user';
-import {OtherUsersPage} from '../../../data/types';
+import {CurrentUser, OtherUsersPage, Username} from '../types/user';
 
 const others = (otherUsersPage: OtherUsersPage): OtherUsersAction => ({type: UserActions.OTHERS, otherUsersPage});
 

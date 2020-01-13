@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Info} from '../../user';
 import {useSelector} from '../../../../lib/react-redux';
-import './Header.css';
 import {checkForCurrentUserReady} from '../../../store/selectors';
+import './Header.css';
 
 export const Header = () => {
   const hasCurrentUser = useSelector(checkForCurrentUserReady);
