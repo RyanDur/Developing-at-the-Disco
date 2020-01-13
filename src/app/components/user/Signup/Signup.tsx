@@ -4,11 +4,11 @@ import {maxUsernameLength} from '../../../../config';
 import {TextInput} from '../../elements';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {empty, not} from '../../../../lib/util/helpers';
-import {selectUsernameErrors} from '../../../store/selector';
 import {create} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
 import {SignupProps} from './types';
 import './Signup.css';
+import {selectUsernameErrors} from '../../../store/user/selector';
 
 const signupText: Record<string, string> = {
   USERNAME_EXISTS: 'Username already exists.'

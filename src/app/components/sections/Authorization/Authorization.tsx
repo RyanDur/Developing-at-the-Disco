@@ -5,8 +5,8 @@ import {navigate} from 'hookrouter';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {join} from '../../../../lib/util/helpers';
 import './Authorization.css';
-import {checkForCurrentUser} from '../../../store/selector';
 import {signupDone} from '../../../store/user/action';
+import {checkForCurrentUser} from '../../../store/user/selector';
 
 export const Authorization = () => {
   const [sceneIsDone, isSceneDone] = useState(false);

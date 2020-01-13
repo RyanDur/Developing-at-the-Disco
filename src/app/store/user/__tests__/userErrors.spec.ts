@@ -6,7 +6,7 @@ import {UserAction} from '../action/types';
 import {Store} from '../../../../lib/redux/types';
 import {userClient} from '../../../data';
 import {combineReducers, createStore} from '../../../../lib/redux';
-import {selectUsernameErrors} from '../../selector';
+import {selectUsernameErrors} from '../selector';
 
 type CreateSignupErrors = (name: string) => UsernameValidation;
 
