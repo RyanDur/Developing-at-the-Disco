@@ -15,7 +15,7 @@ const routes = {
   [paths.auth]: () => <Authorization/>
 };
 
-export const Components = () => {
+export const App = () => {
   const authorized = useSelector(checkAuthorization);
   const routeResult = useRoutes(routes);
 

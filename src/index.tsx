@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Components, {middleware, reducers} from './app/components';
+import App, {middleware, reducers} from './app/components';
 import {combineReducers, createStore} from './lib/redux';
 import {clientStorage} from './lib/redux-storage';
 import {Provider} from './lib/react-redux';
@@ -14,7 +14,7 @@ store.subscribe(storeUpdateListener(store));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Components/>
+    <App/>
   </Provider>,
   document.getElementById('root')
 );

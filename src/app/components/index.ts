@@ -1,4 +1,4 @@
-import {Components} from './Components';
+import {App} from './App';
 import {Reducers} from '../../lib/redux/types';
 import {UserAction, userMiddlewares, userReducers, UserState} from './user';
 
@@ -19,4 +19,4 @@ export {
   ComponentState
 };
 
-export default Components;
+export default App;
