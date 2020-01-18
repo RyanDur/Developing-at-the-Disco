@@ -1,6 +1,0 @@
-#!/bin/zsh
-
-pushd ../../
-  git pull -r
-  npm run cf:push
-popd
