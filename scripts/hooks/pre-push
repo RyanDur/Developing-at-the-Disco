@@ -1,4 +1,6 @@
 #!/bin/zsh
 
-git pull -r
-npm run cf:push
+pushd ../../
+  git pull -r
+  npm run cf:push
+popd
