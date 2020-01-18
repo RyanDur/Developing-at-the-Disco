@@ -1,4 +1,5 @@
 import {NewUser} from '../../src/app/store/user/types';
+import {has} from '../../src/lib/util/helpers';
 
 interface ResponseSetup {
   status: Number;
@@ -14,38 +15,48 @@ declare global {
   namespace Cypress {
     interface Chainable<Subject> {
       signup: (user: NewUser, setup: Setup, config?: Object) => Chainable<Subject>;
+      logout: (setup: Setup, config?: Object) => Chainable<Subject>;
     }
   }
 }
 
-Cypress.Commands.add('signup', (user, setup, config) => {
-  cy.route({
-    method: 'POST',
-    url: '**/users',
-    status: setup.post.status,
-    response: setup.post.response
-  }).as('createUser');
+const defaultPost = {status: 201, response: ''};
+const defaultGet = {status: 200, response: ''};
 
-  if (setup.get) {
+Cypress.Commands.add('signup',
+  (user,
+   {
+     post = defaultPost,
+     get = defaultGet
+   },
+   config) => {
+    cy.route({
+      method: 'POST',
+      url: '**/users',
+      status: post.status,
+      response: post.response
+    }).as('createUser');
+
     cy.route({
       method: 'GET',
       url: '**/users?exclude=*',
-      status: setup.get.status,
-      response: setup.get.response
+      status: get.status,
+      response: get.response
     }).as('getOtherUsers');
-  }
 
-  cy.visit('/', config)
-    .get('#create-user .username input')
-    .type(user.name)
-    .get('form')
-    .submit()
-    .wait('@createUser');
+    cy.visit('/', config)
+      .get('form')
+      .within(() => {
+        cy.get('.username input')
+          .type(user.name)
+          .root().submit();
+      })
+      .wait('@createUser');
 
-  if (setup.get) {
-    cy.wait('@getOtherUsers');
-  }
-});
+    if (has(get.response)) {
+      cy.wait('@getOtherUsers');
+    }
+  });
 
 // ***********************************************
 // This example commands.js shows you how to
