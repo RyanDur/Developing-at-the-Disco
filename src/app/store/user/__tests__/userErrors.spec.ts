@@ -32,7 +32,6 @@ describe('signing up validations', () => {
         validations: ['some error']
       }
     });
-    const error = anError(username);
 
     beforeEach(() => {
       mockCreateUser.mockImplementation((newUser: NewUser, handle: ResponseHandler) => {
@@ -42,7 +41,7 @@ describe('signing up validations', () => {
     });
 
     it('should be validated', () => {
-      expect(store.getState()).toEqual(error);
+      expect(store.getState()).toEqual(anError(username));
     });
 
     describe('when the error is corrected', () => {
