@@ -5,7 +5,7 @@ import {useSelector} from '../../lib/react-redux';
 import {not} from '../../lib/util/helpers';
 import {checkAuthorization} from '../store/user/selector';
 
-enum paths {
+export enum paths {
   home = '/',
   auth = '/authorization'
 }

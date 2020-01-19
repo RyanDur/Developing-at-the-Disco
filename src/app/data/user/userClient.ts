@@ -1,21 +1,27 @@
 import {endpoint} from '../../../config';
 import {http} from '../http';
-import {get, post} from '../method';
-import {CurrentUserGuard, OtherUsersPageGuard, SignupValidationGuard, UserClient} from './types';
+import {get, patch, post} from '../method';
+import {UserStatus} from '../../store/user/types/user';
+import {UserClient} from './types';
+import {CurrentUserGuard, OtherUsersPageGuard, SignupValidationGuard} from './guard';
 
 const usersEndpoint = endpoint.users;
+const {LOGGED_OUT} = UserStatus;
 
 export const userClient: UserClient = {
-  create: (user, handle) =>
-    http(post(user, usersEndpoint), handle, {
+  getAll: (userId, handle) =>
+    http(get({
+      exclude: userId,
+      page: 0,
+      size: Number.MAX_SAFE_INTEGER
+    }, usersEndpoint), handle, {success: OtherUsersPageGuard}),
+
+  create: (newUser, handle) =>
+    http(post(newUser, usersEndpoint), handle, {
       success: CurrentUserGuard,
       clientError: SignupValidationGuard
     }),
 
-  getAll: (userId, handle) =>
-    http(get(usersEndpoint, {
-      exclude: userId,
-      page: 0,
-      size: Number.MAX_SAFE_INTEGER
-    }), handle, {success: OtherUsersPageGuard})
+  logout: (userId, handle) =>
+    http(patch({status: LOGGED_OUT}, usersEndpoint, userId), handle)
 };

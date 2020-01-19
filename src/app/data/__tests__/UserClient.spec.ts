@@ -1,8 +1,9 @@
 import DoneCallback = jest.DoneCallback;
 import {CurrentUser, OtherUsers} from '../../store/user/types';
 import {endpoint, host} from '../../../config';
-import {get} from '../method';
+import {get, patch} from '../method';
 import {userClient} from '..';
+import {UserStatus} from '../../store/user/types/user';
 
 const fetchMock = require('fetch-mock');
 
@@ -23,11 +24,12 @@ const waitUntil = (done: DoneCallback) => ({
 });
 
 describe('the user client', () => {
-  const {create, getAll} = userClient;
-  const currentUser: CurrentUser = {name: 'Ryan', id: '1'};
+  const {create, getAll, logout} = userClient;
+  const currentUser: CurrentUser = {name: 'Ryan', id: '1', status: UserStatus.AVAILABLE};
+  const newUser = {name: currentUser.name};
   const otherUsers: OtherUsers = [
-    {name: 'Chirag', id: 'Taylor'},
-    {name: 'Chris ', id: 'Schuster'}];
+    {name: 'Chirag', id: 'Taylor', status: UserStatus.AVAILABLE},
+    {name: 'Chris ', id: 'Schuster', status: UserStatus.AVAILABLE}];
   const page = {
     empty: false,
     first: true,
@@ -43,63 +45,108 @@ describe('the user client', () => {
     onSuccess: jest.fn(),
     onClientError: jest.fn()
   };
+  const mockLogger = jest.fn();
 
   beforeEach(() => {
     fetchMock.reset();
     mockHandle.onSuccess.mockReset();
     mockHandle.onClientError.mockReset();
+    console.warn = mockLogger;
   });
 
   describe('creating a user', () => {
-    describe('success', () => {
+    describe('successfully', () => {
       it('should handle the response of creating a user', (done) => {
-        fetchMock.post(`${host}${endpoint.users}`, {
+        const posted = fetchMock.post(`${host}${endpoint.users}`, {
           body: currentUser,
           status: 201,
           headers: {'Content-Type': 'application/json'}
         });
 
-        create({name: currentUser.name}, mockHandle);
+        create(newUser, mockHandle);
 
         waitUntil(done).then(() => {
+          expect(posted.lastOptions().body).toEqual(JSON.stringify(newUser));
           expect(mockHandle.onSuccess).toHaveBeenCalledWith(currentUser);
         });
       });
     });
 
-    describe('client error', () => {
-      it('should handle client errors', (done) => {
-        const body = {username: {value: 'John Stamos', validations: ['USERNAME_UNIQUE']}};
-        fetchMock.post(`${host}${endpoint.users}`, {
-          body,
+    describe('when the client receives an error', () => {
+      it('should notify', (done) => {
+        const error = {username: {value: 'John Stamos', validations: ['USERNAME_UNIQUE']}};
+        const posted = fetchMock.post(`${host}${endpoint.users}`, {
+          body: error,
           status: 400,
           headers: {'Content-Type': 'application/json'}
         });
 
-        create({name: currentUser.name}, mockHandle);
+        create(newUser, mockHandle);
 
         waitUntil(done).then(() => {
-          expect(mockHandle.onClientError).toHaveBeenCalledWith(body);
+          expect(posted.lastOptions().body).toEqual(JSON.stringify(newUser));
+          expect(mockHandle.onClientError).toHaveBeenCalledWith(error);
         });
       });
     });
   });
 
   describe('getting all the other users', () => {
-    describe('success', () => {
+    describe('successfully', () => {
       it('should handle the response of getting all the other users', (done) => {
-        const request = get(endpoint.users, {
+        const request = get({
           exclude: currentUser.id,
           page: 0,
           size: Number.MAX_SAFE_INTEGER
+        }, endpoint.users);
+
+        fetchMock.get(`${host}${request.path}`, {
+          status: 200,
+          body: page
         });
-        fetchMock.get(`${host}${request.path}`, page);
 
         getAll(currentUser.id, mockHandle);
 
         waitUntil(done).then(() => {
           expect(mockHandle.onSuccess).toHaveBeenCalledWith(page);
         });
+      });
+    });
+  });
+
+  describe('logging out', () => {
+    const id = 'id';
+    const body = {status: 'LOGGED_OUT'};
+    const request = patch(body, endpoint.users, id);
+    const patchResponse = {
+      status: 204,
+      headers: {'Content-Type': 'application/json'}
+    };
+
+    it('should set the status of the user', done => {
+      const patched = fetchMock.patch(`${host}${request.path}`, {
+        ...patchResponse,
+        body: {}
+      });
+
+      logout(id, mockHandle);
+
+      waitUntil(done).then(() => {
+        expect(patched.lastOptions().body).toEqual(JSON.stringify(body));
+        expect(mockHandle.onSuccess).toHaveBeenCalled();
+      });
+    });
+
+    it('should log the wrong response', done => {
+      fetchMock.patch(`${host}${request.path}`, {
+        ...patchResponse,
+        body: {I_AM: 'NOT THE RIGHT STRUCTURE'}
+      });
+
+      logout(id, mockHandle);
+
+      waitUntil(done).then(() => {
+        expect(mockLogger).toHaveBeenCalled();
       });
     });
   });

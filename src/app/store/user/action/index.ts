@@ -1,8 +1,6 @@
-import {create, current, others, update} from './data';
+import {create, current, invalidSignup, others, update, logout, logoutSuccess} from './user';
 
 import {signupDone} from './scenes';
-
-import {invalidSignup} from './signup';
 
 export {
   create,
@@ -10,5 +8,7 @@ export {
   current,
   others,
   signupDone,
-  invalidSignup
+  invalidSignup,
+  logout,
+  logoutSuccess
 };

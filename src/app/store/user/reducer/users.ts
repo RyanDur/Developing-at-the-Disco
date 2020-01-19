@@ -9,6 +9,8 @@ export const users = (state = initialState, action: UserAction): UsersState => {
       return {...state, current: action.user};
     case UserActions.OTHERS:
       return {...state, others: action.otherUsersPage};
+    case UserActions.LOGOUT_SUCCESS:
+      return initialState;
     default:
       return state;
   }

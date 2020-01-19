@@ -1,4 +1,4 @@
-import {UserState} from './types';
+import {CurrentUser, UserState} from './types';
 import {has} from '../../../lib/util/helpers';
 
 export const selectUsernameErrors = ({userErrors}: UserState) =>
@@ -6,6 +6,9 @@ export const selectUsernameErrors = ({userErrors}: UserState) =>
 
 export const currentUserName = ({users}: UserState) =>
   users.current.name;
+
+export const currentUser = ({users}: UserState): CurrentUser =>
+  users.current;
 
 export const checkForCurrentUser = ({users}: UserState) =>
   has(users.current);

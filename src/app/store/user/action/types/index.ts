@@ -8,10 +8,12 @@ import {OtherUsersAction} from './OtherUsersAction';
 import {GetOtherUsersAction} from './GetOtherUsersAction';
 import {CreateAction} from './CreateAction';
 import {UserActions} from './UserActions';
+import {LogoutAction} from './LogoutAction';
+import {LogoutSuccess} from './LogoutSuccessAction';
 
 export type UserErrorsAction = InvalidSignupAction;
 export type UserScenesAction = SignupDone;
-export type UsersAction = CurrentAction | CreateAction | UpdateAction | OtherUsersAction;
+export type UsersAction = CurrentAction | CreateAction | UpdateAction | OtherUsersAction | LogoutAction | LogoutSuccess;
 export type UserAction = UserScenesAction | UsersAction | UserErrorsAction;
 
 export {
@@ -24,5 +26,6 @@ export {
   CurrentAction,
   OtherUsersAction,
   GetOtherUsersAction,
-  CreateAction
+  CreateAction,
+  LogoutAction
 };

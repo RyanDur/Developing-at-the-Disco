@@ -3,9 +3,9 @@ import {UserAction, UserActions} from '../action/types';
 import {UserState} from '../types/state';
 import {userClient} from '../../../data';
 import {Middleware} from '../../../../lib/redux/types';
-import {OtherUsersPage, ResponseHandler} from '../types';
+import {OtherUsersPage, ResponseHandlers} from '../types';
 
-const handle: ResponseHandler = (dispatch) => ({
+const handle: ResponseHandlers = (dispatch) => ({
   onSuccess: (usersPage: OtherUsersPage) => dispatch(others(usersPage))
 });
 

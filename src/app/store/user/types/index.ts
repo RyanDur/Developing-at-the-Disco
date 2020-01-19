@@ -3,14 +3,14 @@ import {CurrentUser, NewUser, OtherUser, OtherUsers, OtherUsersPage} from './use
 import {UsernameValidation} from './validations/UsernameValidation';
 import {Validation} from './validations/Validation';
 import {SignupErrors} from './validations/SignupErrors';
-import { Handler } from './Handler';
-import { Handlers } from './Handlers';
+import { Handle } from './Handle';
 import { ResponseHandler } from './ResponseHandler';
+import { ResponseHandlers } from './ResponseHandlers';
 
 export {
-  Handler,
-  Handlers,
+  Handle,
   ResponseHandler,
+  ResponseHandlers,
   UsersState,
   UserState,
   UserScenesState,

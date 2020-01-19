@@ -1,4 +1,6 @@
-import {Handlers} from './Handlers';
-import {Dispatch} from '../../../../lib/redux/types';
+import {Handle} from './Handle';
 
-export type ResponseHandler = (dispatch: Dispatch) => Handlers;
+export interface ResponseHandler<T = any> {
+  onSuccess: Handle<T>;
+  onClientError?: Handle<any>;
+}

@@ -12,26 +12,7 @@ describe('a user signing up', () => {
     before(() => {
       cy.server();
       cy.signup(user, {
-        post: {status: 201, response: {name: user.name, id: 'id'}},
-        get: {
-          status: 200, response: {
-            content: [
-              {name: 'Devon', id: 'other-id'},
-              {name: 'David', id: 'other-id'},
-              {name: 'Frances', id: 'other-id'},
-              {name: 'Andrew', id: 'other-id'},
-              {name: 'Caren', id: 'other-id'}
-            ],
-            last: true,
-            first: true,
-            empty: false,
-            size: 1,
-            totalElements: 5,
-            number: 0,
-            totalPages: 1,
-            numberOfElements: 10
-          }
-        }
+        post: {status: 201, response: {name: user.name, id: 'id', status: 'AVAILABLE'}}
       });
     });
 
@@ -44,6 +25,15 @@ describe('a user signing up', () => {
         expect(pathname).to.eq('/');
       });
     });
+
+    describe('when logging out', () => {
+      it('should be back on the signup page', () => {
+        cy.contains('Logout').click();
+        cy.location().should(({pathname}) => {
+          expect(pathname).to.eq('/authorization');
+        });
+      });
+    });
   });
 
   describe('with invalid user information', () => {
@@ -53,7 +43,8 @@ describe('a user signing up', () => {
         post: {
           status: 400,
           response: {username: {value: user.name, validations: ['USERNAME_EXISTS']}}
-        }
+        },
+        get: {}
       });
     });
 

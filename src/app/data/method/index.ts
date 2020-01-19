@@ -7,8 +7,8 @@ const createParams = (params: Params = {}) =>
     .map(param => `${param}=${params[param]}`)
     .join('&');
 
-export const createPath = (endpoint: string, params: Params) =>
-  [endpoint, createParams(params)]
+const createPath = (endpoint: string[], params?: string) =>
+  [endpoint.join('/'), params]
     .filter(notEmpty)
     .join('?');
 
@@ -19,19 +19,28 @@ const info = {
   }
 };
 
-export const get = (endpoint: string, params?: Params): HttpRequest => ({
-  path: createPath(endpoint, params),
+export const get = (params: Params, ...endpoint: string[]): HttpRequest => ({
+  path: createPath(endpoint, createParams(params)),
   request: {
     ...info,
     method: 'GET'
   }
 });
 
-export const post = (body: any, endpoint: string): HttpRequest => ({
-  path: endpoint,
+export const post = (body: any, ...endpoint: string[]): HttpRequest => ({
+  path: createPath(endpoint),
   request: {
     ...info,
     method: 'POST',
+    body: JSON.stringify(body)
+  }
+});
+
+export const patch = (body: any, ...endpoint: string[]): HttpRequest => ({
+  path: createPath(endpoint),
+  request: {
+    ...info,
+    method: 'PATCH',
     body: JSON.stringify(body)
   }
 });

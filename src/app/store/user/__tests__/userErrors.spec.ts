@@ -1,5 +1,5 @@
 import {createUserMiddleware} from '../middleware';
-import {Handlers, NewUser, UserErrorsState, UsernameValidation, UserState} from '../types';
+import {ResponseHandler, NewUser, UserErrorsState, UsernameValidation, UserState} from '../types';
 import {create} from '../action';
 import * as userReducers from '../reducer';
 import {UserAction} from '../action/types';
@@ -39,7 +39,7 @@ describe('signing up validations', () => {
     });
 
     it('should be validated', () => {
-      mockCreateUser.mockImplementation((newUser: NewUser, handle: Handlers) => {
+      mockCreateUser.mockImplementation((newUser: NewUser, handle: ResponseHandler) => {
         handle.onClientError(anError(newUser.name));
       });
 

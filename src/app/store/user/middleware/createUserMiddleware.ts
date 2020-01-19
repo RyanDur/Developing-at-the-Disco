@@ -1,10 +1,10 @@
-import {CurrentUser, ResponseHandler, SignupErrors, UserState} from '../types';
+import {CurrentUser, ResponseHandlers, SignupErrors, UserState} from '../types';
 import {current, invalidSignup} from '../action';
 import {UserAction, UserActions} from '../action/types';
 import {Middleware} from '../../../../lib/redux/types';
 import {userClient} from '../../../data';
 
-const handle: ResponseHandler = (dispatch) => ({
+const handle: ResponseHandlers = (dispatch) => ({
   onSuccess: (user: CurrentUser) => dispatch(current(user)),
   onClientError: (errors: SignupErrors) => dispatch(invalidSignup(errors))
 });

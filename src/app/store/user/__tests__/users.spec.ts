@@ -1,7 +1,7 @@
-import {create, update} from '../action';
-import {createUserMiddleware, getOtherUsersMiddleware} from '../middleware';
+import {create, logout} from '../action';
+import {createUserMiddleware, getOtherUsersMiddleware, logoutMiddleware} from '../middleware';
 import {NewUser, UserId, Username} from '../types/user';
-import {Handlers, UsersState} from '../types';
+import {ResponseHandler, UsersState} from '../types';
 import {users} from '../reducer';
 import {initialState} from '../reducer/users';
 import {UserAction} from '../action/types';
@@ -12,19 +12,23 @@ import {createStore} from '../../../../lib/redux';
 describe('user store:', () => {
   const mockCreateUser = jest.fn();
   const mockGetOtherUsers = jest.fn();
+  const mockLogout = jest.fn();
   const username: Username = 'Travis';
   const id: UserId = '3' as UserId;
   let store: Store<UsersState, UserAction>;
 
   const createSpy = jest.spyOn(userClient, 'create');
   const getAllSpy = jest.spyOn(userClient, 'getAll');
+  const logoutSpy = jest.spyOn(userClient, 'logout');
 
   beforeEach(() => {
     createSpy.mockImplementation(mockCreateUser);
     getAllSpy.mockImplementation(mockGetOtherUsers);
+    logoutSpy.mockImplementation(mockLogout);
     store = createStore(users, [
       createUserMiddleware,
-      getOtherUsersMiddleware
+      getOtherUsersMiddleware,
+      logoutMiddleware
     ]);
   });
 
@@ -35,12 +39,6 @@ describe('user store:', () => {
   });
 
   describe('when creating a user', () => {
-    it('should only create when needed', () => {
-      store.dispatch(update({name: username, id}));
-
-      expect(mockCreateUser).not.toHaveBeenCalled();
-    });
-
     describe('on success', () => {
       const otherUsers = [{name: 'Hayes', id: 'David'}];
       const otherUsersPage = {
@@ -57,12 +55,12 @@ describe('user store:', () => {
 
       beforeEach(() => {
         mockCreateUser.mockReset();
-        mockCreateUser.mockImplementation((name: NewUser, handleCreate: Handlers) => {
+        mockCreateUser.mockImplementation((name: NewUser, handleCreate: ResponseHandler) => {
           handleCreate.onSuccess({...name, id});
         });
 
         mockGetOtherUsers.mockReset();
-        mockGetOtherUsers.mockImplementation((currentUserId: UserId, handleGet: Handlers) => {
+        mockGetOtherUsers.mockImplementation((currentUserId: UserId, handleGet: ResponseHandler) => {
           handleGet.onSuccess(otherUsersPage);
         });
 
@@ -76,6 +74,20 @@ describe('user store:', () => {
 
       it('should get all the other users', () => {
         expect(store.getState().others).toEqual(otherUsersPage);
+      });
+
+      describe('logging out', () => {
+        describe('on success', () => {
+          it('should reset the state', () => {
+            mockLogout.mockImplementation((userId: string, handle: ResponseHandler) => {
+              handle.onSuccess({});
+            });
+
+            store.dispatch(logout(id));
+
+            expect(store.getState()).toEqual(initialState);
+          });
+        });
       });
     });
   });

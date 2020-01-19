@@ -1,8 +1,10 @@
-import {GetAll} from './GetAll';
-import {Create} from './Create';
+import {NewUser, UserId} from '../../../store/user/types/user';
+import {ResponseHandler} from '../../../store/user/types';
 
 export interface UserClient {
-  create: Create;
+  create: (user: NewUser, handle: ResponseHandler) => void;
 
-  getAll: GetAll;
+  getAll: (exclude: UserId, handle: ResponseHandler) => void;
+
+  logout: (id: string, handle: ResponseHandler) => void;
 }

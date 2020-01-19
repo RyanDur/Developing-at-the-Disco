@@ -2,8 +2,8 @@ import {NewUser} from '../../src/app/store/user/types';
 import {has} from '../../src/lib/util/helpers';
 
 interface ResponseSetup {
-  status: Number;
-  response: Object;
+  status?: Number;
+  response?: Object;
 }
 
 interface Setup {
@@ -21,7 +21,25 @@ declare global {
 }
 
 const defaultPost = {status: 201, response: ''};
-const defaultGet = {status: 200, response: ''};
+const defaultGet = {
+  status: 200, response: {
+    content: [
+      {name: 'Devon', id: 'other-id-0', status: 'AVAILABLE'},
+      {name: 'David', id: 'other-id-1', status: 'AVAILABLE'},
+      {name: 'Frances', id: 'other-id-2', status: 'AVAILABLE'},
+      {name: 'Andrew', id: 'other-id-3', status: 'AVAILABLE'},
+      {name: 'Caren', id: 'other-id-4', status: 'AVAILABLE'}
+    ],
+    last: true,
+    first: true,
+    empty: false,
+    size: 1,
+    totalElements: 5,
+    number: 0,
+    totalPages: 1,
+    numberOfElements: 10
+  }
+};
 
 Cypress.Commands.add('signup',
   (user,
@@ -37,23 +55,25 @@ Cypress.Commands.add('signup',
       response: post.response
     }).as('createUser');
 
-    cy.route({
-      method: 'GET',
-      url: '**/users?exclude=*',
-      status: get.status,
-      response: get.response
-    }).as('getOtherUsers');
+    if (has(get)) {
+      cy.route({
+        method: 'GET',
+        url: '**/users?exclude=*',
+        status: get.status,
+        response: get.response
+      }).as('getOtherUsers');
+    }
 
     cy.visit('/', config)
       .get('form')
       .within(() => {
-        cy.get('.username input')
+        cy.contains('Username')
           .type(user.name)
           .root().submit();
       })
       .wait('@createUser');
 
-    if (has(get.response)) {
+    if (has(get)) {
       cy.wait('@getOtherUsers');
     }
   });
