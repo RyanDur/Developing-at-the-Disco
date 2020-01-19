@@ -11,8 +11,8 @@ import {UserActions} from './UserActions';
 import {LogoutAction} from './LogoutAction';
 import {LogoutSuccess} from './LogoutSuccessAction';
 
-export type UserErrorsAction = InvalidSignupAction;
-export type UserScenesAction = SignupDone;
+export type UserErrorsAction = InvalidSignupAction | CurrentAction;
+export type UserScenesAction = SignupDone | LogoutSuccess;
 export type UsersAction = CurrentAction | CreateAction | UpdateAction | OtherUsersAction | LogoutAction | LogoutSuccess;
 export type UserAction = UserScenesAction | UsersAction | UserErrorsAction;
 
