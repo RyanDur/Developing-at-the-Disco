@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {Signup} from '../../user';
-import {navigate} from 'hookrouter';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {has, join} from '../../../../lib/util/helpers';
 import './Authorization.css';
@@ -14,10 +13,7 @@ export const Authorization = () => {
   const dispatch = useDispatch();
 
   const onAnimationEnd = () => {
-    if (sceneIsDone) {
-      dispatch(signupDone(true));
-      navigate('/');
-    }
+    if (sceneIsDone) dispatch(signupDone(true));
   };
 
   return <main id='content'>
