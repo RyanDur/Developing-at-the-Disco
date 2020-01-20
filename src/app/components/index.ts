@@ -1,12 +1,12 @@
 import {App} from './App';
 import {Reducers} from '../../lib/redux/types';
-import {UserAction, userMiddlewares, userReducers, UserState} from './user';
+import {UserAction, userMiddleware, userReducers, UserState} from './user';
 
 type ComponentAction = UserAction;
 type ComponentState = UserState;
 
 const middleware = [
-  ...userMiddlewares
+  ...userMiddleware
 ];
 
 const reducers: Reducers<ComponentState, ComponentAction> = {

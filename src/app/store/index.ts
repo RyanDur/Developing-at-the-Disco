@@ -1,9 +1,10 @@
 import * as userReducers from './user/reducer';
-import {createUserMiddleware, getOtherUsersMiddleware} from './user/middleware';
+import {createUserMiddleware, getOtherUsersMiddleware, logoutMiddleware} from './user/middleware';
 
 const userMiddleware = [
   createUserMiddleware,
-  getOtherUsersMiddleware
+  getOtherUsersMiddleware,
+  logoutMiddleware
 ];
 
 export {userMiddleware, userReducers};

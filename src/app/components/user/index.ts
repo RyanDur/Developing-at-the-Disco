@@ -5,13 +5,12 @@ import {userMiddleware, userReducers} from '../../store';
 import {UserAction} from '../../store/user/action/types';
 import {UserState} from '../../store/user/types';
 
-export const userMiddlewares = userMiddleware;
-
 export {
   UserAction,
   Signup,
   Info,
   userReducers,
+  userMiddleware,
   Others,
   UserState
 };

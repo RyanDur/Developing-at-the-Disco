@@ -5,6 +5,7 @@ import {host} from '../../config';
 import {logError, logResponse} from './loggers';
 import {ResponseHandler} from '../store/user/types';
 import * as t from 'io-ts';
+import {has} from '../../lib/util/helpers';
 
 const NO_CONTENT = t.record(t.string, t.undefined);
 
@@ -23,7 +24,8 @@ export const http = (
   }: ResponseTypeGuards = {success: NO_CONTENT}
 ): void => void fetch(`${host + path}`, request)
   .then(async (response: Response) => {
-    const body = await response.json();
+    const text = await response.text();
+    const body = has(text) ? JSON.parse(text) : {};
     switch (response.status) {
       case 200:
       case 201:
@@ -34,4 +36,6 @@ export const http = (
       default:
         logResponse(body);
     }
-  }).catch(logResponse);
+  }).catch((e) => {
+    return logResponse(e);
+  });

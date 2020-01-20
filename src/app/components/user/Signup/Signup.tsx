@@ -8,7 +8,7 @@ import {create} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
 import {SignupProps} from './types';
 import './Signup.css';
-import {selectUsernameErrors} from '../../../store/user/selector';
+import {usernameErrors} from '../../../store/user/selector';
 
 const signupText: Record<string, string> = {
   USERNAME_EXISTS: 'Username already exists.'
@@ -24,7 +24,7 @@ export const Signup = ({
   onSceneEnd = () => undefined,
   onAnimationEnd = () => undefined
 }: SignupProps) => {
-  const userNameErrors = useSelector(selectUsernameErrors) || {};
+  const userNameErrors = useSelector(usernameErrors) || {};
   const dispatch = useDispatch();
   const [name, updateName] = useState('');
   const [submitted, isSubmitted] = useState(false);

@@ -29,7 +29,7 @@ describe('the user client', () => {
   const newUser = {name: currentUser.name};
   const otherUsers: OtherUsers = [
     {name: 'Chirag', id: 'Taylor', status: UserStatus.AVAILABLE},
-    {name: 'Chris ', id: 'Schuster', status: UserStatus.AVAILABLE}];
+    {name: 'Chris ', id: 'Schuster', status: UserStatus.LOGGED_OUT}];
   const page = {
     empty: false,
     first: true,
@@ -125,8 +125,7 @@ describe('the user client', () => {
 
     it('should set the status of the user', done => {
       const patched = fetchMock.patch(`${host}${request.path}`, {
-        ...patchResponse,
-        body: {}
+        ...patchResponse
       });
 
       logout(id, mockHandle);

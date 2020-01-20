@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
 import {useSelector} from '../../lib/react-redux';
-import {not} from '../../lib/util/helpers';
-import {checkAuthorization} from '../store/user/selector';
+import {empty} from '../../lib/util/helpers';
+import {currentUser} from '../store/user/selector';
 
 export enum paths {
   home = '/',
@@ -16,11 +16,11 @@ const routes = {
 };
 
 export const App = () => {
-  const authorized = useSelector(checkAuthorization);
+  const user = useSelector(currentUser);
   const routeResult = useRoutes(routes);
 
   useEffect(() => {
-    if (not(authorized)) navigate(paths.auth);
+    if (empty(user)) navigate(paths.auth);
   });
 
   return routeResult;
