@@ -3,26 +3,26 @@ import {Authorization, Header} from './sections';
 import {navigate, useRoutes} from 'hookrouter';
 import {useSelector} from '../../lib/react-redux';
 import {empty, has} from '../../lib/util/helpers';
-import {currentUser, currentUserReady} from '../store/user/selector';
+import {currentUser, currentUserSignedUp} from '../store/user/selector';
 
-export enum paths {
+export enum path {
   home = '/',
   auth = '/authorization'
 }
 
 const routes = {
-  [paths.home]: () => <Header/>,
-  [paths.auth]: () => <Authorization/>
+  [path.home]: () => <Header/>,
+  [path.auth]: () => <Authorization/>
 };
 
 export const App = () => {
   const user = useSelector(currentUser);
-  const userIsReady = useSelector(currentUserReady);
+  const userIsSignedUp = useSelector(currentUserSignedUp);
   const routeResult = useRoutes(routes);
 
   useEffect(() => {
-    if (empty(user)) navigate(paths.auth);
-    if (userIsReady) navigate(paths.home);
+    if (empty(user)) navigate(path.auth);
+    if (userIsSignedUp) navigate(path.home);
   });
 
   return routeResult;

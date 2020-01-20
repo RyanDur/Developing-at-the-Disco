@@ -7,7 +7,7 @@ export const usernameErrors = ({userErrors}: UserState) =>
 export const currentUser = ({users}: UserState): CurrentUser =>
   users.current;
 
-export const currentUserReady = ({
+export const currentUserSignedUp = ({
   users,
   userScenes
 }: UserState) => has(users.current) && userScenes.signupDone;

@@ -35,8 +35,8 @@ export const Signup = ({
   const createNewUser = (event: FormEvent) => {
     event.preventDefault();
     if (not(disabled)) {
-      dispatch(create(name));
       isSubmitted(true);
+      dispatch(create(name));
     }
   };
 
