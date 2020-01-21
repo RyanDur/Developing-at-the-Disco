@@ -2,8 +2,12 @@ import * as React from 'react';
 import {Signup} from '../Signup';
 import {create} from '../../../../store/user/action';
 import {render, TestRender, useDispatchSpy, useSelectorSpy} from '../../../../__tests__/support/testApi';
+import {MemoryRouter} from 'react-router-dom';
 
 jest.mock('../../../../../config', () => ({
+  endpoint: {
+    users: 'I am an endpoint'
+  },
   maxUsernameLength: 30
 }));
 
@@ -23,7 +27,9 @@ describe('Signing up', () => {
   beforeEach(props.onSceneEnd.mockReset);
 
   describe('when name is empty', () => {
-    beforeEach(async () => subject = await render(<Signup {...props}/>));
+    beforeEach(async () => subject = render(<MemoryRouter>
+      <Signup {...props} />
+    </MemoryRouter>));
 
     it('should not be able to submit the candidate', () =>
       expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeTruthy());

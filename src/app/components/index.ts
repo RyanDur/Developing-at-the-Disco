@@ -19,4 +19,9 @@ export {
   ComponentState
 };
 
+export enum Path {
+  HOME = '/',
+  AUTH = '/authorization'
+}
+
 export default App;

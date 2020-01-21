@@ -7,8 +7,10 @@ import {empty, not} from '../../../../lib/util/helpers';
 import {create} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
 import {SignupProps} from './types';
+import {currentUser, usernameErrors} from '../../../store/user/selector';
+import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom';
 import './Signup.css';
-import {usernameErrors} from '../../../store/user/selector';
+import {Path} from '../../index';
 
 const signupText: Record<string, string> = {
   USERNAME_EXISTS: 'Username already exists.'
@@ -19,11 +21,12 @@ export const translate = ({value, validations = []}: Validation): Validation => 
   validations: validations.map(validation => signupText[validation])
 });
 
-export const Signup = ({
-  className,
-  onSceneEnd = () => undefined,
-  onAnimationEnd = () => undefined
-}: SignupProps) => {
+export const Signup = withRouter(({
+                                    className,
+                                    onSceneEnd = () => undefined,
+                                    onAnimationEnd = () => undefined,
+                                    history
+                                  }: SignupProps & RouteComponentProps) => {
   const userNameErrors = useSelector(usernameErrors) || {};
   const dispatch = useDispatch();
   const [name, updateName] = useState('');
@@ -37,6 +40,7 @@ export const Signup = ({
     if (not(disabled)) {
       isSubmitted(true);
       dispatch(create(name));
+      history.push(Path.HOME);
     }
   };
 
@@ -64,4 +68,4 @@ export const Signup = ({
       Sign Up
     </button>
   </form>;
-};
+});

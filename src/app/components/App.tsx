@@ -1,29 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {ReactElement} from 'react';
 import {Authorization, Header} from './sections';
-import {navigate, useRoutes} from 'hookrouter';
-import {useSelector} from '../../lib/react-redux';
-import {empty, has} from '../../lib/util/helpers';
-import {currentUser, currentUserSignedUp} from '../store/user/selector';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {PrivateRoute} from './PrivteRoute';
+import {Path} from './index';
 
-export enum path {
-  home = '/',
-  auth = '/authorization'
-}
-
-const routes = {
-  [path.home]: () => <Header/>,
-  [path.auth]: () => <Authorization/>
-};
-
-export const App = () => {
-  const user = useSelector(currentUser);
-  const userIsSignedUp = useSelector(currentUserSignedUp);
-  const routeResult = useRoutes(routes);
-
-  useEffect(() => {
-    if (empty(user)) navigate(path.auth);
-    if (userIsSignedUp) navigate(path.home);
-  });
-
-  return routeResult;
-};
+export const App = (): ReactElement =>
+  <BrowserRouter>
+    <Switch>
+      <Route path={Path.AUTH} component={Authorization}/>
+      <PrivateRoute exact path={Path.HOME} component={Header}/>
+    </Switch>
+  </BrowserRouter>;
