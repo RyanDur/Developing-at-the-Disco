@@ -1,10 +1,13 @@
-import * as userReducers from './user/reducer';
 import {createUserMiddleware, getOtherUsersMiddleware, logoutMiddleware} from './user/middleware';
+import {userErrors, users} from './user/reducer';
 
-const userMiddleware = [
+export const userMiddleware = [
   createUserMiddleware,
   getOtherUsersMiddleware,
   logoutMiddleware
 ];
 
-export {userMiddleware, userReducers};
+export const userReducers = {
+  users,
+  userErrors
+};

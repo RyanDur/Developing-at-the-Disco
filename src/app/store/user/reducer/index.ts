@@ -1,9 +1,3 @@
-import {users} from './users';
-import {userErrors} from './userErrors';
-import {userScenes} from './userScenes';
-
-export {
-  users,
-  userErrors,
-  userScenes
-};
+export {users} from './users';
+export {userErrors} from './userErrors';
+export {userScenes} from './userScenes';

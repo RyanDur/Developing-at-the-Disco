@@ -14,6 +14,7 @@ export const empty = (obj: any) =>
 
 export const has = (content: any) => not(empty(content));
 export const notEmpty = has;
+export const NO_OP = (...anyNumberOfArgs: any[]): any => undefined;
 
 export const remove = (item: any, items: any[]): any[] => {
   const index: number = items.indexOf(item);

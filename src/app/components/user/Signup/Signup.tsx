@@ -1,71 +1,68 @@
 import * as React from 'react';
-import {FormEvent, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
 import {maxUsernameLength} from '../../../../config';
 import {TextInput} from '../../elements';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
-import {empty, not} from '../../../../lib/util/helpers';
+import {empty, has, not} from '../../../../lib/util/helpers';
 import {create} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
 import {SignupProps} from './types';
 import {currentUser, usernameErrors} from '../../../store/user/selector';
-import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom';
-import './Signup.css';
+import {useHistory} from 'react-router-dom';
 import {Path} from '../../index';
+import './Signup.css';
 
-const signupText: Record<string, string> = {
+interface ViewText {
+  [K: string]: string;
+}
+
+const SignupText: ViewText = {
   USERNAME_EXISTS: 'Username already exists.'
 };
 
-export const translate = ({value, validations = []}: Validation): Validation => ({
+export const translate = ({value, validations = []}: Validation, text: ViewText): Validation => ({
   value,
-  validations: validations.map(validation => signupText[validation])
+  validations: validations.map(validation => text[validation])
 });
 
-export const Signup = withRouter(({
-                                    className,
-                                    onSceneEnd = () => undefined,
-                                    onAnimationEnd = () => undefined,
-                                    history
-                                  }: SignupProps & RouteComponentProps) => {
-  const userNameErrors = useSelector(usernameErrors) || {};
+export const Signup = ({
+  className
+}: SignupProps) => {
+  const user = useSelector(currentUser);
+  const invalidUsername = useSelector(usernameErrors) || {};
+  const history = useHistory();
   const dispatch = useDispatch();
   const [name, updateName] = useState('');
   const [submitted, isSubmitted] = useState(false);
 
-  const invalid = empty(name) || name === userNameErrors.value;
+  const invalid = empty(name) || name === invalidUsername.value;
   const disabled = invalid || submitted;
 
-  const createNewUser = (event: FormEvent) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (not(disabled)) {
-      isSubmitted(true);
       dispatch(create(name));
-      history.push(Path.HOME);
+      isSubmitted(true);
     }
   };
 
-  const onTransitionEnd = () => {
-    if (submitted && not(invalid)) {
-      onSceneEnd();
-    } else {
-      isSubmitted(false);
-    }
-  };
+  useEffect(() => {
+    if (has(user)) history.push(Path.HOME);
+    else isSubmitted(false);
+  });
 
   return <form id='create-user'
-               onSubmit={createNewUser}
-               className={className}
-               onAnimationEnd={onAnimationEnd}>
+               onSubmit={handleSubmit}
+               className={className}>
     <TextInput className='username'
                placeHolder='Username'
                onChange={updateName}
-               errors={translate(userNameErrors)}
+               errors={translate(invalidUsername, SignupText)}
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'
-            onTransitionEnd={onTransitionEnd}
             disabled={disabled}>
       Sign Up
     </button>
   </form>;
-});
+};

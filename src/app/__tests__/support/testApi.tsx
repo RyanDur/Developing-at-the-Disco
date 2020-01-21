@@ -5,6 +5,7 @@ import {act, Simulate} from 'react-dom/test-utils';
 import * as ShallowRenderer from 'react-test-renderer/shallow';
 import * as MyReactRedux from '../../../lib/react-redux';
 import {has} from '../../../lib/util/helpers';
+import {currentUser, usernameErrors} from '../../store/user/selector';
 
 let container: HTMLElement = null;
 
