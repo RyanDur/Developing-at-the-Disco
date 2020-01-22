@@ -2,10 +2,9 @@
     display: flex;
     justify-content: center;
     height: 100vh;
+    padding: 20rem 0 0;
 
-    & .signup {
-        margin: 20rem 0;
-
+    & .authorization {
         &.remove {
             position: relative;
             animation: 500ms ease-out 0ms 1 remove;

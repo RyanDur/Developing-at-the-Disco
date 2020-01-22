@@ -1,15 +1,13 @@
 import * as React from 'react';
-import {FormEvent, useEffect, useState} from 'react';
+import {DetailedHTMLProps, FormEvent, HTMLAttributes, useEffect, useState} from 'react';
 import {maxUsernameLength} from '../../../../config';
 import {TextInput} from '../../elements';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
-import {empty, has, not} from '../../../../lib/util/helpers';
-import {create, pageDone} from '../../../store/user/action';
+import {empty, not} from '../../../../lib/util/helpers';
+import {create} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
-import {SignupProps} from './types';
 import {currentUser, usernameErrors} from '../../../store/user/selector';
 import './Signup.css';
-import {Page} from '../../../store/user/action/types';
 
 interface ViewText {
   [K: string]: string;
@@ -24,9 +22,7 @@ export const translate = ({value, validations = []}: Validation, text: ViewText)
   validations: validations.map(validation => text[validation])
 });
 
-export const Signup = ({
-  className
-}: SignupProps) => {
+export const Signup = ({className}: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLFormElement>) => {
   const user = useSelector(currentUser);
   const invalidUsername = useSelector(usernameErrors) || {};
   const dispatch = useDispatch();
@@ -48,9 +44,7 @@ export const Signup = ({
     if (empty(user)) isSubmitted(false);
   });
 
-  return <form id='create-user'
-               onSubmit={handleSubmit}
-               className={className}>
+  return <form onSubmit={handleSubmit} id='create-user' className={className} >
     <TextInput className='username'
                placeHolder='Username'
                onChange={updateName}
@@ -58,9 +52,6 @@ export const Signup = ({
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'
-            onTransitionEnd={() => {
-              if (has(user)) dispatch(pageDone(Page.SIGNUP));
-            }}
             disabled={disabled}>
       Sign Up
     </button>

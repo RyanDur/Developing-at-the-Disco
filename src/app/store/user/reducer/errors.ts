@@ -1,10 +1,10 @@
-import {SignupValidations, UserActions, UserErrorsAction} from '../action/types';
-import {UserErrorsState} from '../types';
+import {SignupValidations, UserActions, ErrorsAction} from '../action/types';
+import {ErrorsState} from '../types';
 import {Reducer} from '../../../../lib/redux/types';
 
-export const initialState: UserErrorsState = {};
+export const initialState: ErrorsState = {};
 
-export const userErrors: Reducer<UserErrorsState, UserErrorsAction> =
+export const errors: Reducer<ErrorsState, ErrorsAction> =
   (state = initialState, action) => {
     switch (action.type) {
       case SignupValidations.INVALID_SIGNUP:

@@ -1,24 +1,24 @@
 import {createUserMiddleware} from '../middleware';
-import {NewUser, ResponseHandler, UserErrorsState} from '../types';
+import {NewUser, ResponseHandler, ErrorsState} from '../types';
 import {create, current} from '../action';
-import {userErrors} from '../reducer';
-import {UserAction} from '../action/types';
+import {errors} from '../reducer';
+import {ErrorsAction, UserAction} from '../action/types';
 import {Store} from '../../../../lib/redux/types';
 import {userClient} from '../../../data';
 import {createStore} from '../../../../lib/redux';
 import {UserStatus} from '../types/user';
-import {initialState} from '../reducer/userErrors';
+import {initialState} from '../reducer/errors';
 
 describe('signing up validations', () => {
   const mockCreateUser = jest.fn();
   const username: string = 'Ryan';
-  let store: Store<UserErrorsState, UserAction>;
+  let store: Store<ErrorsState, ErrorsAction>;
   const userClientSpy = jest.spyOn(userClient, 'create');
 
   beforeEach(() => {
     console.warn = jest.fn();
     userClientSpy.mockImplementation(mockCreateUser);
-    store = createStore(userErrors, [createUserMiddleware]);
+    store = createStore(errors, [createUserMiddleware]);
   });
 
   it('should have no errors', () => {

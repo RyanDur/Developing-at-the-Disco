@@ -10,12 +10,15 @@ import {CreateAction} from './CreateAction';
 import {UserActions} from './UserActions';
 import {LogoutAction} from './LogoutAction';
 import {LogoutSuccess} from './LogoutSuccessAction';
-import { Page } from './Page';
+import {Page} from './Page';
 
-export type UserErrorsAction = InvalidSignupAction | CurrentAction;
-export type PageAction = PageDone | LogoutSuccess;
-export type UsersAction = CurrentAction | CreateAction | UpdateAction | OtherUsersAction | LogoutAction | LogoutSuccess;
-export type UserAction = UsersAction | UserErrorsAction;
+export type UserAction = CurrentAction
+  | CreateAction
+  | UpdateAction
+  | OtherUsersAction
+  | LogoutAction
+  | LogoutSuccess;
+export type ErrorsAction = InvalidSignupAction | UserAction;
 
 export {
   Page,

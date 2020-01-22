@@ -1,14 +1,22 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import {Signup} from '../../user';
-import {join} from '../../../../lib/util/helpers';
+import {has} from '../../../../lib/util/helpers';
 import {useSelector} from '../../../../lib/react-redux';
-import {isAuthorizationDone} from '../../../store/user/selector';
+import {currentUser} from '../../../store/user/selector';
+import {useHistory} from 'react-router-dom';
+import {Path} from '../../index';
 import './Authorization.css';
 
 export const Authorization = () => {
-  const authorizationIsDone = useSelector(isAuthorizationDone);
+  const user = useSelector(currentUser);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (has(user)) history.push(Path.HOME);
+  });
 
   return <main id='content'>
-    <Signup className={join('authorization', authorizationIsDone && 'remove')}/>
+    <Signup className='authorization'/>
   </main>;
 };

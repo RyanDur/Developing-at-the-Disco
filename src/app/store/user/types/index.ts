@@ -1,4 +1,4 @@
-import {UserErrorsState, PageState, UsersState, UserState} from './state';
+import {ErrorsState, PageState, UsersState, UserState} from './state';
 import {CurrentUser, NewUser, OtherUser, OtherUsers, OtherUsersPage} from './user';
 import {UsernameValidation} from './validations/UsernameValidation';
 import {Validation} from './validations/Validation';
@@ -19,7 +19,7 @@ export {
   OtherUser,
   OtherUsers,
   OtherUsersPage,
-  UserErrorsState,
+  ErrorsState,
   UsernameValidation,
   Validation,
   SignupErrors
