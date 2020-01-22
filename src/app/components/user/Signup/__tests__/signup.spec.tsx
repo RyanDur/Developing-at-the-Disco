@@ -64,11 +64,6 @@ describe('Signing up', () => {
 
           it('should not be able to submit again', () =>
             expect(subject.find('.submit').prop('disabled')).toBe(true));
-
-          it('should notify signup has ended', () => {
-            subject.find('button').simulate('transitionend');
-            expect(mockDispatch).toHaveBeenCalledWith(pageDone(Page.SIGNUP));
-          });
         });
       });
     });

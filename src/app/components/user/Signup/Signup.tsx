@@ -22,7 +22,11 @@ export const translate = ({value, validations = []}: Validation, text: ViewText)
   validations: validations.map(validation => text[validation])
 });
 
-export const Signup = ({className}: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLFormElement>) => {
+interface SignupProps {
+  onSceneEnd?: () => void;
+}
+
+export const Signup = ({onSceneEnd, ...props}: SignupProps & DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLFormElement>) => {
   const user = useSelector(currentUser);
   const invalidUsername = useSelector(usernameErrors) || {};
   const dispatch = useDispatch();
@@ -44,7 +48,7 @@ export const Signup = ({className}: DetailedHTMLProps<HTMLAttributes<HTMLElement
     if (empty(user)) isSubmitted(false);
   });
 
-  return <form onSubmit={handleSubmit} id='create-user' className={className} >
+  return <form {...props} onSubmit={handleSubmit}>
     <TextInput className='username'
                placeHolder='Username'
                onChange={updateName}
@@ -52,6 +56,7 @@ export const Signup = ({className}: DetailedHTMLProps<HTMLAttributes<HTMLElement
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'
+            onTransitionEnd={() => onSceneEnd()}
             disabled={disabled}>
       Sign Up
     </button>

@@ -9,15 +9,16 @@
     }
   },
   "scripts": {
-    "flows": "cypress open",
-    "flows:silent": "cypress run",
-    "build": "webpack --env production",
     "start": "webpack-dev-server",
     "start:open": "webpack-dev-server --open",
-    "test:flows": "npm run build && start-server-and-test start http://localhost:8080 flows",
+    "build": "webpack --env production",
+    "test": "npm run test:unit && npm run test:flows:silent",
     "test:unit": "jest --env=jsdom",
-    "test:ci": "npm run test:unit && start-server-and-test start http://localhost:8080 flows:silent",
-    "cf:push": "npm run test:ci && npm run build && cf push"
+    "flows": "cypress open",
+    "flows:silent": "cypress run",
+    "test:flows": "npm run build && start-server-and-test start http://localhost:8080 flows",
+    "test:flows:silent": "npm run build && start-server-and-test start http://localhost:8080 flows:silent",
+    "cf:push": "npm run test && cf push"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
