@@ -4,4 +4,4 @@ import {Dispatch} from './Dispatch';
 import {AnyState, State} from './State';
 
 export type Middleware<S extends State = AnyState, A extends Action = AnyAction> =
-  (api: MiddlewareAPI<S, A>) => (next: Dispatch<A>) => (action: AnyAction) => any;
+  (api: MiddlewareAPI<S, A>) => (next: Dispatch<A>) => (action: A) => void;

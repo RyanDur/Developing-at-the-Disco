@@ -10,8 +10,9 @@ const handle: ResponseHandlers = (dispatch) => ({
 });
 
 export const createUserMiddleware: Middleware<UserState, UserAction> =
-  ({dispatch}) => () => (action) => {
+  ({dispatch}) => next => action => {
     if (action.type === UserActions.CREATE) {
       userClient.create({name: action.name}, handle(dispatch));
     }
+    next(action);
   };

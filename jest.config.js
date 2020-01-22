@@ -18,5 +18,8 @@ module.exports = {
     testEnvironment: "node",
     moduleNameMapper: {
         "\\.(css|less)$": "identity-obj-proxy",
-    }
+    },
+    setupFilesAfterEnv: [
+        "<rootDir>/src/__tests__/setup.ts"
+    ]
 };

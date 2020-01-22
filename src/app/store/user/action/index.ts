@@ -1,13 +1,13 @@
 import {create, current, invalidSignup, others, update, logout, logoutSuccess} from './user';
 
-import {signupDone} from './scenes';
+import {pageDone} from './scenes';
 
 export {
   create,
   update,
   current,
   others,
-  signupDone,
+  pageDone,
   invalidSignup,
   logout,
   logoutSuccess

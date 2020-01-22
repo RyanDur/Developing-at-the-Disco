@@ -1,66 +1,72 @@
 import * as React from 'react';
-import {render, TestRender} from '../../../../__tests__/support/testApi';
 import {TextInput} from '../index';
 import {TextInputProps} from '../types';
+import {mount, ReactWrapper} from 'enzyme';
 
 describe('the text input', () => {
   const text = 'Yay';
   const title = 'Some text';
-  let textInput: TestRender = null;
+  let textInput: ReactWrapper;
 
-  const createTextInput = (props: TextInputProps) => render(<TextInput {...props}/>);
+  const createTextInput = (props: TextInputProps) => mount(<TextInput {...props}/>);
 
   describe('without error', () => {
     const props = {onChange: jest.fn(), className: 'Some-name', maxLength: 10, placeHolder: title};
 
-    beforeEach(async () => {
-      textInput = await createTextInput(props);
+    beforeEach(() => {
+      textInput = createTextInput(props);
     });
 
     it('should have a title', () => {
-      expect(textInput.getBy('.title').innerHTML).toBe(title);
+      expect(textInput.find('.title').text()).toBe(title);
     });
 
     it('should add the given class name to the input', () => {
-      expect(textInput.getBy('.text-input').classList).toContain(props.className);
+      expect(textInput.find('.text-input').hasClass(props.className)).toBe(true);
     });
 
     it('should associate the input wth the label', () => {
-      expect(textInput.getBy<HTMLLabelElement>('.title').htmlFor)
-        .toEqual(textInput.getBy('.text').id);
+      expect(textInput.find('.title').prop('htmlFor'))
+        .toEqual(textInput.find('.text').prop('id'));
     });
 
     it('should associate the input wth the label count', () => {
-      expect(textInput.getBy<HTMLLabelElement>('.max-length').htmlFor)
-        .toEqual(textInput.getBy('.text').id);
+      expect(textInput.find('.max-length').prop('htmlFor'))
+        .toEqual(textInput.find('.text').prop('id'));
     });
 
     it('should not have a candidate name', () => {
-      expect(textInput.getBy('.text-input').classList).not.toContain('candidate');
+      expect(textInput.find('.text-input').hasClass('candidate')).not.toBe(true);
     });
 
     describe('on focus', () => {
+      beforeEach(() => {
+        textInput.find('.text').simulate('focus');
+      });
+
       it('should consider the candidate', () => {
-        textInput.focus(textInput.getBy('.text'));
-        expect(textInput.getBy('.text-input').classList).toContain('candidate');
+        expect(textInput.find('.text-input').hasClass('candidate')).toBe(true);
       });
 
       describe('on blur', () => {
+        beforeEach(() => {
+          textInput.find('.text').simulate('blur');
+        });
+
         it('should not consider the empty state a candidate', () => {
-          textInput.blur(textInput.getBy('.text'));
-          expect(textInput.getBy('.text-input').classList).not.toContain('candidate');
+          expect(textInput.find('.text-input').hasClass('candidate')).not.toBe(true);
         });
       });
     });
 
     describe('given input', () => {
       beforeEach(() => {
-        textInput.change(textInput.getBy('.text'), {target: {value: text}});
-        textInput.focus(textInput.getBy('.text'));
+        textInput.find('.text').simulate('change', {target: {value: text}});
+        textInput.find('.text').simulate('focus');
       });
 
       it('should make the input a candidate.', () => {
-        expect(textInput.getBy('.text-input').classList).toContain('candidate');
+        expect(textInput.find('.text-input').hasClass('candidate')).toBe(true);
       });
 
       it('should trigger the passed in function', () => {
@@ -68,20 +74,22 @@ describe('the text input', () => {
       });
 
       it('should not be longer than the max length given', () => {
-        expect(textInput.getBy<HTMLInputElement>('.text').maxLength).toEqual(props.maxLength);
+        expect(textInput.find('.text').prop('maxLength')).toEqual(props.maxLength);
       });
 
       describe('blur input', () => {
         it('should remove candidacy if the input has no value', async () => {
-          textInput.change(textInput.getBy('.text'), {target: {value: ''}});
-          textInput.blur(textInput.getBy('.text'));
-          expect(textInput.getBy('.text-input').classList).not.toContain('candidate');
+          textInput.find('.text').simulate('change', {target: {value: ''}});
+          textInput.find('.text').simulate('blur');
+
+          expect(textInput.find('.text-input').hasClass('candidate')).not.toBe(true);
         });
 
         it('should not remove candidacy if the input has a value', async () => {
-          textInput.change(textInput.getBy('.text'), {target: {value: 'a'}});
-          textInput.blur(textInput.getBy('.text'));
-          expect(textInput.getBy('.text-input').classList).toContain('candidate');
+          textInput.find('.text').simulate('change', {target: {value: 'a'}});
+          textInput.find('.text').simulate('blur');
+
+          expect(textInput.find('.text-input').hasClass('candidate')).toBe(true);
         });
       });
     });
@@ -92,33 +100,32 @@ describe('the text input', () => {
 
     const props = {errors, onChange: jest.fn(), className: 'Some-name', maxLength: 10, placeHolder: title};
 
-    beforeEach(async () => {
-      textInput = await createTextInput(props);
-      textInput.change(textInput.getBy('.text'), {target: {value: errors.value}});
+    beforeEach(() => {
+      textInput = createTextInput(props);
+      textInput.find('.text').simulate('change', {target: {value: errors.value}});
     });
 
     it('should display the errors', () => {
-      const errorsElement = textInput.getBy('.errors');
+      const errorsElement = textInput.find('.errors');
       expect(errorsElement).not.toBeNull();
-      expect(errorsElement.innerHTML).toContain(errors.validations[0]);
+      expect(errorsElement.first().text()).toContain(errors.validations[0]);
     });
 
     it('should be marked as invalid', () => {
-      expect(textInput.getBy('.text-input').classList).toContain('invalid');
+      expect(textInput.find('.text-input').hasClass('invalid')).toBe(true);
     });
 
     describe('fixing the input', () => {
       beforeEach(() => {
-        textInput.change(textInput.getBy('.text'), {target: {value: 'different'}});
+        textInput.find('.text').simulate('change', {target: {value: 'different'}});
       });
 
       it('should unmark the input as invalid', () => {
-        expect(textInput.getBy('.text-input').classList).not.toContain('invalid');
+        expect(textInput.find('.text-input').hasClass('invalid')).not.toBe(true);
       });
 
       it('should not display the errors', () => {
-        const errorsElement = textInput.getBy('.errors');
-        expect(errorsElement).toBeNull();
+        expect(textInput.find('.errors').exists()).toBe(false);
       });
     });
   });

@@ -4,8 +4,7 @@
     height: 100vh;
 
     & .signup {
-        position: relative;
-        top: 20rem;
+        margin: 20rem 0;
 
         &.remove {
             position: relative;

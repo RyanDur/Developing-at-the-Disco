@@ -1,6 +1,6 @@
-import {SignupDone, UserScenesActions} from './types';
+import {PageDone, PageActions, Page} from './types';
 
-export const signupDone = (signupIsDone: boolean): SignupDone => ({
-  type: UserScenesActions.SIGNUP_DONE,
-  signupIsDone
+export const pageDone = (page: Page): PageDone => ({
+  type: PageActions.DONE,
+  page
 });

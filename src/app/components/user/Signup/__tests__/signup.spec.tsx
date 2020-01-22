@@ -1,15 +1,12 @@
 import * as React from 'react';
 import {Signup} from '../Signup';
-import {create} from '../../../../store/user/action';
+import {create, pageDone} from '../../../../store/user/action';
 import {
-  render,
-  TestRender,
   useDispatchSpy,
   useSelectorSpy
-} from '../../../../__tests__/support/testApi';
-import {Path} from '../../../index';
-
-const mockHistoryPush = jest.fn();
+} from '../../../../../__tests__/support/testApi';
+import {Page} from '../../../../store/user/action/types';
+import {mount, ReactWrapper} from 'enzyme';
 
 describe('Signing up', () => {
   const mockPreventDefault = jest.fn();
@@ -18,7 +15,7 @@ describe('Signing up', () => {
   const name = 'YaY';
   useDispatchSpy(mockDispatch);
   useSelectorSpy(mockSelector);
-  let subject: TestRender;
+  let subject: ReactWrapper;
 
   describe('on user creation success', () => {
     beforeEach(async () => {
@@ -26,18 +23,18 @@ describe('Signing up', () => {
         .mockReturnValueOnce(undefined)
         .mockReturnValueOnce(undefined)
         .mockReturnValueOnce({foo: 'bar'})
-        .mockReturnValueOnce(undefined);
-      subject = await render(<Signup/>);
+        .mockReturnValueOnce(undefined)
+        .mockReturnValue({foo: 'bar'});
+      subject = mount(<Signup/>);
     });
 
     describe('on init', () => {
       describe('when name is empty', () => {
         it('should not be able to submit the candidate', () => {
           mockDispatch.mockReset();
-
-          subject.change(subject.getBy('.username input'), {target: {value: ''}});
-          subject.blur(subject.getBy('.username input'));
-          subject.submit(subject.getBy('form'));
+          subject.find('.username input').simulate('change', {target: {value: ''}});
+          subject.find('.username input').simulate('blur');
+          subject.find('form').simulate('submit');
 
           expect(mockDispatch).not.toHaveBeenCalled();
         });
@@ -45,17 +42,17 @@ describe('Signing up', () => {
 
       describe('given input', () => {
         beforeEach(() => {
-          subject.change(subject.getBy('.username input'), {target: {value: name}});
-          subject.focus(subject.getBy('.username input'));
+          subject.find('.username input').simulate('change', {target: {value: name}});
+          subject.find('.username input').simulate('blur');
         });
 
         it('should be able to submit the candidate', () => {
-          expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeFalsy();
+          expect(subject.find('.submit').prop('disabled')).toBe(false);
         });
 
         describe('on submit', () => {
           beforeEach(async () => {
-            subject.submit(subject.getBy('form'),
+            subject.find('form').simulate('submit',
               {preventDefault: mockPreventDefault});
           });
 
@@ -66,10 +63,11 @@ describe('Signing up', () => {
             expect(mockPreventDefault).toHaveBeenCalled());
 
           it('should not be able to submit again', () =>
-            expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeTruthy());
+            expect(subject.find('.submit').prop('disabled')).toBe(true));
 
-          it('should update the url', () => {
-            expect(mockHistoryPush).toHaveBeenCalledWith(Path.HOME);
+          it('should notify signup has ended', () => {
+            subject.find('button').simulate('transitionend');
+            expect(mockDispatch).toHaveBeenCalledWith(pageDone(Page.SIGNUP));
           });
         });
       });
@@ -80,49 +78,41 @@ describe('Signing up', () => {
     const message = 'Username already exists.';
     const errors = {value: name, validations: ['USERNAME_EXISTS']};
 
-    beforeEach(async () => {
+    beforeEach(() => {
       mockSelector.mockImplementation(() => errors);
-      subject = await render(<Signup/>);
-      subject.change(subject.getBy('.username input'), {target: {value: name}});
-      subject.focus(subject.getBy('.username input'));
+      subject = mount(<Signup/>);
+      subject.find('.username input').simulate('change', {target: {value: name}});
+      subject.find('.username input').simulate('focus');
     });
 
     it('should not be able to submit', () =>
-      expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeTruthy());
+      expect(subject.find('.submit').prop('disabled')).toBe(true));
 
     it('should display the errors', () =>
-      expect(subject.getBy('.username').innerHTML).toContain(message));
+      expect(subject.find('.username').first().text()).toContain(message));
 
     describe('changing the name', () => {
       beforeEach(() => {
-        subject.change(subject.getBy('.username input'), {target: {value: 'some name'}});
-        subject.focus(subject.getBy('.username input'));
+        subject.find('.username input').simulate('change', {target: {value: 'some name'}});
+        subject.find('.username input').simulate('focus');
       });
 
       it('should be able to submit', () =>
-        expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeFalsy());
+        expect(subject.find('.submit').prop('disabled')).toBe(false));
 
       describe('on submit', () => {
-        beforeEach(() => subject.submit(subject.getBy('form')));
+        beforeEach(() => subject.find('form').simulate('submit'));
 
         it('should not be able to submit', () =>
-          expect(subject.getBy<HTMLButtonElement>('.submit').disabled).toBeTruthy());
+          expect(subject.find('.submit').prop('disabled')).toBe(true));
       });
     });
   });
-})
-;
+});
 
 jest.mock('../../../../../config', () => ({
   endpoint: {
     users: 'I am an endpoint'
   },
   maxUsernameLength: 30
-}));
-
-// noinspection JSUnusedGlobalSymbols
-jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: mockHistoryPush
-  })
 }));

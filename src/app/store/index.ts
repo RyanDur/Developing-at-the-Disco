@@ -1,5 +1,5 @@
 import {createUserMiddleware, getOtherUsersMiddleware, logoutMiddleware} from './user/middleware';
-import {userErrors, users} from './user/reducer';
+import {pages, userErrors, users} from './user/reducer';
 
 export const userMiddleware = [
   createUserMiddleware,
@@ -9,5 +9,6 @@ export const userMiddleware = [
 
 export const userReducers = {
   users,
-  userErrors
+  userErrors,
+  pages
 };

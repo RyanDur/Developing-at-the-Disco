@@ -1,23 +1,20 @@
 import * as React from 'react';
 import {Reducer} from 'react';
-import {Action, AnyAction, AnyState, Dispatch, Listener, Middleware, State, Store, Unsubscribe} from './types';
+import {Action, AnyAction, AnyState, Listener, Middleware, State, Store, Unsubscribe} from './types';
 import {start} from './actions';
 import {has, remove} from '../util/helpers';
+import {MiddlewareAPI} from './types/MiddlewareAPI';
 
 const enhance = <S extends State = AnyState, A extends Action = AnyAction>(
   store: Store<S, A>,
   middlewares: Array<Middleware<S, A>>
 ): Store<S, A> => {
-  const enhancedDispatch: Dispatch<A> = (action) => {
-    partiallyApplied.forEach(middleware => middleware(action));
-    store.dispatch(action);
-  };
+  const enhancedStore = {...store, dispatch: (action: A) => enhancedDispatch(action)};
+  const api: MiddlewareAPI<S, A> = {getState: store.getState, dispatch: enhancedStore.dispatch};
 
-  const enhancedStore = {...store, dispatch: enhancedDispatch};
-
-  const partiallyApplied = middlewares
-    .map(middleware => middleware(enhancedStore))
-    .map(middleware => middleware(store.dispatch));
+  const enhancedDispatch = middlewares
+    .map(middleware => middleware(api))
+    .reduce((next, middleware) => middleware(next), store.dispatch);
 
   return enhancedStore;
 };

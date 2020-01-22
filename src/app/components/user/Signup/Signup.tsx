@@ -4,13 +4,12 @@ import {maxUsernameLength} from '../../../../config';
 import {TextInput} from '../../elements';
 import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {empty, has, not} from '../../../../lib/util/helpers';
-import {create} from '../../../store/user/action';
+import {create, pageDone} from '../../../store/user/action';
 import {Validation} from '../../../store/user/types';
 import {SignupProps} from './types';
 import {currentUser, usernameErrors} from '../../../store/user/selector';
-import {useHistory} from 'react-router-dom';
-import {Path} from '../../index';
 import './Signup.css';
+import {Page} from '../../../store/user/action/types';
 
 interface ViewText {
   [K: string]: string;
@@ -30,7 +29,6 @@ export const Signup = ({
 }: SignupProps) => {
   const user = useSelector(currentUser);
   const invalidUsername = useSelector(usernameErrors) || {};
-  const history = useHistory();
   const dispatch = useDispatch();
   const [name, updateName] = useState('');
   const [submitted, isSubmitted] = useState(false);
@@ -47,8 +45,7 @@ export const Signup = ({
   };
 
   useEffect(() => {
-    if (has(user)) history.push(Path.HOME);
-    else isSubmitted(false);
+    if (empty(user)) isSubmitted(false);
   });
 
   return <form id='create-user'
@@ -61,6 +58,9 @@ export const Signup = ({
                maxLength={maxUsernameLength}/>
     <button type='submit'
             className='submit primary'
+            onTransitionEnd={() => {
+              if (has(user)) dispatch(pageDone(Page.SIGNUP));
+            }}
             disabled={disabled}>
       Sign Up
     </button>

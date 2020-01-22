@@ -8,6 +8,7 @@ export const testMiddleware: Middleware<TestState, SomeActions> =
     if (TestActions.MIDDLEWARE_ACTION === action.type) {
       next({type: TestActions.SOME_ACTION, value: action.value});
     }
+    next(action);
   };
 
 export const otherTestMiddleware: Middleware<TestState, SomeActions> =
@@ -18,6 +19,7 @@ export const otherTestMiddleware: Middleware<TestState, SomeActions> =
         value: `new value: ${action.value}, current value: ${(api.getState() || {}).other}`
       });
     }
+    next(action);
   };
 
 export const otherTestMoreMiddleware: Middleware<TestState, SomeActions> =
@@ -28,6 +30,7 @@ export const otherTestMoreMiddleware: Middleware<TestState, SomeActions> =
         value: `new value: ${action.value}, current value: ${(api.getState().another || {}).other}`
       });
     }
+    next(action);
   };
 
 export const anotherTestMiddleware: Middleware<TestState, SomeActions> =
@@ -38,4 +41,5 @@ export const anotherTestMiddleware: Middleware<TestState, SomeActions> =
         value: `new value: ${action.value}, current value: ${(api.getState() || {}).another}`
       });
     }
+    next(action);
   };

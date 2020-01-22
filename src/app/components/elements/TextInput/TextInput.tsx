@@ -5,7 +5,13 @@ import {MessageList} from '../List';
 import './TextInput.css';
 import {join, has} from '../../../../lib/util/helpers';
 
-export const TextInput = ({onChange, className, maxLength, placeHolder, errors = {}}: TextInputProps) => {
+export const TextInput = ({
+  onChange,
+  className,
+  maxLength,
+  placeHolder,
+  errors = {}
+}: TextInputProps) => {
   const [text, updateText] = useState('');
   const [isCandidate, updateCandidate] = useState(false);
 

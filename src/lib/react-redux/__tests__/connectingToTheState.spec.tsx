@@ -12,44 +12,42 @@ import {TestElement} from '../../__tests__/support/TestElement';
 import {otherTestMiddleware} from '../../__tests__/support/testMiddlewares';
 import {someInitialState} from '../../__tests__/support/TestReducers';
 import {Provider} from '../Provider';
-import {render, TestRender} from '../../../app/__tests__/support/testApi';
+import {mount, ReactWrapper} from 'enzyme';
 
 describe('Connecting components to the state.', () => {
-  let subject: TestRender, getBy: TestRender['getBy'], click: TestRender['click'];
+  let subject: ReactWrapper;
 
   describe('without middleware', () => {
     beforeEach(() => {
       const store = createStore(testReducer);
-      subject = render(<Provider store={store}><TestElement testActions={[someAction]}/></Provider>);
-      getBy = subject.getBy;
+      subject = mount(<Provider store={store}><TestElement testActions={[someAction]}/></Provider>);
     });
 
     it('should create the initial state', () =>
-      expect(getBy('#value').innerHTML).toEqual(someInitialState.value));
+      expect(subject.find('#value').text()).toEqual(someInitialState.value));
 
     it('should update the state when dispatching an action', () => {
-      subject.click(getBy('button'));
-      return expect(getBy('#value').innerHTML).toEqual(someAction.value);
+      subject.find('button').simulate('click');
+      expect(subject.find('#value').text()).toEqual(someAction.value);
     });
   });
 
   describe('with middleware', () => {
     beforeEach(() => {
       const store = createStore(anotherTestReducer, [testMiddleware, otherTestMiddleware]);
-      subject = render(
+      subject = mount(
         <Provider store={store}>
           <TestElement testActions={[middlewareAction, otherMiddlewareAction]}/>
         </Provider>
       );
-      click = subject.click;
-      subject.click(getBy('button'));
+      subject.find('button').simulate('click');
     });
 
     it('should dispatch to the reducers', () =>
-      expect(getBy('#value').innerHTML).toEqual(middlewareAction.value));
+      expect(subject.find('#value').text()).toEqual(middlewareAction.value));
 
     it('should have access to the current state', () =>
-      expect(getBy('#other').innerHTML)
+      expect(subject.find('#other').text())
         .toEqual('new value: other middleware updated value, current value: other initial'));
   });
 });

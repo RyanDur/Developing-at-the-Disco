@@ -14,4 +14,5 @@ export const getOtherUsersMiddleware: Middleware<UserState, UserAction> =
     if (UserActions.CURRENT === action.type) {
       userClient.getAll(action.user.id, handle(next));
     }
+    next(action);
   };

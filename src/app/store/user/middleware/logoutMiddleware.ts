@@ -9,8 +9,10 @@ const handle: ResponseHandlers = (dispatch) => ({
   onSuccess: () => dispatch(logoutSuccess())
 });
 
-export const logoutMiddleware: Middleware<UserState, UserAction> = () => next => action => {
-  if (action.type === UserActions.LOGOUT) {
-    userClient.logout(action.id, handle(next));
-  }
-};
+export const logoutMiddleware: Middleware<UserState, UserAction> =
+  () => next => action => {
+    if (action.type === UserActions.LOGOUT) {
+      userClient.logout(action.id, handle(next));
+    }
+    next(action);
+  };

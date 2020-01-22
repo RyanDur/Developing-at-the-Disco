@@ -7,8 +7,3 @@ export interface TextInputProps {
   placeHolder: string;
   errors?: Partial<Validation>;
 }
-
-export interface TextInputState {
-  text: string;
-  isCandidate: boolean;
-}

@@ -1,26 +1,26 @@
-import {UserScenesState} from '../types';
-import {UserScenesAction} from '../action/types';
-import {logoutSuccess, signupDone} from '../action';
-import {userScenes} from '../reducer';
+import {PageState} from '../types';
+import {logoutSuccess, pageDone} from '../action';
+import {pages} from '../reducer';
 import {Store} from '../../../../lib/redux/types';
 import {createStore} from '../../../../lib/redux';
-import {initialState} from '../reducer/userScenes';
+import {initialState} from '../reducer/pages';
+import {Page, PageAction} from '../action/types';
 
 describe('user scenes', () => {
-  let store: Store<UserScenesState, UserScenesAction>;
+  let store: Store<PageState, PageAction>;
 
-  beforeEach(() => store = createStore(userScenes));
+  beforeEach(() => store = createStore(pages));
 
   it('should be in its initial state', () =>
     expect(store.getState()).toEqual(initialState));
 
   describe('when signup is done', () => {
     beforeEach(() => {
-      store.dispatch(signupDone(true));
+      store.dispatch(pageDone(Page.SIGNUP));
     });
 
     it('should update when the signup scene is done', () => {
-      expect(store.getState().signupDone).toEqual(true);
+      expect(store.getState().page).toEqual(Page.SIGNUP);
     });
 
     describe('when the user logs out', () => {
