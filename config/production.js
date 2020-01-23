@@ -4,13 +4,11 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {EnvironmentPlugin} = require("webpack");
 
 exports.production = (paths) => merge([common(paths), {
     devtool: 'source-map',
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Home',
             meta: {
