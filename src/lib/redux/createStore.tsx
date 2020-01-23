@@ -7,14 +7,13 @@ import {MiddlewareAPI} from './types/MiddlewareAPI';
 
 const enhance = <S extends State = AnyState, A extends Action = AnyAction>(
   store: Store<S, A>,
-  middlewares: Array<Middleware<S, A>>
+  middleware: Array<Middleware<S, A>>
 ): Store<S, A> => {
   const enhancedStore = {...store, dispatch: (action: A) => enhancedDispatch(action)};
   const api: MiddlewareAPI<S, A> = {getState: store.getState, dispatch: enhancedStore.dispatch};
 
-  const enhancedDispatch = middlewares
-    .map(middleware => middleware(api))
-    .reduce((next, middleware) => middleware(next), store.dispatch);
+  const enhancedDispatch = middleware.map(ware => ware(api))
+    .reduce((next, ware) => ware(next), store.dispatch);
 
   return enhancedStore;
 };

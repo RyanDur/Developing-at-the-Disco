@@ -3,7 +3,7 @@ import {Info} from '../../user';
 import {Logout} from '../../user/Logout';
 import './Header.css';
 
-export const Header = () => {
+export const Home = () => {
   return <header id='main-header'>
     <Logout/>
     <Info/>

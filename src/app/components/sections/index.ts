@@ -1,7 +1,7 @@
-import Header from './Header';
+import Home from './Home';
 import Authorization from './Authorization';
 
 export {
-  Header,
+  Home,
   Authorization
 };
