@@ -5,7 +5,6 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {EnvironmentPlugin} = require("webpack");
 
 exports.development = (paths) => merge([common(paths), {
@@ -20,7 +19,6 @@ exports.development = (paths) => merge([common(paths), {
     stats: 'minimal',
     plugins: [
         new FriendlyErrorsWebpackPlugin(),
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Home',
             meta: {
