@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {Signup} from '../../user';
 import {useSelector} from '../../../../lib/react-redux';
 import {currentUser} from '../../../store/user/selector';
-import {has, join} from '../../../../lib/util/helpers';
+import {has, classes} from '../../../../lib/util/helpers';
 import {Path} from '../../index';
 import {Redirect} from 'react-router-dom';
 import './Authorization.css';
@@ -18,6 +18,6 @@ export const Authorization = () => {
     <Signup id='create-user'
             onSceneEnd={() => isInternalSceneDone(true)}
             onAnimationEnd={() => isRemoved(true)}
-            className={join('authorization', authorized && 'remove')}/>
+            className={classes('authorization', authorized && 'remove')}/>
   </main>;
 };

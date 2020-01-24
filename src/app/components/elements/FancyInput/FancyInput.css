@@ -1,0 +1,95 @@
+
+label.title {
+    position: relative;
+    z-index: 1;
+    top: 3rem;
+    margin: 0 1.2rem;
+    width: 20.5%;
+    color: var(--666666);
+    background-image: linear-gradient(
+            transparent 50%,
+            white 45%,
+            white 65%,
+            transparent 60%
+    );
+    transition: top 300ms,
+    font-size 300ms,
+    line-height 300ms,
+    color 300ms,
+    width 300ms;
+
+    &.candidate {
+        top: 0.7rem;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+        width: 5.6rem;
+        color: var(--007c87);
+    }
+
+    &.invalid {
+        color: var(--9e0024);
+        transition: none;
+    }
+}
+
+input.fancy-input {
+    position: relative;
+    width: 100%;
+    height: 4rem;
+    padding: 0 1.2rem;
+    border-radius: 0.4rem;
+    border: 0.1rem solid var(--999999);
+
+    &:focus {
+        outline: none;
+    }
+
+    &.candidate {
+        border-radius: 0.4rem;
+        border: 0.1rem solid var(--007c87);
+    }
+
+    &.invalid {
+        border: 0.1rem solid var(--9e0024);
+        color: var(--9e0024);
+    }
+}
+
+label.max-length {
+    position: relative;
+    width: 100%;
+    display: block;
+    text-align: end;
+    line-height: 1.4rem;
+    font-size: 1rem;
+    color: var(--007c87);
+    opacity: 0;
+    z-index: 1;
+    bottom: 1.6rem;
+    right: 0.4rem;
+    transition: opacity 300ms;
+
+    &.candidate {
+        opacity: 1;
+    }
+
+    &.invalid {
+        color: var(--9e0024);
+    }
+}
+
+
+.errors {
+    position: relative;
+    color: var(--9e0024);
+    padding: 0 1.2rem;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    z-index: -2;
+    top: 0;
+    transition: top 300ms ease-out;
+
+    &.leave {
+        top: -3rem;
+    }
+}

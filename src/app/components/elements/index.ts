@@ -1,4 +1,4 @@
-import {TextInput} from './TextInput';
+import {FancyInput} from './FancyInput';
 import {MessageList} from './List';
 
-export {TextInput, MessageList};
+export {FancyInput, MessageList};

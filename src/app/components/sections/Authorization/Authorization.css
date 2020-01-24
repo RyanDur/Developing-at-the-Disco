@@ -1,10 +1,11 @@
 #content {
     display: flex;
     justify-content: center;
-    height: 100vh;
     padding: 20rem 0 0;
 
     & .authorization {
+        width: 32rem;
+
         &.remove {
             position: relative;
             animation: 500ms ease-out 0ms 1 remove;

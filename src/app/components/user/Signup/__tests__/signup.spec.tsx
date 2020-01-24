@@ -1,11 +1,7 @@
 import * as React from 'react';
 import {Signup} from '../Signup';
-import {create, pageDone} from '../../../../store/user/action';
-import {
-  useDispatchSpy,
-  useSelectorSpy
-} from '../../../../../__tests__/support/testApi';
-import {Page} from '../../../../store/user/action/types';
+import {create} from '../../../../store/user/action';
+import {useDispatchSpy, useSelectorSpy} from '../../../../../__tests__/support/testApi';
 import {mount, ReactWrapper} from 'enzyme';
 
 describe('Signing up', () => {
@@ -19,12 +15,7 @@ describe('Signing up', () => {
 
   describe('on user creation success', () => {
     beforeEach(async () => {
-      mockSelector
-        .mockReturnValueOnce(undefined)
-        .mockReturnValueOnce(undefined)
-        .mockReturnValueOnce({foo: 'bar'})
-        .mockReturnValueOnce(undefined)
-        .mockReturnValue({foo: 'bar'});
+      mockSelector.mockReturnValue(undefined);
       subject = mount(<Signup/>);
     });
 
@@ -74,7 +65,7 @@ describe('Signing up', () => {
     const errors = {value: name, validations: ['USERNAME_EXISTS']};
 
     beforeEach(() => {
-      mockSelector.mockImplementation(() => errors);
+      mockSelector.mockReturnValue(errors);
       subject = mount(<Signup/>);
       subject.find('.username input').simulate('change', {target: {value: name}});
       subject.find('.username input').simulate('focus');

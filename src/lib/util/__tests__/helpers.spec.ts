@@ -1,60 +1,120 @@
-import {has} from '../helpers';
+import {empty, has, is, not} from '../helpers';
 
 describe('helpers', () => {
+  describe('not', () => {
+    it.each`
+       value
+       ${false}
+       ${null}
+       ${undefined}
+       ${0}
+       ${NaN}
+       ${''}
+      `('should be true when $value', ({value}) =>
+      expect(not(value)).toBe(true));
+
+    it.each`
+       value
+       ${true}
+       ${{}}
+       ${[]}
+       ${'0'}
+       ${'false'}
+       ${new Date()}
+       ${42}
+       ${-42}
+       ${3.14}
+       ${-3.14}
+       ${Infinity}
+       ${-Infinity}
+      `('should be false when $value', ({value}) =>
+      expect(not(value)).toBe(false));
+  });
+
+  describe('is', () => {
+    it.each`
+    value
+     ${true}
+     ${{}}
+     ${[]}
+     ${'0'}
+     ${'false'}
+     ${new Date()}
+     ${42}
+     ${-42}
+     ${3.14}
+     ${-3.14}
+     ${Infinity}
+     ${-Infinity}
+    `('should be true when $value', ({value}) => {
+      expect(is(value)).toBe(true);
+    });
+
+    it.each`
+       value
+       ${false}
+       ${null}
+       ${undefined}
+       ${0}
+       ${NaN}
+       ${''}
+      `('should be false when $value', ({value}) =>
+      expect(is(value)).toBe(false));
+  });
+
   describe('has', () => {
-    it('should be false when given undefined', () => {
-      expect(has(undefined)).toBe(false);
-    });
-
-    it('should be false when given null', () => {
-      expect(has(null)).toBe(false);
-    });
-
-    describe('an object', () => {
-      it('should be false if empty', () => {
-        expect(has({})).toBe(false);
-      });
-
-      it('should be true if not empty', () => {
-        expect(has({I_AM: 'NOT EMPTY'})).toBe(true);
-      });
-    });
-
-    describe('a number', () => {
-      it('should be false if empty', () => {
-        expect(has(0)).toBe(false);
-      });
-
-      it.each`
+    it.each`
       value
+      ${undefined}
+      ${false}
+      ${null}
+      ${{}}
+      ${''}
+      ${[]}
+    `('should be false when $value', ({value}) =>
+      expect(has(value)).toBe(false));
+
+    it.each`
+      value
+      ${{I_AM: 'NOT EMPTY'}}
       ${-1}
-      ${1}
-      ${2}
-      ${-2}
+      ${0}
       ${3}
-      `('should be true if not empty', ({value}) => {
-        expect(has(value)).toBe(true);
-      });
-    });
+      ${-56.45}
+      ${0.0}
+      ${'NOT EMPTY'}
+      ${['NOT EMPTY']}
+      ${true}
+    `('should be true when $value', ({value}) =>
+      expect(has(value)).toBe(true));
+  });
 
-    describe('a string', () => {
-      it('should be false if empty', () => {
-        expect(has('')).toBe(false);
-      });
+  describe('empty', () => {
+    it.each`
+      value
+      ${{I_AM: 'NOT EMPTY'}}
+      ${-1}
+      ${0}
+      ${3}
+      ${-1.45}
+      ${0.0}
+      ${Number()}
+      ${new Date()}
+      ${'NOT EMPTY'}
+      ${['NOT EMPTY']}
+      ${true}
+    `('should be false when $value', ({value}) =>
+      expect(empty(value)).toBe(false));
 
-      it('should be true if not empty', () => {
-        expect(has('NOT EMPTY')).toBe(true);
-      });
-    });
-
-    describe('an array', () => {
-      it('should be false if empty', () => {
-        expect(has([])).toBe(false);
-      });
-
-      it('should be true if not empty', () => {
-        expect(has(['NOT EMPTY'])).toBe(true);
-      });
-    });
+    it.each`
+      value
+      ${undefined}
+      ${false}
+      ${null}
+      ${{}}
+      ${''}
+      ${[]}
+    `('should be true when $value', ({value}) =>
+      expect(empty(value)).toBe(true));
   });
 });

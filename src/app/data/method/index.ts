@@ -1,6 +1,6 @@
 import {Params} from './types';
 import {HttpRequest} from '../types';
-import {notEmpty} from '../../../lib/util/helpers';
+import {has} from '../../../lib/util/helpers';
 
 const createParams = (params: Params = {}) =>
   Object.keys(params)
@@ -9,7 +9,7 @@ const createParams = (params: Params = {}) =>
 
 const createPath = (endpoint: string[], params?: string) =>
   [endpoint.join('/'), params]
-    .filter(notEmpty)
+    .filter(has)
     .join('?');
 
 const info = {

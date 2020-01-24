@@ -1,23 +1,27 @@
-export const join = (...list: string[]) => list.filter(has).join(' ');
+export const not = (val: any): boolean => !val;
+export const is = (val: any): boolean => !!val;
 
-export const not = (val: any) => !val;
-const emptyArray = (arr: any[]) => arr.length === 0;
-const emptyObject = (obj: Object) => emptyArray(Object.keys(obj));
-
-export const empty = (thing: any) => {
-  if (Array.isArray(thing)) {
-    return emptyArray(thing);
-  } else if (not(isNaN(Number(thing))) || thing === undefined) {
-    return not(thing);
-  } else {
-    return emptyObject(thing);
+export const empty = (thing: any): boolean => {
+  switch (typeOf(thing)) {
+    case 'number':
+      return false;
+    case 'object':
+      return emptyObject(thing);
+    default:
+      return not(thing);
   }
 };
 
-export const has = (content: any) => not(empty(content));
-export const notEmpty = has;
+export const has = (content: any): boolean => not(empty(content));
 
-export const remove = (item: any, items: any[]): any[] => {
+export const classes = (...strings: string[]): string =>
+  strings.filter(has).join(' ');
+
+export const remove = <T = any>(item: T, items: T[]): T[] => {
   const index: number = items.indexOf(item);
   return [...items.slice(0, index), ...items.slice(index + 1)];
 };
+
+const typeOf = (thing: any): string => thing === null ? 'null' : typeof thing;
+const emptyObject = (obj: object): boolean =>
+  is((JSON.stringify(obj).match(/{}|\[]/) || []).length);
