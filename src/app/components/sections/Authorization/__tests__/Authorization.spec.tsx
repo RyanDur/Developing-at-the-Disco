@@ -2,7 +2,7 @@ import * as React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {Authorization} from '../Authorization';
 import {useSelectorSpy} from '../../../../../__tests__/support/testApi';
-import {Signup} from '../../../user';
+import {AuthForm} from '../../../user';
 import {Redirect} from 'react-router-dom';
 import {Path} from '../../../index';
 
@@ -28,14 +28,14 @@ describe('authorization', () => {
     });
 
     describe('when the internal scene has ended', () => {
-      beforeEach(() => auth.find(Signup).props().onSceneEnd());
+      beforeEach(() => auth.find(AuthForm).props().onSceneEnd());
 
       it('should not show authorization', () =>
         expect(auth.find('.authorization').hasClass('remove'))
           .toBe(true));
 
       describe('when it has left the page', () => {
-        beforeEach(() => auth.find(Signup).simulate('animationend'));
+        beforeEach(() => auth.find(AuthForm).simulate('animationend'));
 
         it('should redirect to home', () =>
           expect(auth.find(Redirect).props().to).toBe(Path.HOME));

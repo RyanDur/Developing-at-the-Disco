@@ -6,7 +6,7 @@ interface ListProps {
   className: string;
 }
 
-export const MessageList = ({messages, ...props}: ListProps & DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement>) =>
+export const MessageList = ({messages = [], ...props}: ListProps & DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement>) =>
   <ul {...props}>{messages.map((message: string) =>
     <li key={message}>{message}</li>)}
   </ul>;

@@ -67,7 +67,7 @@ Cypress.Commands.add('signup',
     cy.visit('/', config)
       .get('form')
       .within(() => {
-        cy.contains('Username')
+        cy.get('#username')
           .type(user.name)
           .root().submit();
       })

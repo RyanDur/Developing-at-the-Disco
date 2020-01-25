@@ -23,5 +23,8 @@ export const remove = <T = any>(item: T, items: T[]): T[] => {
 };
 
 const typeOf = (thing: any): string => thing === null ? 'null' : typeof thing;
-const emptyObject = (obj: object): boolean =>
-  is((JSON.stringify(obj).match(/{}|\[]/) || []).length);
+const emptyObject = (obj: object): boolean => {
+  if (Array.isArray(obj)) return not(obj.length);
+  return not(Object.keys(obj).length) &&
+    is((JSON.stringify(obj).match(/{}/) || []).length);
+};

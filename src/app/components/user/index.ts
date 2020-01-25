@@ -1,4 +1,4 @@
-import Signup from './Signup';
+import AuthForm from './Signup';
 import Others from './Others';
 import Info from './Info';
 import {userMiddleware, userReducers} from '../../store';
@@ -7,7 +7,7 @@ import {UserState} from '../../store/user/types';
 
 export {
   UserAction,
-  Signup,
+  AuthForm,
   Info,
   userReducers,
   userMiddleware,

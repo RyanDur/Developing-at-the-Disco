@@ -7,6 +7,7 @@ button {
     &.primary {
         background-color: var(--007c87);
         color: var(--ffffff);
+        -webkit-text-fill-color: var(--ffffff);
 
         &:hover {
             background-color: var(--035a61);

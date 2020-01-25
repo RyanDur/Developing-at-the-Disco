@@ -1,3 +1,3 @@
-import {Signup} from './Signup';
+import {AuthForm} from './AuthForm';
 
-export default Signup;
+export default AuthForm;

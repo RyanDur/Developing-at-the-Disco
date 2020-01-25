@@ -77,6 +77,7 @@ describe('helpers', () => {
     it.each`
       value
       ${{I_AM: 'NOT EMPTY'}}
+      ${{I_AM: (): any => undefined}}
       ${-1}
       ${0}
       ${3}
@@ -87,6 +88,10 @@ describe('helpers', () => {
       ${true}
     `('should be true when $value', ({value}) =>
       expect(has(value)).toBe(true));
+
+    it('should ', () => {
+      expect(has({I_AM: (): any => undefined})).toBe(true);
+    });
   });
 
   describe('empty', () => {

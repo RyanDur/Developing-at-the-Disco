@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {Signup} from '../../user';
+import {AuthForm} from '../../user';
 import {useSelector} from '../../../../lib/react-redux';
 import {currentUser} from '../../../store/user/selector';
 import {has, classes} from '../../../../lib/util/helpers';
@@ -15,9 +15,9 @@ export const Authorization = () => {
   const hasAuthorization = done && removed && authorized;
 
   return hasAuthorization ? <Redirect to={Path.HOME}/> : <main id='content'>
-    <Signup id='create-user'
-            onSceneEnd={() => isInternalSceneDone(true)}
-            onAnimationEnd={() => isRemoved(true)}
-            className={classes('authorization', authorized && 'remove')}/>
+    <AuthForm id='create-user'
+              onAnimationEnd={() => isRemoved(true)}
+              onSceneEnd={() => isInternalSceneDone(true)}
+              className={classes('authorization', done && authorized && 'remove')}/>
   </main>;
 };

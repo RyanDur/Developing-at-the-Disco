@@ -11,7 +11,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "start:open": "webpack-dev-server --open",
-    "build": "webpack --env production",
+    "build": "rm -rf ./dist && webpack --env production",
     "test": "npm run test:unit && npm run test:flows:silent",
     "test:unit": "jest --env=jsdom",
     "flows": "cypress open",

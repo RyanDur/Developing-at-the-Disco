@@ -133,7 +133,9 @@ describe('creating the store', () => {
   describe('when getting the state', () => {
     it('should not happen while the the state is updating', () => {
       const store = createStore((state) => {
-        has(store) && store.getState();
+        if (has(store)) {
+          store.getState();
+        }
         return state;
       });
 
