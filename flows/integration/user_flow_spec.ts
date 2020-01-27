@@ -61,5 +61,6 @@ describe('a user signing up', () => {
 });
 
 const user: NewUser = {
-  name: 'Benedict Cumberbatch'
+  name: 'Benedict Cumberbatch',
+  password: 'Bandicoot Cabbagepatch'
 };

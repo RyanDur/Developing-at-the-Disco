@@ -4,4 +4,5 @@ import {Action} from '../../../../../lib/redux/types';
 
 export interface CreateAction extends Action<UserActions.CREATE> {
   name: Username;
+  password: string;
 }

@@ -69,6 +69,8 @@ Cypress.Commands.add('signup',
       .within(() => {
         cy.get('#username')
           .type(user.name)
+          .get('#password')
+          .type(user.password)
           .root().submit();
       })
       .wait('@createUser');

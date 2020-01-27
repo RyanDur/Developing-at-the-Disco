@@ -26,7 +26,7 @@ const waitUntil = (done: DoneCallback) => ({
 describe('the user client', () => {
   const {create, getAll, logout} = userClient;
   const currentUser: CurrentUser = {name: 'Ryan', id: '1', status: UserStatus.AVAILABLE};
-  const newUser = {name: currentUser.name};
+  const newUser = {name: currentUser.name, password: 'your face'};
   const otherUsers: OtherUsers = [
     {name: 'Chirag', id: 'Taylor', status: UserStatus.AVAILABLE},
     {name: 'Chris ', id: 'Schuster', status: UserStatus.LOGGED_OUT}];

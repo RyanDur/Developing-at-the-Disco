@@ -1,10 +1,11 @@
 button {
     all: unset;
-    text-align: center;
     height: 4rem;
     border-radius: 0.4rem;
+    width: 100%;
 
     &.primary {
+        text-align: center;
         background-color: var(--007c87);
         color: var(--ffffff);
         -webkit-text-fill-color: var(--ffffff);

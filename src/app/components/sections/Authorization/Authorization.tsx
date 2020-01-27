@@ -1,23 +1,15 @@
 import * as React from 'react';
-import {useState} from 'react';
 import {AuthForm} from '../../user';
 import {useSelector} from '../../../../lib/react-redux';
 import {currentUser} from '../../../store/user/selector';
-import {has, classes} from '../../../../lib/util/helpers';
+import {classes, has} from '../../../../lib/util/helpers';
 import {Path} from '../../index';
 import {Redirect} from 'react-router-dom';
 import './Authorization.css';
 
 export const Authorization = () => {
   const authorized = has(useSelector(currentUser));
-  const [removed, isRemoved] = useState(false);
-  const [done, isInternalSceneDone] = useState(false);
-  const hasAuthorization = done && removed && authorized;
-
-  return hasAuthorization ? <Redirect to={Path.HOME}/> : <main id='content'>
-    <AuthForm id='create-user'
-              onAnimationEnd={() => isRemoved(true)}
-              onSceneEnd={() => isInternalSceneDone(true)}
-              className={classes('authorization', done && authorized && 'remove')}/>
+  return authorized ? <Redirect to={Path.HOME}/> : <main id='content'>
+    <AuthForm id='create-user' className={classes('authorization')}/>
   </main>;
 };

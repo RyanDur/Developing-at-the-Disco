@@ -1,6 +1,6 @@
 import {createUserMiddleware} from '../middleware';
 import {NewUser, ResponseHandler, ErrorsState} from '../types';
-import {create, current} from '../action';
+import {createNewUser, current} from '../action';
 import {errors} from '../reducer';
 import {ErrorsAction, UserAction} from '../action/types';
 import {Store} from '../../../../lib/redux/types';
@@ -37,7 +37,7 @@ describe('signing up validations', () => {
       mockCreateUser.mockImplementation((newUser: NewUser, handle: ResponseHandler) => {
         handle.onClientError(anError(newUser.name));
       });
-      store.dispatch(create(username));
+      store.dispatch(createNewUser(username, 'password'));
     });
 
     it('should be validated', () => {

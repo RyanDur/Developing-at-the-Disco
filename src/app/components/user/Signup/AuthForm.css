@@ -1,23 +1,48 @@
-.accordion {
-    position: relative;
+.fan {
+    min-height: 4rem;
     height: fit-content;
-    width: 32rem;
+    position: relative;
 
-    & .bellow {
-        position: relative;
-        z-index: 1;
+    & .stick,
+    & .guard.bottom {
         width: 100%;
-        margin: 0 0 1.5rem;
+        bottom: 0;
+        margin: 2rem 0 0;
+        opacity: 0;
+        position: absolute;
+
+        &.unfolded {
+            opacity: 1;
+            position: relative;
+        }
+
+        &.enter {
+            transition: bottom 300ms;
+        }
+
+        &.enter-active {
+            opacity: 1;
+            bottom: -6rem;
+        }
+
+        &.exit {
+            transition: bottom 300ms;
+        }
+
+        &.exit-active {
+            bottom: 6rem;
+        }
     }
 
-    & .submit {
-        position: relative;
-        z-index: 0;
-        width: 100%;
-        transition: transform 250ms;
+    & .guard.top {
+        z-index: 2;
+    }
 
-        &:disabled {
-            transform: translate(0, -5.5rem);
-        }
+    & .stick {
+        z-index: 1;
+    }
+
+    & .guard.bottom {
+        z-index: 0;
     }
 }

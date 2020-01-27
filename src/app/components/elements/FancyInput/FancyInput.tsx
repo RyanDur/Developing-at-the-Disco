@@ -14,16 +14,19 @@ export const FancyInput = ({
   onFocus = () => undefined,
   onBlur = () => undefined,
   errors = {},
+  onTransitionEnd,
   ...props
 }: FancyInputProps) => {
   const [value, updateValue] = useState('');
   const [candidate, updateCandidate] = useState(false);
   const invalid = errors.value === value;
 
-  return <article className={classes('fancy-input', className, candidate && 'candidate', invalid && 'invalid')}>
-    <label className='title' htmlFor={id}>{placeHolder}</label>
+  return <article id={id}
+                  onTransitionEnd={onTransitionEnd}
+                  className={classes('fancy-input', className, candidate && 'candidate', invalid && 'invalid')}>
+    <label className='title' htmlFor={`fancy-${id}`}>{placeHolder}</label>
     <input {...props}
-           id={id}
+           id={`fancy-${id}`}
            className='fancy'
            onChange={event => {
              updateValue(event.target.value);
@@ -39,7 +42,7 @@ export const FancyInput = ({
              onBlur(event);
            }}/>
     <label className='max-length'
-           htmlFor={id}>{`${String(value).length}/${maxLength}`}</label>
+           htmlFor={`fancy-${id}`}>{`${String(value).length}/${maxLength}`}</label>
     <MessageList className='errors' messages={errors.validations}/>
   </article>;
 };

@@ -6,8 +6,8 @@ import {useDispatch, useSelector} from '../../../../lib/react-redux';
 import {classes, empty, not} from '../../../../lib/util/helpers';
 import {usernameErrors} from '../../../store/user/selector';
 import {SignupText, translate} from '../../translator';
+import {createNewUser} from '../../../store/user/action';
 import './AuthForm.css';
-import {create} from '../../../store/user/action';
 
 interface SignupProps {
   id?: string;
@@ -19,19 +19,19 @@ interface SignupProps {
 export const AuthForm = ({
   id,
   className,
-  onSceneEnd = () => undefined,
   onAnimationEnd = () => undefined
 }: SignupProps) => {
   const dispatch = useDispatch();
   const invalidUsername = useSelector(usernameErrors);
   const [name, updateName] = useState('');
+  const [password, updatePassword] = useState('');
   const [submitted, isSubmitted] = useState(false);
-  const invalid = empty(name) || name === (invalidUsername || {}).value;
+  const invalid = empty(name) || empty(password) || name === (invalidUsername || {}).value;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (not(invalid)) {
-      dispatch(create(name));
+      dispatch(createNewUser(name, password));
       isSubmitted(true);
     }
   };
@@ -41,21 +41,25 @@ export const AuthForm = ({
   }, [invalidUsername]);
 
   return <form id={id}
-               className={classes(className, 'accordion')}
+               className={classes(className, 'fan')}
                onAnimationEnd={onAnimationEnd}
                onSubmit={handleSubmit}>
     <FancyInput id='username'
-                className='bellow'
+                autoFocus={true}
+                className='guard top'
                 type='text'
                 placeHolder='Username'
-                onChange={event => {
-                  updateName(event.target.value);
-                }}
+                onChange={event => updateName(event.target.value)}
                 errors={translate(invalidUsername, SignupText)}
                 maxLength={maxUsernameLength}/>
+    <FancyInput id='password'
+                type='password'
+                className={classes('stick', 'unfolded')}
+                placeHolder='Password'
+                onChange={event => updatePassword(event.target.value)}
+                maxLength={maxUsernameLength}/>
     <button type='submit'
-            className='submit primary'
-            onTransitionEnd={() => submitted && onSceneEnd()}
+            className={classes('primary guard bottom', 'unfolded')}
             disabled={invalid || submitted}>
       Sign Up
     </button>

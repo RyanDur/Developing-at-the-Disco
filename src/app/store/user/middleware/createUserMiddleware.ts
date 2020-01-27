@@ -12,7 +12,7 @@ const handle: ResponseHandlers = (dispatch) => ({
 export const createUserMiddleware: Middleware<UserState, UserAction> =
   ({dispatch}) => next => action => {
     if (action.type === UserActions.CREATE) {
-      userClient.create({name: action.name}, handle(dispatch));
+      userClient.create({name: action.name, password: action.password}, handle(dispatch));
     }
     next(action);
   };

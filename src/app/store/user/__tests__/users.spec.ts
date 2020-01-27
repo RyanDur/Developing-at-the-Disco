@@ -1,4 +1,4 @@
-import {create, logout} from '../action';
+import {createNewUser, logout} from '../action';
 import {createUserMiddleware, getOtherUsersMiddleware, logoutMiddleware} from '../middleware';
 import {NewUser, UserId, Username} from '../types/user';
 import {ResponseHandler, UsersState} from '../types';
@@ -14,6 +14,7 @@ describe('user store:', () => {
   const mockGetOtherUsers = jest.fn();
   const mockLogout = jest.fn();
   const username: Username = 'Travis';
+  const password: string = 'I am a password!!';
   const id: UserId = '3' as UserId;
   let store: Store<UsersState, UserAction>;
 
@@ -55,8 +56,8 @@ describe('user store:', () => {
 
       beforeEach(() => {
         mockCreateUser.mockReset();
-        mockCreateUser.mockImplementation((name: NewUser, handleCreate: ResponseHandler) => {
-          handleCreate.onSuccess({...name, id});
+        mockCreateUser.mockImplementation((user: NewUser, handleCreate: ResponseHandler) => {
+          handleCreate.onSuccess({name: user.name, id});
         });
 
         mockGetOtherUsers.mockReset();
@@ -64,7 +65,7 @@ describe('user store:', () => {
           handleGet.onSuccess(otherUsersPage);
         });
 
-        store.dispatch(create(username));
+        store.dispatch(createNewUser(username, password));
       });
 
       it('should update the current user', () => {

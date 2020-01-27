@@ -2,13 +2,14 @@ import * as React from 'react';
 import {AuthForm} from '../AuthForm';
 import {useDispatchSpy, useSelectorSpy} from '../../../../../__tests__/support/testApi';
 import {mount, ReactWrapper} from 'enzyme';
-import {create} from '../../../../store/user/action';
+import {createNewUser} from '../../../../store/user/action';
 
 describe('Signing up', () => {
   const mockPreventDefault = jest.fn();
   const mockSelector = jest.fn();
   const mockDispatch = jest.fn();
   const name = 'YaY';
+  const password = 'WooHoo';
   const props = {
     onSceneEnd: jest.fn(),
     onSubmit: jest.fn(),
@@ -29,19 +30,27 @@ describe('Signing up', () => {
     describe('on init', () => {
       describe('when name is empty', () => {
         it('should not be able to submit the candidate', () => {
-          typeAndMove('');
+          typeAndMove('#password', 'some password');
           subject.find('form').simulate('submit');
 
-          expect(subject.find('.submit').props().disabled)
-            .toBe(true);
+          expect(mockDispatch).not.toHaveBeenCalled();
         });
       });
 
-      describe('given input', () => {
-        beforeEach(() => typeAndMove(name));
+      describe('when password is empty', () => {
+        it('should not be able to submit the candidate', () => {
+          typeAndMove('#username', 'some name');
+          subject.find('form').simulate('submit');
+
+          expect(mockDispatch).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when username and password are given', () => {
+        beforeEach(() => signIn(name, password));
 
         it('should be able to submit the candidate', () => {
-          expect(subject.find('.submit').prop('disabled'))
+          expect(subject.find('button').prop('disabled'))
             .toBe(false);
         });
 
@@ -55,11 +64,11 @@ describe('Signing up', () => {
             expect(mockPreventDefault).toHaveBeenCalled());
 
           it('should create the user', () => {
-            expect(mockDispatch).toHaveBeenCalledWith(create(name));
+            expect(mockDispatch).toHaveBeenCalledWith(createNewUser(name, password));
           });
 
           it('should not be able to submit again', () =>
-            expect(subject.find('.submit').prop('disabled'))
+            expect(subject.find('button').prop('disabled'))
               .toBe(true));
         });
       });
@@ -74,11 +83,11 @@ describe('Signing up', () => {
       mockDispatch.mockReset();
       mockSelector.mockReturnValue(errors);
       subject = mount(<AuthForm {...props}/>);
-      typeAndMove(name);
+      signIn(name, password);
     });
 
     it('should not be able to submit', () =>
-      expect(subject.find('.submit').prop('disabled'))
+      expect(subject.find('button').prop('disabled'))
         .toBe(true));
 
     it('should not create the user', () =>
@@ -89,10 +98,10 @@ describe('Signing up', () => {
         .toContain(message));
 
     describe('changing the name', () => {
-      beforeEach(() => typeAndMove('some name'));
+      beforeEach(() => typeAndMove('#username', 'some name'));
 
       it('should be able to submit', () =>
-        expect(subject.find('.submit').prop('disabled'))
+        expect(subject.find('button').prop('disabled'))
           .toBe(false));
 
       describe('on submit', () => {
@@ -100,7 +109,7 @@ describe('Signing up', () => {
           .simulate('submit'));
 
         it('should not be able to submit', () =>
-          expect(subject.find('.submit').prop('disabled'))
+          expect(subject.find('button').prop('disabled'))
             .toBe(true));
 
         it('should create the user', () =>
@@ -109,10 +118,15 @@ describe('Signing up', () => {
     });
   });
 
-  const typeAndMove = (value: string): void => {
-    subject.find('#username input').simulate('change', {target: {value}});
-    subject.find('#username input').simulate('focus');
-    subject.find('#username input').simulate('blur');
+  const typeAndMove = (selector: string, value: string = ''): void => {
+    subject.find(`${selector} input`).simulate('change', {target: {value}});
+    subject.find(`${selector} input`).simulate('focus');
+    subject.find(`${selector} input`).simulate('blur');
+  };
+
+  const signIn = (username: string, pass: string = '') => {
+    typeAndMove('#username', username);
+    typeAndMove('#password', pass);
   };
 });
 

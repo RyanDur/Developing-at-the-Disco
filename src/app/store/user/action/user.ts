@@ -12,7 +12,7 @@ import {Username} from '../types/user';
 
 const others = (otherUsersPage: OtherUsersPage): OtherUsersAction => ({type: UserActions.OTHERS, otherUsersPage});
 
-const create = (name: Username): CreateAction => ({type: UserActions.CREATE, name});
+const createNewUser = (name: Username, password: string): CreateAction => ({type: UserActions.CREATE, name, password});
 
 const current = (user: CurrentUser): CurrentAction => ({type: UserActions.CURRENT, user});
 
@@ -28,7 +28,7 @@ const invalidSignup = (errors: SignupErrors): InvalidSignupAction => ({
 });
 
 export {
-  create,
+  createNewUser,
   update,
   current,
   others,

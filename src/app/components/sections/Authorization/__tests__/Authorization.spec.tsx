@@ -2,7 +2,6 @@ import * as React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {Authorization} from '../Authorization';
 import {useSelectorSpy} from '../../../../../__tests__/support/testApi';
-import {AuthForm} from '../../../user';
 import {Redirect} from 'react-router-dom';
 import {Path} from '../../../index';
 
@@ -27,19 +26,7 @@ describe('authorization', () => {
       auth = shallow(<Authorization/>);
     });
 
-    describe('when the internal scene has ended', () => {
-      beforeEach(() => auth.find(AuthForm).props().onSceneEnd());
-
-      it('should not show authorization', () =>
-        expect(auth.find('.authorization').hasClass('remove'))
-          .toBe(true));
-
-      describe('when it has left the page', () => {
-        beforeEach(() => auth.find(AuthForm).simulate('animationend'));
-
-        it('should redirect to home', () =>
-          expect(auth.find(Redirect).props().to).toBe(Path.HOME));
-      });
-    });
+    it('should redirect to home', () =>
+      expect(auth.find(Redirect).props().to).toBe(Path.HOME));
   });
 });
