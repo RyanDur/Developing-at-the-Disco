@@ -6,13 +6,13 @@ import React from 'react';
 import {Path} from './index';
 
 export const PrivateRoute = ({component, ...rest}: RouteProps) => {
-  const user = useSelector(currentUser);
+  const authorized = has(useSelector(currentUser));
   const ComponentToRender = component;
 
   return <Route
     {...rest}
     render={props =>
-      has(user) ? <ComponentToRender {...props}/> :
+      authorized ? <ComponentToRender {...props}/> :
         <Redirect to={{pathname: Path.AUTH, state: {from: props.location}}}/>
     }
   />;
