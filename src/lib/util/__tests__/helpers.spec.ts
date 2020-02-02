@@ -86,6 +86,7 @@ describe('helpers', () => {
       ${'NOT EMPTY'}
       ${['NOT EMPTY']}
       ${true}
+      ${(): any => undefined}
     `('should be true when $value', ({value}) =>
       expect(has(value)).toBe(true));
 
@@ -108,6 +109,7 @@ describe('helpers', () => {
       ${'NOT EMPTY'}
       ${['NOT EMPTY']}
       ${true}
+      ${(): any => undefined}
     `('should be false when $value', ({value}) =>
       expect(empty(value)).toBe(false));
 

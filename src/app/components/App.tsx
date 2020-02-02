@@ -1,7 +1,8 @@
 import React, {ReactElement} from 'react';
-import {Authorization, Home} from './sections';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Home} from './sections';
+import {Authorization} from './user';
 import {Path} from './index';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {PrivateRoute} from './PrivteRoute';
 
 export const App = (): ReactElement =>

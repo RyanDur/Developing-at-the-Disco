@@ -1,37 +1,35 @@
 import * as React from 'react';
-import {AuthForm} from '../AuthForm';
-import {useDispatchSpy, useSelectorSpy} from '../../../../../__tests__/support/testApi';
 import {mount, ReactWrapper} from 'enzyme';
+import {Authorization} from '../Authorization';
+import {useDispatchSpy, useSelectorSpy} from '../../../../../__tests__/support/testApi';
+import {Redirect, Router} from 'react-router-dom';
+import {Path} from '../../../index';
 import {createNewUser} from '../../../../store/user/action';
+import {createMemoryHistory} from 'history';
+import {when} from 'jest-when';
+import {usernameErrors} from '../../../../store/user/selector';
 
-describe('Signing up', () => {
-  const mockPreventDefault = jest.fn();
-  const mockSelector = jest.fn();
-  const mockDispatch = jest.fn();
+describe('authorization', () => {
   const name = 'YaY';
   const password = 'WooHoo';
-  const props = {
-    onSceneEnd: jest.fn(),
-    onSubmit: jest.fn(),
-    id: 'some-id',
-    className: 'some-class'
-  };
-  let subject: ReactWrapper;
-
-  useSelectorSpy(mockSelector);
+  const mockSelector = jest.fn();
+  const mockDispatch = jest.fn();
+  const mockPreventDefault = jest.fn();
   useDispatchSpy(mockDispatch);
+  useSelectorSpy(mockSelector);
+  let auth: ReactWrapper;
 
   describe('on user creation success', () => {
     beforeEach(async () => {
       mockSelector.mockReturnValue(undefined);
-      subject = mount(<AuthForm {...props}/>);
+      auth = authorization();
     });
 
     describe('on init', () => {
       describe('when name is empty', () => {
         it('should not be able to submit the candidate', () => {
           typeAndMove('#password', 'some password');
-          subject.find('form').simulate('submit');
+          auth.find('form').simulate('submit');
 
           expect(mockDispatch).not.toHaveBeenCalled();
         });
@@ -40,7 +38,7 @@ describe('Signing up', () => {
       describe('when password is empty', () => {
         it('should not be able to submit the candidate', () => {
           typeAndMove('#username', 'some name');
-          subject.find('form').simulate('submit');
+          auth.find('form').simulate('submit');
 
           expect(mockDispatch).not.toHaveBeenCalled();
         });
@@ -50,13 +48,13 @@ describe('Signing up', () => {
         beforeEach(() => signIn(name, password));
 
         it('should be able to submit the candidate', () => {
-          expect(subject.find('button').prop('disabled'))
+          expect(auth.find('button').prop('disabled'))
             .toBe(false);
         });
 
         describe('on submit', () => {
           beforeEach(async () => {
-            subject.find('form').simulate('submit',
+            auth.find('form').simulate('submit',
               {preventDefault: mockPreventDefault});
           });
 
@@ -68,7 +66,7 @@ describe('Signing up', () => {
           });
 
           it('should not be able to submit again', () =>
-            expect(subject.find('button').prop('disabled'))
+            expect(auth.find('button').prop('disabled'))
               .toBe(true));
         });
       });
@@ -81,35 +79,37 @@ describe('Signing up', () => {
 
     beforeEach(() => {
       mockDispatch.mockReset();
-      mockSelector.mockReturnValue(errors);
-      subject = mount(<AuthForm {...props}/>);
+      when(mockSelector)
+        .calledWith(usernameErrors)
+        .mockReturnValue(errors);
+      auth = authorization();
       signIn(name, password);
     });
 
     it('should not be able to submit', () =>
-      expect(subject.find('button').prop('disabled'))
+      expect(auth.find('button').prop('disabled'))
         .toBe(true));
 
     it('should not create the user', () =>
       expect(mockDispatch).not.toHaveBeenCalled());
 
     it('should display the errors', () =>
-      expect(subject.find('#username').first().text())
+      expect(auth.find('#username').first().text())
         .toContain(message));
 
     describe('changing the name', () => {
       beforeEach(() => typeAndMove('#username', 'some name'));
 
       it('should be able to submit', () =>
-        expect(subject.find('button').prop('disabled'))
+        expect(auth.find('button').prop('disabled'))
           .toBe(false));
 
       describe('on submit', () => {
-        beforeEach(() => subject.find('form')
+        beforeEach(() => auth.find('form')
           .simulate('submit'));
 
         it('should not be able to submit', () =>
-          expect(subject.find('button').prop('disabled'))
+          expect(auth.find('button').prop('disabled'))
             .toBe(true));
 
         it('should create the user', () =>
@@ -118,10 +118,29 @@ describe('Signing up', () => {
     });
   });
 
+  describe('redirection', () => {
+    it('should not happen when not authorized', () => {
+      auth = authorization();
+      expect(auth.find('#create-user').exists())
+        .toBe(true);
+    });
+
+    it('should happen when authorized', () => {
+      mockSelector.mockReturnValue({some: 'USER'});
+      auth = authorization();
+      expect(auth.find(Redirect).props().to).toBe(Path.HOME);
+    });
+  });
+
+  const authorization = () => {
+    const history = createMemoryHistory();
+    return mount(<Router history={history}><Authorization/></Router>);
+  };
+
   const typeAndMove = (selector: string, value: string = ''): void => {
-    subject.find(`${selector} input`).simulate('change', {target: {value}});
-    subject.find(`${selector} input`).simulate('focus');
-    subject.find(`${selector} input`).simulate('blur');
+    auth.find(`${selector} input`).simulate('change', {target: {value}});
+    auth.find(`${selector} input`).simulate('focus');
+    auth.find(`${selector} input`).simulate('blur');
   };
 
   const signIn = (username: string, pass: string = '') => {
